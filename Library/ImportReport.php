@@ -23,7 +23,7 @@ class ImportReport extends \Library\ImportAbstract
         $createReport = $this->getPdo()->prepare('INSERT INTO reports (report_name, created) VALUES(?, ?)');
         $createdOk = $createReport->execute(array($this->xmlObj->Report[0]['name'], date('Y-m-d H:i:s')));
         if (!$createdOk) {
-            die('Sorry, we couldn\'t create the new report: ' . $createReport->errorInfo()[2] . PHP_EOL);
+            die('Sorry, we couldn\'t create the new report: ' . $createReport->errorInfo() . PHP_EOL);
         }
 
         $this->reportID = $this->getPdo()->lastInsertId();
