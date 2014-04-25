@@ -37,7 +37,7 @@ class ImportReport extends \Library\ImportAbstract
         $completedInsert = $this->getPdo()->prepare('UPDATE reports SET imported = 1 WHERE report_id = ?');
         $reportCompleted = $completedInsert->execute(array('1'));
         if (!$reportCompleted) {
-            die('Sorry, we couldn\'t complete the report insert: ' . $completedInsert->errorInfo()[2] . PHP_EOL);
+            die('Sorry, we couldn\'t complete the report insert: ' . $completedInsert->errorInfo() . PHP_EOL);
         }
 
         return $this->getPdo()->lastInsertId();
@@ -51,7 +51,7 @@ class ImportReport extends \Library\ImportAbstract
             echo 'Importing host ' . $count . ' of ' . $this->xmlObj->Report[0]->ReportHost->count() . ' ... ';
             $insertedHost = $insertHost->execute(array($this->reportID, $host['name']));
             if (!$insertedHost) {
-                die('Sorry, we couldn\'t insert the host: ' . $insertHost->errorInfo()[2] . PHP_EOL);
+                die('Sorry, we couldn\'t insert the host: ' . $insertHost->errorInfo() . PHP_EOL);
             }
 
             $hostID = $this->getPdo()->lastInsertId();
@@ -80,7 +80,7 @@ class ImportReport extends \Library\ImportAbstract
             if (in_array($name, $names)) {
                 $updateHost = $hostUpdate->execute(array($value, $hostID));
                 if (!$updateHost) {
-                    die('Sorry, we couldn\'t update the host: ' . $hostUpdate->errorInfo()[2] . PHP_EOL);
+                    die('Sorry, we couldn\'t update the host: ' . $hostUpdate->errorInfo() . PHP_EOL);
                 }
             }
 
@@ -114,13 +114,13 @@ class ImportReport extends \Library\ImportAbstract
             }
             $vulnAdded = $addVuln->execute(array($attributes['pluginID'], $item['pluginName'], $attributes['svc_name'], $cvss, $attributes['pluginFamily'], $item->description, $item->cve, $item->risk_factor, $item->see_also, $item->solution, $item->synopsis));
             if (!$vulnAdded) {
-                die('Sorry, we couldn\'t add the vulnerability: ' . $addVuln->errorInfo()[2] . PHP_EOL);
+                die('Sorry, we couldn\'t add the vulnerability: ' . $addVuln->errorInfo() . PHP_EOL);
             }
 
 
             $vulnLinkAdded = $addVulnLink->execute(array($this->reportID, $hostID, $attributes['pluginID'], $attributes['port'], $attributes['protocol'],));
             if (!$vulnLinkAdded) {
-                die('Sorry, we couldn\'t add the vulnerability link: ' . $addVulnLink->errorInfo()[2] . PHP_EOL);
+                die('Sorry, we couldn\'t add the vulnerability link: ' . $addVulnLink->errorInfo() . PHP_EOL);
             }
 
             $foundVulnerabilities[$attributes['pluginID']] = (string)$item['pluginName'];
