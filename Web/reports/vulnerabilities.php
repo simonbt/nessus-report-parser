@@ -41,6 +41,11 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
         {
             $OS = "Microsoft Windows";
         }
+        if (substr_count($OS, 'FreeBSD') > 1)
+        {
+            $OS = 'FreeBSD';
+        }
+
 
         if ($hostData->fqdn == "")
         {
@@ -75,7 +80,7 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
         $ret = strcmp($first, $second);
         if($ret == 0)
         {
-            return strcmp($secondArrayElement['severity'], $firstArrayElement['severity']);
+            return strcmp((float) $secondArrayElement['severity'], (float) $firstArrayElement['severity']);
         }
         return $ret;
 
