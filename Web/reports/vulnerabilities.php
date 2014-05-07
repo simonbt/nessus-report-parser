@@ -45,6 +45,10 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
         {
             $OS = 'FreeBSD';
         }
+        if (substr_count($OS, 'Linux') > 1)
+        {
+            $OS = 'Linux';
+        }
 
 
         if ($hostData->fqdn == "")
