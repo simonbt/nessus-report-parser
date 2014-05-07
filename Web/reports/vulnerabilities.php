@@ -10,6 +10,11 @@ require_once(__DIR__ . "/../config.php");
 
 header('Content-Type: text/plain'); //Setting the page to plaintext so the tabs and carriage returns format correctly to allow cut&paste into pages
 
+$OSList = array(
+    "windows"   =>  "Microsoft Windows",
+    "FreeBSD"   =>  "FreeBSD",
+    "Linux"     =>  "Linux"
+);
 
 $reportId = $_GET['reportid'];
 $severity = $_GET['severity'];
@@ -22,11 +27,10 @@ if (!$reportData)
     die("There is no data to display, try adjusting your severity settings");
 }
 
-outputVulnHostPort($reportData); // Picking out only the Vulnerabilities and each host, protocol and port from the full data.
+outputVulnHostPort($reportData, $OSList); // Picking out only the Vulnerabilities and each host, protocol and port from the full data.
 
 
-
-function outputVulnHostPort($reportData) // Pass full report array to return hosts, ports and protocols sorted by vulnerability
+function outputVulnHostPort($reportData, $OSList) // Pass full report array to return hosts, ports and protocols sorted by vulnerability
 {
     $data = array();
     foreach ($reportData as $hostData)
@@ -37,17 +41,12 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
             $OS = $hostData->OS;
         }
 
-        if (substr_count($OS, 'Windows') > 1)
+        foreach ($OSList as $sys => $label)
         {
-            $OS = "Microsoft Windows";
-        }
-        if (substr_count($OS, 'FreeBSD') > 1)
-        {
-            $OS = 'FreeBSD';
-        }
-        if (substr_count($OS, 'Linux') > 1)
-        {
-            $OS = 'Linux';
+            if (substr_count($OS, $sys) > 1)
+            {
+                $OS = $label;
+            }
         }
 
 
