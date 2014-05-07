@@ -31,7 +31,7 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
     $data = array();
     foreach ($reportData as $hostData)
     {
-        if (!$hostData->OS){
+        if ((!$hostData->OS) || (strpos($hostData->OS, 'Unable to accurately identify') !== FALSE)){
             $OS = "Unable to accurately identify";
         } else {
             $OS = $hostData->OS;
@@ -80,7 +80,7 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
         $ret = strcmp($first, $second);
         if($ret == 0)
         {
-            return strcmp((float) $secondArrayElement['severity'], (float) $firstArrayElement['severity']);
+            return strcmp((float)$secondArrayElement['severity'], (float)$firstArrayElement['severity']);
         }
         return $ret;
 
