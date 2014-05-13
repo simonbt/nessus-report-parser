@@ -6,12 +6,19 @@
  * Time: 09:39
  */
 
+echo '<html>';
+echo '<head>';
+echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
+echo '<link rel="stylesheet" type="text/css" href="vulnerabilities.css">';
+echo '</head>';
+
+echo "<table border=0 cellpadding=0 cellspacing=0>
+";
+
 require_once(__DIR__ . "/../config.php");
 
-header('Content-Type: text/plain'); //Setting the page to plaintext so the tabs and carriage returns format correctly to allow cut&paste into pages
-
 $OSList = array(
-    "windows"   =>  "Microsoft Windows",
+    "Windows"   =>  "Microsoft Windows",
     "FreeBSD"   =>  "FreeBSD",
     "Linux"     =>  "Linux"
 );
@@ -30,25 +37,14 @@ if (!$reportData)
 outputVulnHostPort($reportData, $OSList); // Picking out only the Vulnerabilities and each host, protocol and port from the full data.
 
 
-function outputVulnHostPort($reportData, $OSList) // Pass full report array to return hosts, ports and protocols sorted by vulnerability
+function outputVulnHostPort($reportData) // Pass full report array to return hosts, ports and protocols sorted by vulnerability
 {
     $data = array();
     foreach ($reportData as $hostData)
     {
-        if ((!$hostData->OS) || (strpos($hostData->OS, 'Unable to accurately identify') !== FALSE)){
-            $OS = "Unable to accurately identify";
-        } else {
-            $OS = $hostData->OS;
-        }
 
-        foreach ($OSList as $sys => $label)
-        {
-            if (substr_count($OS, $sys) > 1)
-            {
-                $OS = $label;
-            }
-        }
-
+        $potentialOperatingSystems = explode(PHP_EOL, $hostData->OS);
+        $OS = trim(array_shift($potentialOperatingSystems));
 
         if ($hostData->fqdn == "")
         {
@@ -83,26 +79,82 @@ function outputVulnHostPort($reportData, $OSList) // Pass full report array to r
         $ret = strcmp($first, $second);
         if($ret == 0)
         {
-            return strcmp((float)$secondArrayElement['severity'], (float)$firstArrayElement['severity']);
-        }
-        return $ret;
+            $firstSeverity = (float) $firstArrayElement['severity'];
+            $secondSeverity = (float) $secondArrayElement['severity'];
 
+            if($secondSeverity > $firstSeverity)
+            {
+                return 1;
+            }
+            elseif($firstSeverity > $secondSeverity)
+            {
+                return -1;
+            }
+            elseif($firstSeverity == $secondSeverity)
+            {
+                return 0;
+            }
+        }
+
+        return $ret;
     });
 
     $ip = "";
+
+
+    $counts = array();
+    foreach ($data as $value){
+        foreach ($value as $key2 => $value2){
+            if ($key2 == "ip")
+            {
+                $index = $value2;
+                if (array_key_exists($index, $counts)){
+                    $counts[$index]++;
+                } else {
+                    $counts[$index] = 1;
+                }
+            }
+        }
+    }
+
+
     foreach ($data as $vuln)
     {
+        if ($vuln['risk'] == "Medium" )
+        {
+            $colour = "orange";
+        } else {
+            $colour = "red";
+        }
         if ($ip == long2ip($vuln['ip']))
         {
-            print (" \t" . " \t" . " \t" . $vuln['vuln'] . "\t" . $vuln['risk'] . "\t" . $vuln['severity'] . "\n");
+            print( "
+            <tr>
+                  <td class=" . $colour .">" . $vuln['vuln'] . "</td>
+                  <td class=" . $colour .">" . $vuln['risk'] . "</td>
+                  <td class=" . $colour .">" . $vuln['severity'] . "</td>
+             </tr>
+            ");
         } else {
-            print (long2ip($vuln['ip']) . "\t" . $vuln['name'] . "\t" . $vuln['os'] . "\t" . $vuln['vuln'] . "\t" . $vuln['risk'] . "\t" . $vuln['severity'] . "\n");
+            print( "
+            <tr>
+                  <td border:solid 1pt gray; vertical-align: top; rowspan=\"" . $counts[$vuln['ip']] . "\">" . long2ip($vuln['ip']) . "</td>
+                  <td border:solid 1pt gray; vertical-align: top; rowspan=\"" . $counts[$vuln['ip']] . "\">" . $vuln['name'] . "</td>
+                  <td border:solid 1pt gray; vertical-align: top; rowspan=\"" . $counts[$vuln['ip']] . "\">" . $vuln['os'] . "</td>
+                  <td class=" . $colour .">" . $vuln['vuln'] . "</td>
+                  <td class=" . $colour .">" . $vuln['risk'] . "</td>
+                  <td class=" . $colour .">" . $vuln['severity'] . "</td>
+             </tr>
+
+            ");
+
             $ip = long2ip($vuln['ip']);
         }
 
     }
 }
 
+echo " </table>";
 
 function getReportData($reportId, $severity, $url) // Pass reportID, severity and $url from config file to return full report JSON
 {
