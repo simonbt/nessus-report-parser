@@ -8,9 +8,13 @@
 
 require_once(__DIR__ . "/../config.php");
 
-header('Content-Type: text/plain'); //Setting the page to plaintext so the tabs and carriage returns format correctly to allow cut&paste into pages
+echo '<html>';
+echo '<head>';
+echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
+echo '<link rel="stylesheet" type="text/css" href="main.css">';
+echo '</head>';
 
-echo "Click back to return to the report list\n";
+
 
 $reportId = $_GET['reportid'];
 $severity = $_GET['severity']; //Dealing with GET requests, setting $reportid and $severity variables
@@ -24,29 +28,42 @@ if (!$reportData)
 
 hostReport($reportData); // Picking out only the Vulnerabilities and each host, protocol and port from the full data.
 
+
+
 function hostReport($reportData) // Pass full report array to return hosts, ports and protocols sorted by vulnerability
 {
-    foreach ($reportData as $vulnerability) {
-        echo PHP_EOL . $vulnerability[0][0]->vulnerability . PHP_EOL; // Output Vulnerability name
 
+    foreach ($reportData as $vulnerability) {
+        echo '<div class="headers"><br>' . $vulnerability[0][0]->vulnerability . '</div>'; // Output Vulnerability name
+        echo "<table>";
         $loop = 0;
         foreach ($vulnerability[1] as $hostObj) {
-            if ($loop == 3) {
-                print($hostObj->host_id . "\t" . strtoupper($hostObj->protocol) . "/" . $hostObj->port . "\n"); // Output the final column with carriage return
+
+            if ($loop == 0) {
+                $loop++;
+                print('<tr>');
+            }
+
+            print('
+                    <td>' . $hostObj->host_id . '</td>
+                    <td>' . strtoupper($hostObj->protocol) . '/' .  $hostObj->port . '</td>
+                    ');
+            $loop++;
+            if ($loop == 5) {
+                print('</tr>');
                 $loop = 0;
                 continue;
             }
-            if ($loop < 3) {
-                print($hostObj->host_id . "\t" . strtoupper($hostObj->protocol) . "/" . $hostObj->port . "\t"); // Output the first 3 columns with tab delimiters
-                $loop++;
-                continue;
-            }
+
         }
 
-        echo "\n\n"; // Just for tidying output
 
+        echo "</tr>";
+        echo "</table>";
     }
+
 }
+
 
 
 function getReportData($reportId, $severity, $url) // Pass reportID, severity and $url from config file to return full report JSON
