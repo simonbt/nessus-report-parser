@@ -24,6 +24,12 @@ td
     white-space:nowrap;
     background-color: white;
 }
+.main
+{
+    color: black;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
+    font-size:12.0pt;
+}
 .red
 {
     color:#FF0003;

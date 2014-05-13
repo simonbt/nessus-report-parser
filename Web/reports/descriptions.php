@@ -8,6 +8,12 @@
 
 require_once(__DIR__ . "/../config.php");
 
+echo '<html>';
+echo '<head>';
+echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
+echo '<link rel="stylesheet" type="text/css" href="main.css">';
+echo '</head>';
+
 $reportId = $_GET['reportid'];
 $severity = $_GET['severity']; //Dealing with GET requests, setting $reportid and $severity variables
 
@@ -25,6 +31,7 @@ function getDescriptions($reportData) // Pass full report array to return hosts,
 {
     foreach ($reportData as $vulnerability)
     {
+        echo "<div class=\"main\">";
         echo "<b>" . $vulnerability[0]->vulnerability . "</b><br>";
         if ($vulnerability[0]->randomstormed == 1)
         {
@@ -48,6 +55,7 @@ function getDescriptions($reportData) // Pass full report array to return hosts,
         echo $vulnerability[0]->see_also;
 
         echo "<hr>";
+        echo "</div>";
     }
 
 }
