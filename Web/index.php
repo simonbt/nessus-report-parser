@@ -8,8 +8,23 @@
 
 require_once(__DIR__ . "/config.php");
 
-echo 'Imported Reports<br>';
-echo 'Your severity setting is: ' . $severity . ' <i>set in config.php</i><br><br>';
+echo '<html>';
+echo '<head>';
+echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
+echo '<link rel="stylesheet" type="text/css" href="reports/main.css">';
+echo '<title>RandomStorm Report Generator</title>';
+echo '</head>';
+echo '<div class="menu">';
+echo '<div><img src="images/logo.png" alt="RandomStorm Limited" /></div>';
+
+echo '<div>
+<br>
+<b>Imported Reports</b>
+<br>
+Your severity setting is: ' . $severity . ' <i>set in config.php</i><br><br>
+';
+
+
 $reports = json_decode(getReportList($url));
 
 if (!$reports)
@@ -25,6 +40,8 @@ foreach ($reports as $report) {
     echo '<a href="reports/vulnerabilities.php?reportid=' . $report->id . '&severity=' . $severity . '">View the vulnerability output</a><br>';
     echo '<a href="reports/descriptions.php?reportid=' . $report->id . '&severity=' . $severity . '">View the vulnerability descriptions</a><br><br>';
 }
+
+echo '</div>';
 
 function getReportList($url)
 {

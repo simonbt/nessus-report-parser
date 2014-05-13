@@ -9,19 +9,12 @@
 echo '<html>';
 echo '<head>';
 echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
-echo '<link rel="stylesheet" type="text/css" href="vulnerabilities.css">';
+echo '<link rel="stylesheet" type="text/css" href="main.css">';
 echo '</head>';
 
-echo "<table border=0 cellpadding=0 cellspacing=0>
-";
+echo "<table border=0 cellpadding=0 cellspacing=0>";
 
 require_once(__DIR__ . "/../config.php");
-
-$OSList = array(
-    "Windows"   =>  "Microsoft Windows",
-    "FreeBSD"   =>  "FreeBSD",
-    "Linux"     =>  "Linux"
-);
 
 $reportId = $_GET['reportid'];
 $severity = $_GET['severity'];
@@ -34,7 +27,7 @@ if (!$reportData)
     die("There is no data to display, try adjusting your severity settings");
 }
 
-outputVulnHostPort($reportData, $OSList); // Picking out only the Vulnerabilities and each host, protocol and port from the full data.
+outputVulnHostPort($reportData); // Picking out only the Vulnerabilities and each host, protocol and port from the full data.
 
 
 function outputVulnHostPort($reportData) // Pass full report array to return hosts, ports and protocols sorted by vulnerability
@@ -154,7 +147,7 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
     }
 }
 
-echo " </table>";
+echo "</table>";
 
 function getReportData($reportId, $severity, $url) // Pass reportID, severity and $url from config file to return full report JSON
 {
