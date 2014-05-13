@@ -10,6 +10,7 @@ echo '<html>';
 echo '<head>';
 echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
 echo '<link rel="stylesheet" type="text/css" href="main.css">';
+echo '<title>Vulnerability View</title>';
 echo '</head>';
 
 echo "<table border=0 cellpadding=0 cellspacing=0>";
