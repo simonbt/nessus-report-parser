@@ -13,6 +13,7 @@ echo '<link rel="stylesheet" type="text/css" href="main.css">';
 echo '<title>Vulnerability View</title>';
 echo '</head>';
 
+echo "<a class=\"myButton\"; href=\"../index.php\">Return to Menu</a></p>";
 echo "<table border=0 cellpadding=0 cellspacing=0>";
 
 require_once(__DIR__ . "/../config.php");
@@ -114,12 +115,30 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
 
     foreach ($data as $vuln)
     {
-        if ($vuln['risk'] == "Medium" )
+        if (($vuln['risk'] == "High") || ($vuln['risk'] == "Critical"))
         {
-            $colour = "orange";
-        } else {
             $colour = "red";
         }
+        elseif ($vuln['risk'] == "Medium")
+        {
+            $colour = "orange";
+        }
+        elseif ($vuln['risk'] == "Low")
+        {
+            $colour = "green";
+        }
+        elseif ($vuln['risk'] == "Info")
+        {
+            $colour = "blue";
+        }
+        else
+        {
+            $colour = "blue";
+        }
+
+
+
+
         if ($ip == long2ip($vuln['ip']))
         {
             print( "

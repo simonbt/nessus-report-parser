@@ -35,13 +35,12 @@ class Reports extends \Library\WebAbstract
     {
 
         $returnArray = array();
-       # $getVulnerabilites = $this->getPDO()->prepare('SELECT DISTINCT plugin_id FROM host_vuln_link WHERE report_id=?');
         $getVulnerabilites = $this->getPDO()->prepare('SELECT DISTINCT plugin_id FROM host_vuln_link LEFT JOIN vulnerabilities ON host_vuln_link.plugin_id = vulnerabilities.pluginID WHERE host_vuln_link.report_id=? AND vulnerabilities.severity >=?');
         $getDetails = $this->getPdo()->prepare('SELECT * FROM vulnerabilities WHERE pluginID = ?');
         $getVulnerabilites->execute(array($reportID, $severity));
         $vulnerabilites = $getVulnerabilites->fetchall(\PDO::FETCH_COLUMN);
 
-        foreach ($vulnerabilites as $id => $vulnerability)
+        foreach ($vulnerabilites as $vulnerability)
         {
             $getDetails->execute(array($vulnerability));
             $details = $getDetails->fetchAll(\PDO::FETCH_ASSOC);
@@ -57,7 +56,6 @@ class Reports extends \Library\WebAbstract
         $getHostName = $this->getPdo()->prepare('SELECT host_name, operating_system, host_fqdn, netbios_name FROM hosts WHERE id=?');
         $getVulnerabilites = $this->getPDO()->prepare('SELECT DISTINCT plugin_id FROM host_vuln_link LEFT JOIN vulnerabilities ON host_vuln_link.plugin_id = vulnerabilities.pluginID WHERE host_vuln_link.report_id=? AND host_vuln_link.host_id=? AND vulnerabilities.severity >=?');
         $getDetails = $this->getPdo()->prepare('SELECT vulnerability, risk_factor, severity FROM vulnerabilities WHERE pluginID = ?');
-
         $getHostIDs->execute(array($reportID));
         $hosts = $getHostIDs->fetchall(\PDO::FETCH_ASSOC);
         if (!$hosts) {
@@ -72,7 +70,6 @@ class Reports extends \Library\WebAbstract
             $hosts[$key]['OS'] = $hostName[0]['operating_system'];
             $hosts[$key]['fqdn'] = $hostName[0]['host_fqdn'];
             $hosts[$key]['netbios'] = $hostName[0]['netbios_name'];
-
             $getVulnerabilites->execute(array($reportID, $host['host_id'], $severity));
             $vulnerabilites = $getVulnerabilites->fetchall(\PDO::FETCH_COLUMN);
 
@@ -98,8 +95,6 @@ class Reports extends \Library\WebAbstract
         $getHostIDs = $this->getPdo()->prepare('SELECT host_id, port, protocol FROM host_vuln_link WHERE plugin_id =? and report_id =?');
         $getHostName = $this->getPdo()->prepare('SELECT host_name FROM hosts WHERE id=?');
         $getDetails = $this->getPdo()->prepare('SELECT * FROM vulnerabilities WHERE pluginID = ? AND severity >=?');
-
-
         $getPluginIDs->execute(array($reportID));
         $pluginIDs = $getPluginIDs->fetchAll(\PDO::FETCH_COLUMN);
         if (!$pluginIDs) {

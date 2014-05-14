@@ -1,6 +1,6 @@
 
 .style0
-{;
+{
     white-space:nowrap;
     color:black;
     font-style:normal;
@@ -41,6 +41,20 @@ td
 .orange
 {
     color:#FF6F00;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
+    vertical-align: bottom;
+    font-size:9.0pt;
+}
+.green
+{
+    color:limegreen;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
+    vertical-align: bottom;
+    font-size:9.0pt;
+}
+.blue
+{
+    color:dodgerblue;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
     vertical-align: bottom;
     font-size:9.0pt;
@@ -86,3 +100,4 @@ td
     position:relative;
     top:1px;
 }
+

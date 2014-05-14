@@ -14,7 +14,7 @@ echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
 echo '<link rel="stylesheet" type="text/css" href="main.css">';
 echo '<title>Report Descriptions</title>';
 echo '</head>';
-
+echo "<a class=\"myButton\"; href=\"../index.php\">Return to Menu</a></p>";
 $reportId = $_GET['reportid'];
 $severity = $_GET['severity']; //Dealing with GET requests, setting $reportid and $severity variables
 
