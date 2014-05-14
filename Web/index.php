@@ -39,7 +39,7 @@ echo '<div>
 <br>
 <b>Options</b>
 <br>
-Your severity setting is: ' . $severity . ' <i>set in config.php</i><br>
+Your severity setting is: ' . $severity . '<br>
 <p><a class="myButton"; href="Library/severity.html" onclick="centeredPopup(this.href,\'myWindow\',\'500\',\'300\',\'yes\');return false">Change Severity</a>
 <a class="myButton"; href="#">View Descriptions</a>
 <a class="myButton"; href="#">Download xls format</a></p>
