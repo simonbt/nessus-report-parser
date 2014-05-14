@@ -19,10 +19,15 @@ echo '<div><img src="images/logo.png" alt="RandomStorm Limited" /></div>';
 
 echo '<div>
 <br>
-<b>Imported Reports</b>
+<b>Options</b>
 <br>
-Your severity setting is: ' . $severity . ' <i>set in config.php</i><br><br>
+Your severity setting is: ' . $severity . ' <i>set in config.php</i><br>
+<a class="myButton"; href="#">Change Severity</a><br>
+<a class="myButton"; href="#">View Descriptions</a><br>
+<a class="myButton"; href="#">Download xls format</a><br><br>
+<b>Reports</b><br><br>
 ';
+
 
 
 $reports = json_decode(getReportList($url));
@@ -30,17 +35,15 @@ $reports = json_decode(getReportList($url));
 if (!$reports)
 {
     echo "There are no reports available on the system<br>";
-    echo "To import a report, run import.php [Report file name] from the program directory";
-}
-foreach ($reports as $report) {
-    echo $report->report_name . ' - ' . $report->created . '<br>';
-    echo '<a class="myButton"; href="reports/hosts.php?reportid=' . $report->id . '&severity=' . $severity . '">Host View</a><br>';
-    echo '<a class="myButton"; href="reports/vulnerabilities.php?reportid=' . $report->id . '&severity=' . $severity . '">Vulnerability View</a><br>';
-    echo '<a class="myButton"; href="reports/descriptions.php?reportid=' . $report->id . '&severity=' . $severity . '">Description View</a><br><br>';
-}
-
+} else {
+    foreach ($reports as $report) {
+        echo $report->report_name . ' - ' . $report->created . '<br>';
+        echo '<a class="myButton"; href="reports/hosts.php?reportid=' . $report->id . '&severity=' . $severity . '">Host View</a><br>';
+        echo '<a class="myButton"; href="reports/vulnerabilities.php?reportid=' . $report->id . '&severity=' . $severity . '">Vulnerability View</a><br>';
+        echo '<a class="myButton"; href="reports/descriptions.php?reportid=' . $report->id . '&severity=' . $severity . '">Description View</a><br><br>';
+    }
 echo '</div>';
-
+}
 function getReportList($url)
 {
     $query = '?listreports=1';
