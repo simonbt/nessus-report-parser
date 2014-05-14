@@ -33,12 +33,10 @@ if (!$reports)
     echo "To import a report, run import.php [Report file name] from the program directory";
 }
 foreach ($reports as $report) {
-    echo 'ID: ' . $report->id . '<br>';
-    echo 'Name: ' . $report->report_name . '<br>';
-    echo 'Created: ' . $report->created . '<br>';
-    echo '<a href="reports/hosts.php?reportid=' . $report->id . '&severity=' . $severity . '">View the hosts output</a><br>';
-    echo '<a href="reports/vulnerabilities.php?reportid=' . $report->id . '&severity=' . $severity . '">View the vulnerability output</a><br>';
-    echo '<a href="reports/descriptions.php?reportid=' . $report->id . '&severity=' . $severity . '">View the vulnerability descriptions</a><br><br>';
+    echo $report->report_name . ' - ' . $report->created . '<br>';
+    echo '<a class="myButton"; href="reports/hosts.php?reportid=' . $report->id . '&severity=' . $severity . '">Host View</a><br>';
+    echo '<a class="myButton"; href="reports/vulnerabilities.php?reportid=' . $report->id . '&severity=' . $severity . '">Vulnerability View</a><br>';
+    echo '<a class="myButton"; href="reports/descriptions.php?reportid=' . $report->id . '&severity=' . $severity . '">Description View</a><br><br>';
 }
 
 echo '</div>';

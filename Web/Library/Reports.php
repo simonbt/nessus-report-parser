@@ -17,7 +17,7 @@ class Reports extends \Library\WebAbstract
 
         $reports = array();
 
-        $listReportQuery = $this->getPdo()->prepare('SELECT * FROM reports');
+        $listReportQuery = $this->getPdo()->prepare('SELECT * FROM reports ORDER BY id DESC');
         $listReportQuery->execute();
         $reportList = $listReportQuery->fetchAll(\PDO::FETCH_ASSOC);
 
