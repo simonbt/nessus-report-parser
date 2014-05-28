@@ -22,7 +22,7 @@ $reportId = $_GET['reportid'];
 $severity = $_GET['severity'];
 
 
-$reportData = json_decode(getReportData($reportId, $severity, $url)); //Get all report data from the API. Returns JSON so decoding that too
+$reportData = json_decode(getReportData($reportId, $severity, $url, $auth)); //Get all report data from the API. Returns JSON so decoding that too
 
 if (!$reportData)
 {
@@ -169,22 +169,27 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
 
 echo "</table>";
 
-function getReportData($reportId, $severity, $url) // Pass reportID, severity and $url from config file to return full report JSON
+function getReportData($reportId, $severity, $url, $auth) // Pass reportID, severity and $url from config file to return full report JSON
 {
     $query = '?report=2&reportid=' . $reportId . '&severity=' . $severity;
-    $report = curlGet($url, $query);
+    $report = curlGet($url, $query, $auth);
     return $report;
 }
 
 
-function curlGet($url, $query) // Curl function
+function curlGet($url, $query, $auth) // Curl function
 {
+
     $url_final = $url . '' . $query;
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url_final);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_URL,$url_final);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30); //timeout after 30 seconds
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+    curl_setopt($ch, CURLOPT_USERPWD, "$auth[username]:$auth[password]");
+
     $return = curl_exec($ch);
     curl_close($ch);
     return $return;
-}
 
+}

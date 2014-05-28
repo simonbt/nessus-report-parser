@@ -46,8 +46,7 @@ Your severity setting is: ' . $severity . '<br>
 <b>Reports</b><br><br>
 ';
 
-
-$reports = json_decode(getReportList($url));
+$reports = json_decode(getReportList($url, $auth));
 
 if (!$reports)
 {
@@ -63,21 +62,31 @@ if (!$reports)
     }
 echo '</div>';
 }
-function getReportList($url)
+function getReportList($url, $auth)
 {
+
     $query = '?listreports=1';
-    $report = curlGet($url, $query);
+    $report = curlGet($url, $query, $auth);
     return $report;
+
 }
 
 
-function curlGet($url, $query)
+function curlGet($url, $query, $auth)
 {
+
     $url_final = $url . '' . $query;
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url_final);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL,$url_final);
+curl_setopt($ch, CURLOPT_TIMEOUT, 30); //timeout after 30 seconds
+curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+curl_setopt($ch, CURLOPT_USERPWD, "$auth[username]:$auth[password]");
+
     $return = curl_exec($ch);
     curl_close($ch);
     return $return;
+
+
+
 }
