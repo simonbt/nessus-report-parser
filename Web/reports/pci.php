@@ -35,14 +35,24 @@ outputVulnHostPort($reportData); // Picking out only the Vulnerabilities and eac
 function outputVulnHostPort($reportData) // Pass full report array to return hosts, ports and protocols sorted by vulnerability
 {
 
-    $ignoredVulns = array(
+    $ignoredInfos = array(
+        "Service Detection",
         "Nessus SYN scanner",
-        "Host Fully Qualified Domain Name (FQDN) Resolution",
-        "Traceroute Information",
-        "Device Type",
-        "Nessus Scan Information",
-        "OS Identification",
-        "OS Identification Failed",
+        "Web-Server Allows Password Auto-Completion",
+        "IPSEC Internet Key Exchange (IKE) Version 1 Detection",
+    );
+
+    $tidyNames = array(
+        "ssh" => "Secure Shell Protocol",
+        "dns" => "Domain Name Service",
+        "ftp" => "File Transfer Protocol",
+        "mysql" => "MySQL Database",
+        "smtp" => "Simple Mail Transfer Protocol",
+        "http" => "Hypertext Transfer Protocol",
+        "subversion" => "Subversion Version Manager",
+        "pptp" => "Point-to-Point Tunneling Protocol",
+        "www" => "World Wide Web",
+        "savant" => "Savant"
     );
 
     $data = array();
@@ -69,6 +79,7 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
         }
 
     }
+
 
     usort($data, function($firstArrayElement, $secondArrayElement)
     {
@@ -118,7 +129,7 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
 
     foreach ($data as $vuln)
     {
-        if ( in_array($vuln['vuln'], $ignoredVulns))
+        if (( !in_array($vuln['vuln'], $ignoredInfos)) && ( $vuln['risk'] == "Informational"))
         {
             $counts[$vuln['ip']]--;
         }
@@ -127,26 +138,13 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
     foreach ($data as $vuln)
     {
 
-        if (($vuln['risk'] == "High") || ($vuln['risk'] == "Critical"))
-        {
-            $colour = "red";
-        }
-        elseif ($vuln['risk'] == "Medium")
-        {
-            $colour = "orange";
-        }
-        elseif ($vuln['risk'] == "Low")
-        {
-            $colour = "green";
-        }
-        elseif ($vuln['risk'] == "Info")
-        {
-            $colour = "blue";
-        }
-        else
-        {
-            $colour = "blue";
-        }
+        $options = array(
+            "High" => "red",
+            "Critical" => "red",
+            "Medium" => "orange",
+            "Low" => "green",
+            "Informational" => "blue",
+        );
 
         if ($vuln['severity'] > 4)
         {
@@ -166,19 +164,28 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
         }
         else
         {
-            $sevColour = $colour;
+            $sevColour = $options[$vuln['risk']];
         }
 
-
-        if ( in_array($vuln['vuln'], $ignoredVulns))
+        if ((!in_array($vuln['vuln'], $ignoredInfos)) && ( $vuln['risk'] == "Informational"))
         {
             continue;
         }
 
-        if ( $vuln['vuln'] == "Service Detection")
+        if (array_key_exists($vuln['service'], $tidyNames))
         {
-            $vuln['vuln'] = $vuln['vuln'] . ": " . $vuln['service'];
+            $service = $tidyNames[$vuln['service']];
         }
+        else
+        {
+            $service = $vuln['service'];
+        }
+
+        if (( $vuln['vuln'] == "Service Detection") || ( $vuln['vuln'] == "Nessus SYN scanner"))
+        {
+            $vuln['vuln'] = "Service Detection: " . $service;
+        }
+
 
         if ($ip == long2ip($vuln['ip']))
         {
@@ -187,7 +194,7 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
             <tr>
                   <td>" . $vuln['vuln'] . "</td>
                   <td>" . $vuln['port'] . "</td>
-                  <td class=" . $colour .">" . $vuln['risk'] . "</td>
+                  <td class=" . $options[$vuln['risk']] .">" . $vuln['risk'] . "</td>
                   <td class=" . $sevColour .">" . $vuln['severity'] . "</td>
                   <td class=" . $statusColour .">" . $status . "</td>
                   <td>N/A</td>
@@ -211,7 +218,7 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
                   <td border:solid 1pt gray; vertical-align: top; rowspan=\"" . $counts[$vuln['ip']] . "\">" . long2ip($vuln['ip']) . "</td>
                   <td>" . $vuln['vuln'] . "</td>
                   <td>" . $vuln['port'] . "</td>
-                  <td class=" . $colour .">" . $vuln['risk'] . "</td>
+                  <td class=" . $options[$vuln['risk']] .">" . $vuln['risk'] . "</td>
                   <td class=" . $sevColour .">" . $vuln['severity'] . "</td>
                   <td class=" . $statusColour .">" . $status . "</td>
                   <td>N/A</td>
