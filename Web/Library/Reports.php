@@ -131,4 +131,43 @@ class Reports extends \Library\WebAbstract
 
         return $returnTable;
     }
+
+    function getPCI($reportID, $severity)
+    { // Returns all report data for all hosts, filtered by severity and report ID but sorted by vulnerability.
+
+        $getHostIDs = $this->getPdo()->prepare('SELECT DISTINCT host_id FROM host_vuln_link WHERE report_id=?');
+        $getHostName = $this->getPdo()->prepare('SELECT host_name FROM hosts WHERE id=?');
+        $getVulnerabilites = $this->getPDO()->prepare('SELECT DISTINCT plugin_id, protocol, port, service FROM host_vuln_link LEFT JOIN vulnerabilities ON host_vuln_link.plugin_id = vulnerabilities.pluginID WHERE host_vuln_link.report_id=? AND host_vuln_link.host_id=? AND vulnerabilities.severity >=? ORDER BY plugin_id');
+        $getDetails = $this->getPdo()->prepare('SELECT vulnerability, risk_factor, severity FROM vulnerabilities WHERE pluginID = ?');
+        $getHostIDs->execute(array($reportID));
+        $hosts = $getHostIDs->fetchall(\PDO::FETCH_ASSOC);
+        if (!$hosts) {
+            die('Sorry, we couldn\'t get the host ID list: ' . $getHostIDs->errorInfo()[2] . PHP_EOL);
+        }
+        $stuff = array();
+        foreach ($hosts as $key => $host)
+        {
+            $getHostName->execute(array($host['host_id']));
+            $hostName = $getHostName->fetchall(\PDO::FETCH_ASSOC);
+            $hosts[$key]['hostname'] = $hostName[0]['host_name'];
+            $getVulnerabilites->execute(array($reportID, $host['host_id'], $severity));
+            $vulnerabilites = $getVulnerabilites->fetchall(\PDO::FETCH_ASSOC);
+
+            foreach ($vulnerabilites as $id => $vulnerability)
+            {
+                $vulnerabilites[$id] = array();
+                $getDetails->execute(array($vulnerability['plugin_id']));
+                $details = $getDetails->fetchAll(\PDO::FETCH_ASSOC);
+                $vulnerabilites[$id]['plugin'] = $vulnerability['plugin_id'];
+                $vulnerabilites[$id]['name'] = $details[0]['vulnerability'];
+                $vulnerabilites[$id]['severity'] = $details[0]['severity'];
+                $vulnerabilites[$id]['risk'] = $details[0]['risk_factor'];
+                $vulnerabilites[$id]['port'] = $vulnerability['port'];
+                $vulnerabilites[$id]['protocol'] = $vulnerability['protocol'];
+                $vulnerabilites[$id]['service'] = $vulnerability['service'];
+            }
+            $hosts[$key]['vulnerabilities'] = $vulnerabilites;
+        }
+       return $hosts;
+    }
 } 

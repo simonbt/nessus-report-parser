@@ -55,9 +55,12 @@ if (!$reports)
     foreach ($reports as $report) {
         echo $report->report_name . ' - ' . $report->created . '<br>';
         echo '
-            <p><a class="myButton"; href="reports/hosts.php?reportid=' . $report->id . '&severity=' . $severity . '">Host View</a>
+            <p>
+            <a class="myButton"; href="reports/hosts.php?reportid=' . $report->id . '&severity=' . $severity . '">Host View</a>
             <a class="myButton"; href="reports/vulnerabilities.php?reportid=' . $report->id . '&severity=' . $severity . '">Vulnerability View</a>
-            <a class="myButton"; href="reports/descriptions.php?reportid=' . $report->id . '&severity=' . $severity . '">Description View</a></p>
+            <a class="myButton"; href="reports/descriptions.php?reportid=' . $report->id . '&severity=' . $severity . '">Description View</a>
+            <a class="myButton"; href="reports/pci.php?reportid=' . $report->id . '&severity=' . $severity . '">PCI View</a>
+            </p>
             ';
     }
 echo '</div>';

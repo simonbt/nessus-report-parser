@@ -14,5 +14,3 @@ if ((is_numeric($severity)) && ($severity > 0 && $severity < 10.0))
 } else {
     echo "failed";
 }
-
-

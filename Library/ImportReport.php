@@ -29,7 +29,7 @@ class ImportReport extends \Library\ImportAbstract
         $this->reportID = $this->getPdo()->lastInsertId();
         $this->createHost();
 
-        return array('reportName' => $this->reportName);
+        return $this->reportName;
     }
 
     public function completeReport() // Complete report - NOT YET IMPLEMENTED
@@ -48,7 +48,7 @@ class ImportReport extends \Library\ImportAbstract
         $count = 1;
         $insertHost = $this->getPdo()->prepare('INSERT INTO hosts (report_id, host_name) VALUES(?, ?)');
         foreach ($this->xmlObj->Report[0]->ReportHost as $num => $host) {
-            echo 'Importing host ' . $count . ' of ' . $this->xmlObj->Report[0]->ReportHost->count() . ' ... ';
+            echo 'Importing host ' . $count . ' of ' . $this->xmlObj->Report[0]->ReportHost->count() . '... ';
             $insertedHost = $insertHost->execute(array($this->reportID, $host['name']));
             if (!$insertedHost) {
                 die('Sorry, we couldn\'t insert the host: ' . print_r($insertHost->errorInfo()) . PHP_EOL);
@@ -103,7 +103,7 @@ class ImportReport extends \Library\ImportAbstract
 
 
             $addVuln = $this->getPdo()->prepare('INSERT OR REPLACE INTO vulnerabilities (pluginID, vulnerability, svc_name, severity, pluginFamily, description, cve, risk_factor, see_also, solution, synopsis) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-            $addVulnLink = $this->getPdo()->prepare('INSERT INTO host_vuln_link (report_id, host_id, plugin_id, port, protocol) VALUES(?, ?, ?, ?, ?)');
+            $addVulnLink = $this->getPdo()->prepare('INSERT INTO host_vuln_link (report_id, host_id, plugin_id, port, protocol, service) VALUES(?, ?, ?, ?, ?, ?)');
 
             foreach ($item->attributes() as $attribute => $value) {
 
@@ -118,7 +118,7 @@ class ImportReport extends \Library\ImportAbstract
             }
 
 
-            $vulnLinkAdded = $addVulnLink->execute(array($this->reportID, $hostID, $attributes['pluginID'], $attributes['port'], $attributes['protocol'],));
+            $vulnLinkAdded = $addVulnLink->execute(array($this->reportID, $hostID, $attributes['pluginID'], $attributes['port'], $attributes['protocol'], $attributes['svc_name']));
             if (!$vulnLinkAdded) {
                 die('Sorry, we couldn\'t add the vulnerability link: ' . print_r($addVulnLink->errorInfo()) . PHP_EOL);
             }

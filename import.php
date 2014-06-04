@@ -34,4 +34,4 @@ $report = new \Library\ImportReport($pdo); // Build report Object
 
 echo "Creating report" . PHP_EOL;
 
-print_r($report->createReport($xml)); // Output any return from report import.
+echo "Completed creating report: " . $report->createReport($xml); // Output any return from report import.

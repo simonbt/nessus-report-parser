@@ -67,6 +67,15 @@ if (array_key_exists('report', $_GET)) {
                     die("You must pass a severity level");
                 }
                 break;
+            case 4:
+                if (array_key_exists('severity', $_GET)) {
+                    echo json_encode($reports->getPCI($_GET['reportid'], $_GET['severity']));
+                }
+                else
+                {
+                    die("You must pass a severity level");
+                }
+                break;
         }
 
     }

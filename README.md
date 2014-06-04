@@ -16,6 +16,7 @@ CONFIGURATION:
 
 Create Apache2 vhost with Web as the root directory
 Edit Web/config.php and ensure that the path is correct to the reportsAPI.php.
+If you are using htaccess for authentication you will need to add the username and password into Web/config.php
 
 
 USAGE:
@@ -34,3 +35,7 @@ Updates:
 
 16th April 2014:
     Changed storage engine from MySQL to SQLite3
+
+4th June 2014:
+    Added PCI report output
+

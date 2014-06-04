@@ -59,6 +59,13 @@ td
     vertical-align: bottom;
     font-size:9.0pt;
 }
+.black
+{
+    color:black;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
+    vertical-align: bottom;
+    font-size:9.0pt;
+}
 
 .menu
 {
@@ -99,5 +106,19 @@ td
 .myButton:active {
     position:relative;
     top:1px;
+}
+.pass
+{
+    color:limegreen;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
+    vertical-align: bottom;
+    font-size:9.0pt;
+}
+.fail
+{
+    color:#FF0003;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
+    vertical-align: bottom;
+    font-size:9.0pt;
 }
 
