@@ -25,12 +25,14 @@ function centeredPopup(url,winName,w,h,scroll){
         'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',resizable';
 popupWindow = window.open(url,winName,settings)
 }
+
+function loadingScreen(){
+   document.body.innerHTML += '<div class=\"loading\">Loading&#8230;</div>';
+}
 </script>
 ";
 
 echo '</head>';
-
-
 
 
 echo '<div class="menu">';
@@ -41,9 +43,7 @@ echo '<div>
 <br>
 Your severity setting is: ' . $severity . '<br>
 <p><a class="myButton"; href="Library/severity.html" onclick="centeredPopup(this.href,\'myWindow\',\'500\',\'300\',\'yes\');return false">Change Severity</a>
-<a class="myButton"; href="#">View Descriptions</a>
-<a class="myButton"; href="#">Download xls format</a></p>
-<b>Reports</b><br><br>
+<p><b>Imported Reports</b>
 ';
 
 $reports = json_decode(getReportList($url, $auth));
@@ -53,14 +53,18 @@ if (!$reports)
     echo "There are no reports available on the system<br>";
 } else {
     foreach ($reports as $report) {
-        echo $report->report_name . ' - ' . $report->created . '<br>';
+        echo '<p><b>' . $report->report_name . '</b> (' . $report->created . ') - ';
         echo '
-            <p>
-            <a class="myButton"; href="reports/hosts.php?reportid=' . $report->id . '&severity=' . $severity . '">Host View</a>
-            <a class="myButton"; href="reports/vulnerabilities.php?reportid=' . $report->id . '&severity=' . $severity . '">Vulnerability View</a>
-            <a class="myButton"; href="reports/descriptions.php?reportid=' . $report->id . '&severity=' . $severity . '">Description View</a>
-            <a class="myButton"; href="reports/pci.php?reportid=' . $report->id . '&severity=0">PCI View</a>
-            </p>
+<label>
+    <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
+        <option selected> Select Report </option>
+        <option value="reports/hosts.php?reportid=' . $report->id . '&severity=' . $severity . '">Hosts Report</option>
+        <option value="reports/vulnerabilities.php?reportid=' . $report->id . '&severity=' . $severity . '">Vulnerabilities Report</option>
+        <option value="reports/descriptions.php?reportid=' . $report->id . '&severity=' . $severity . '">Descriptions Report</option>
+        <option value="reports/pci.php?reportid=' . $report->id . '&severity=0">PCI Report</option>
+    </select>
+</label>
+
             ';
     }
 echo '</div>';

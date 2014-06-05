@@ -11,9 +11,25 @@ echo '<head>';
 echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
 echo '<link rel="stylesheet" type="text/css" href="main.css">';
 echo '<title>PCI View</title>';
+echo "
+<script language=\"javascript\">
+var popupWindow = null;
+function centeredPopup(url,winName,w,h,scroll){
+    LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
+    TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
+    settings =
+        'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',resizable';
+popupWindow = window.open(url,winName,settings)
+}
+
+function loadingScreen(){
+   document.body.innerHTML += '<div class=\"loading\">Loading&#8230;</div>';
+}
+</script>
+";
 echo '</head>';
 
-echo "<a class=\"myButton\"; href=\"../index.php\">Return to Menu</a></p>";
+echo "<a onclick='loadingScreen()' class=\"myButton\"; href=\"../index.php\">Return to Menu</a></p>";
 echo "<table border=0 cellpadding=0 cellspacing=0>";
 
 require_once(__DIR__ . "/../config.php");
