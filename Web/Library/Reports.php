@@ -144,7 +144,7 @@ class Reports extends \Library\WebAbstract
         if (!$hosts) {
             die('Sorry, we couldn\'t get the host ID list: ' . $getHostIDs->errorInfo()[2] . PHP_EOL);
         }
-        $stuff = array();
+
         foreach ($hosts as $key => $host)
         {
             $getHostName->execute(array($host['host_id']));

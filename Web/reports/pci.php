@@ -57,27 +57,37 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
         "imap" => "Internet Message Access Protocol"
     );
 
+    $risks = array(
+        "Critical" => "CRITICAL",
+        "High" => "HIGH",
+        "Medium" => "MEDIUM",
+        "Low" => "LOW",
+        "None" => "INFO"
+    );
+
     $data = array();
     foreach ($reportData as $hostData)
     {
         foreach ($hostData->vulnerabilities as $vulnerability)
         {
 
-            if ($vulnerability->risk == 'None')
+            if (array_key_exists($vulnerability->risk, $risks))
             {
-                $risk = 'Informational';
-            } else {
+                $risk = $risks[$vulnerability->risk];
+            }
+            else
+            {
                 $risk = $vulnerability->risk;
             }
 
-
             $data[] = array(
-                                                'ip' => ip2long($hostData->hostname),
-                                                'vuln' => $vulnerability->name,
-                                                'risk' => $risk,
-                                                'severity' => $vulnerability->severity,
-                                                'port' => $vulnerability->port . "/" . $vulnerability->protocol,
-                                                'service' => $vulnerability->service);
+                                'ip' => ip2long($hostData->hostname),
+                                'vuln' => $vulnerability->name,
+                                'risk' => $risk,
+                                'severity' => $vulnerability->severity,
+                                'port' => $vulnerability->protocol . "/" . $vulnerability->port,
+                                'service' => $vulnerability->service
+            );
         }
 
     }
@@ -131,7 +141,7 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
 
     foreach ($data as $vuln)
     {
-        if (( !in_array($vuln['vuln'], $ignoredInfos)) && ( $vuln['risk'] == "Informational"))
+        if (( !in_array($vuln['vuln'], $ignoredInfos)) && ( $vuln['risk'] == "INFO"))
         {
             $counts[$vuln['ip']]--;
         }
@@ -143,11 +153,11 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
         $notes = "<td class=\"black\">N/A</td>";
 
         $options = array(
-            "High" => "red",
-            "Critical" => "red",
-            "Medium" => "orange",
-            "Low" => "green",
-            "Informational" => "blue",
+            "HIGH" => "red",
+            "CRITICAL" => "red",
+            "MEDIUM" => "orange",
+            "LOW" => "green",
+            "INFO" => "blue",
         );
 
         if ($vuln['severity'] > 4)
@@ -171,7 +181,7 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
             $sevColour = $options[$vuln['risk']];
         }
 
-        if ((!in_array($vuln['vuln'], $ignoredInfos)) && ( $vuln['risk'] == "Informational"))
+        if ((!in_array($vuln['vuln'], $ignoredInfos)) && ( $vuln['risk'] == "INFO"))
         {
             continue;
         }
@@ -222,7 +232,7 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
             } else {
                 print("
                 <tr>
-                  <td>Host Summary</td>
+                  <td>Host Summary:</td>
                   <td colspan=6></td>
                 </tr>
             ");
