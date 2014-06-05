@@ -52,7 +52,9 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
         "subversion" => "Subversion Version Manager",
         "pptp" => "Point-to-Point Tunneling Protocol",
         "www" => "World Wide Web",
-        "savant" => "Savant"
+        "savant" => "Savant",
+        "pop3" => "Post Office Protocol v3",
+        "imap" => "Internet Message Access Protocol"
     );
 
     $data = array();
@@ -138,6 +140,8 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
     foreach ($data as $vuln)
     {
 
+        $notes = "<td class=\"black\">N/A</td>";
+
         $options = array(
             "High" => "red",
             "Critical" => "red",
@@ -181,11 +185,22 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
             $service = $vuln['service'];
         }
 
-        if (( $vuln['vuln'] == "Service Detection") || ( $vuln['vuln'] == "Nessus SYN scanner"))
+        if ( $vuln['vuln'] == "Nessus SYN scanner")
         {
-            $vuln['vuln'] = "Service Detection: " . $service;
+            $vuln['vuln'] = "Special Note";
         }
 
+        if (( $vuln['vuln'] == "Service Detection") || ( $vuln['vuln'] == "Special Note"))
+        {
+            $vuln['vuln'] = $vuln['vuln'] . ": " . $service;
+        }
+
+        if (($vuln['vuln'] == "Service Detection: File Transfer Protocol") || ($vuln['vuln'] == "Service Detection: Telnet Protocol"))
+        {
+            $notes = "<td class=\"orange\">CLEAR TEXT</td>";
+            $status = "FAIL";
+            $statusColour = "red";
+        }
 
         if ($ip == long2ip($vuln['ip']))
         {
@@ -197,7 +212,7 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
                   <td class=" . $options[$vuln['risk']] .">" . $vuln['risk'] . "</td>
                   <td class=" . $sevColour .">" . $vuln['severity'] . "</td>
                   <td class=" . $statusColour .">" . $status . "</td>
-                  <td>N/A</td>
+                  " . $notes . "
              </tr>
             ");
         } else {
@@ -221,7 +236,7 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
                   <td class=" . $options[$vuln['risk']] .">" . $vuln['risk'] . "</td>
                   <td class=" . $sevColour .">" . $vuln['severity'] . "</td>
                   <td class=" . $statusColour .">" . $status . "</td>
-                  <td>N/A</td>
+                  " . $notes . "
              </tr>
 
             ");

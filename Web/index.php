@@ -59,7 +59,7 @@ if (!$reports)
             <a class="myButton"; href="reports/hosts.php?reportid=' . $report->id . '&severity=' . $severity . '">Host View</a>
             <a class="myButton"; href="reports/vulnerabilities.php?reportid=' . $report->id . '&severity=' . $severity . '">Vulnerability View</a>
             <a class="myButton"; href="reports/descriptions.php?reportid=' . $report->id . '&severity=' . $severity . '">Description View</a>
-            <a class="myButton"; href="reports/pci.php?reportid=' . $report->id . '&severity=' . $severity . '">PCI View</a>
+            <a class="myButton"; href="reports/pci.php?reportid=' . $report->id . '&severity=0">PCI View</a>
             </p>
             ';
     }
