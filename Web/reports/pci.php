@@ -10,7 +10,7 @@ echo '<html>';
 echo '<head>';
 echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
 echo '<link rel="stylesheet" type="text/css" href="main.css">';
-echo '<title>Vulnerability View</title>';
+echo '<title>PCI View</title>';
 echo '</head>';
 
 echo "<a class=\"myButton\"; href=\"../index.php\">Return to Menu</a></p>";
@@ -85,7 +85,7 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
                                 'vuln' => $vulnerability->name,
                                 'risk' => $risk,
                                 'severity' => $vulnerability->severity,
-                                'port' => $vulnerability->protocol . "/" . $vulnerability->port,
+                                'port' => strtoupper($vulnerability->protocol) . "/" . $vulnerability->port,
                                 'service' => $vulnerability->service
             );
         }
