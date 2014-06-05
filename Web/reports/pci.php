@@ -230,12 +230,12 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
             {
                 $started++;
             } else {
-                print("
+                print('
                 <tr>
-                  <td>Host Summary:</td>
-                  <td colspan=6></td>
+                  <td class="black">Host Summary:</td>
+                  <td class="black" colspan=6><ul><li>Unable to resolve</li></ul></td>
                 </tr>
-            ");
+            ');
             }
 
             print( "
