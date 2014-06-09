@@ -20,6 +20,7 @@ else
     print '<p><a href="index.php">Return to menu</a></p>';
 
 }
-?>
+print'
 </body>
 </html>
+';

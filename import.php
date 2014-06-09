@@ -21,6 +21,7 @@ spl_autoload_register(function ($className) {
     }
 
     require($fileName);
+    return true;
 });
 
 try {
