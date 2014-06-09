@@ -10,39 +10,38 @@ require_once(__DIR__ . "/config.php");
 
 
 
-echo '<html>';
-echo '<head>';
-echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
-echo '<link rel="stylesheet" type="text/css" href="reports/main.css">';
-echo '<title>RandomStorm Report Generator</title>';
+echo '  <html>
+            <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                <link rel="stylesheet" type="text/css" href="reports/main.css">
+                <title>RandomStorm Report Generator</title>
+                <script language="javascript">
+                    var popupWindow = null;
+                    function centeredPopup(url,winName,w,h,scroll){
+                        LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
+                        TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
+                        settings =
+                        \'height=\'+h+\',width=\'+w+\',top=\'+TopPosition+\',left=\'+LeftPosition+\',scrollbars=\'+scroll+\',resizable\';
+                        popupWindow = window.open(url,winName,settings)
+                    }
+';
 echo "
-<script language=\"javascript\">
-var popupWindow = null;
-function centeredPopup(url,winName,w,h,scroll){
-    LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
-    TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
-    settings =
-        'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',resizable';
-popupWindow = window.open(url,winName,settings)
-}
-
-function loadingScreen(){
-   document.body.innerHTML += '<div class=\"loading\">Loading&#8230;</div>';
-}
-</script>
+                    function loadingScreen(){
+                        document.body.innerHTML += '<div class=\"loading\">Loading&#8230;</div>';
+                    }
+                </script>
+            </head>
 ";
 
-echo '</head>';
-
-
 echo '<div class="menu">';
-echo '<div><img src="images/logo.png" alt="RandomStorm Limited" /></div>';
+echo '<div><a href="index.php" onclick="loadingScreen()"><img src="images/logo.png" alt="RandomStorm Limited" /></a></div>';
 echo '<div>
 <br>
 <b>Options</b>
 <br>
 Your severity setting is: ' . $severity . '<br>
 <p><a class="myButton"; href="Library/severity.html" onclick="centeredPopup(this.href,\'myWindow\',\'500\',\'300\',\'yes\');return false">Change Severity</a>
+<p><a class="myButton"; href="files.php" onclick="loadingScreen()">File Management</a>
 <p><b>Imported Reports</b>
 ';
 

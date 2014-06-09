@@ -24,7 +24,7 @@ spl_autoload_register(function ($className) {
 });
 
 try {
-    $pdo = new PDO('sqlite:reports.sqlite');
+    $pdo = new PDO('sqlite:' . __DIR__ . '/reports.sqlite');
 } catch (PDOException $pdoError) {
     echo $pdoError->getMessage();
     exit;
