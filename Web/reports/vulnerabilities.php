@@ -52,8 +52,8 @@ outputVulnHostPort($reportData); // Picking out only the Vulnerabilities and eac
 function outputVulnHostPort($reportData) // Pass full report array to return hosts, ports and protocols sorted by vulnerability
 {
     $data = array();
+    $rowCount = 0;
     foreach ($reportData as $hostData) {
-
         $potentialOperatingSystems = explode(PHP_EOL, $hostData->OS);
         $OS = trim(array_shift($potentialOperatingSystems));
 
@@ -133,6 +133,7 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
 
 
         if ($ip == long2ip($vuln['ip'])) {
+            $rowCount++;
             print("
             <tr>
                 <td class=" . $colour . ">" . $vuln['vuln'] . "</td>
@@ -141,6 +142,14 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
             </tr>
             ");
         } else {
+            $rowCount++;
+            if ($rowCount > 10)
+            {
+                echo "</table>";
+                echo "<p><hr>";
+                echo "<p><table border=0 cellpadding=0 cellspacing=0>";
+                $rowCount = 0;
+            }
             print("
             <tr>
                 <td border:solid 1pt gray; vertical-align: top; rowspan='" . $counts[$vuln['ip']] . "'>" . long2ip($vuln['ip']) . "</td>
@@ -154,6 +163,8 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
             ");
 
             $ip = long2ip($vuln['ip']);
+
+
         }
 
     }

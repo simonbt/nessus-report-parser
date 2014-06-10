@@ -46,7 +46,6 @@ if (!$reportData)
 hostReport($reportData); // Picking out only the Vulnerabilities and each host, protocol and port from the full data.
 
 
-
 function hostReport($reportData) // Pass full report array to return hosts, ports and protocols sorted by vulnerability
 {
 

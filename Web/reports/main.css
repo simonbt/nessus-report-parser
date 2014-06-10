@@ -9,6 +9,15 @@
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
     font-size:9.0pt;
 }
+table.center {
+    margin-left:auto;
+    margin-right:auto;
+}
+hr {
+    height: 10px;
+    color: #74b807;
+    background-color: #74b807;
+}
 td
 {
     padding-top:1px;
@@ -73,6 +82,7 @@ td
     color: black;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
     font-size:12.0pt;
+
 }
 .headers
 {

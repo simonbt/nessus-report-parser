@@ -25,6 +25,13 @@ echo '  <html>
         <body>
         ';
 
+if (count($_POST['reports']) == 0)
+{
+    echo 'You must select at least one report.';
+    print '<p><a href="files.php">Return to menu</a>';
+    die();
+}
+
 if ($_POST['formSubmit'] == 'Delete')
 {
     if (count($_POST['reports']) > 1)

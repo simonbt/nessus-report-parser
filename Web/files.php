@@ -33,7 +33,7 @@ echo '  <html>
                 </script>
             </head>
         <body>
-        <div class="main">
+        <div class="menu">
         <div><a href="index.php" onclick="loadingScreen()"><img src="images/logo.png" alt="RandomStorm Limited" /></a></div>
         <div><p><a class="myButton" href="index.php" onclick="loadingScreen()">Return to the index</a></div>
         ';
@@ -46,7 +46,7 @@ print('
     <h2>Stored Reports</h2>
 ');
 
-print '<table>
+print '<table class="center">
         <tr>
             <td>Report Name</td>
             <td>Last Updated</td>
@@ -81,7 +81,7 @@ echo '
 print('
 <h2>Upload File</h2>
 <form action="getfile.php" method="post" enctype="multipart/form-data">
-  <input type="file" name="uploadFile" size="50" maxlength="25" />
+  <input type="file" name="uploadFile" accept="text/xml,.nessus" size="50" maxlength="25" />
   <input type="submit" name="upload" value="Upload!" />
 </form>
 </div>
