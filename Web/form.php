@@ -69,6 +69,7 @@ elseif ($_POST['formSubmit'] == 'Merge')
 }
 elseif ($_POST['formSubmit'] == 'Import')
 {
+    $toMerge = '';
     $mergeResults = $_POST['reports'];
     if (count($mergeResults) > 1)
     {
