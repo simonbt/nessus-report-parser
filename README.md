@@ -14,7 +14,6 @@ CONFIGURATION:
     Create Apache2 vhost with Web as the root directory
     If you are using htaccess for authentication you will need to add the username and password into config.php
 
-APACHE2 Configuration:
     Vhost Template: (You'll need to add "127.0.0.1  reports.local" into /etc/hosts for this template to work correctly
 
     <VirtualHost *:80>
