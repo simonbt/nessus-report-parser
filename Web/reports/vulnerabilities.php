@@ -143,7 +143,7 @@ function outputVulnHostPort($reportData) // Pass full report array to return hos
             ");
         } else {
             $rowCount++;
-            if ($rowCount > 10)
+            if ($rowCount > 900)
             {
                 echo "</table>";
                 echo "<p><hr>";
