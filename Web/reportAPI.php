@@ -76,6 +76,9 @@ if (array_key_exists('report', $_GET)) {
                     die("You must pass a severity level");
                 }
                 break;
+            case 5:
+                echo json_encode($reports->getOpenDLP($_GET['filename']));
+                break;
         }
 
     }

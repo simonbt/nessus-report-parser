@@ -170,4 +170,119 @@ class Reports extends \Library\WebAbstract
         }
        return $hosts;
     }
+
+    protected $xmlObj;
+    protected $scanName;
+    protected $report;
+    protected $reportResults;
+    protected $totalFiles;
+    protected $totalFilesDone;
+    protected $totalBytesFound;
+    protected $totalBytesScanned;
+
+    function getOpenDLP($fileName)
+    {
+        $xml = $xml = simplexml_load_file(__DIR__ . '/../opendlpUploads/' . $fileName);
+
+        $this->xmlObj = $xml;
+        $this->report = array();
+
+        foreach ( $this->xmlObj->systems->system as $target )
+        {
+            $typeCount = array();
+            foreach ($target->results->result as $result )
+            {
+                if (array_key_exists(trim($result->type), $typeCount))
+                {
+                    $typeCount[trim($result->type)]++;
+                } else {
+                    $typeCount[trim($result->type)] = 1;
+                }
+            }
+
+            $fileCount = array();
+            foreach ($target->results->result as $result )
+            {
+                if (array_key_exists(trim($result->file), $fileCount))
+                {
+                    $fileCount[trim($result->file)]++;
+                } else {
+                    $fileCount[trim($result->file)] = 1;
+                }
+            }
+
+            $this->totalFiles = $this->totalFiles + $target->filestotal;
+            $this->totalFilesDone = $this->totalFilesDone + $target->filesdone;
+            $this->totalBytesFound = $this->totalBytesFound + $target->bytestotal;
+            $this->totalBytesScanned = $this->totalBytesScanned + $target->bytesdone;
+
+            $systemDetails = array();
+
+            foreach ($target->results->result as $details)
+            {
+                $systemDetails[] = array(
+
+                    'Type'          => trim($details->type),
+                    // 'Base64'           => trim($details->raw_pattern_base64),
+                    'Matched Pattern'       => trim($details->filtered_pattern),
+                    'File Location'          => trim($details->file),
+                    'Offset'        => trim($details->offset),
+                    // 'MD5 Hash'           => trim($details->md5),
+                    'Database Name'      => trim($details->database),
+                    'Table'         => trim($details->table),
+                    'Column'        => trim($details->column),
+                    'Row'           => trim($details->row)
+
+                );
+            }
+
+
+            $this->reportResults[] = array(
+
+                'System Name'   => trim($target->system_name),
+                'Workgroup'     => trim($target->workgroup),
+                'IP Address'            => trim($target->ip),
+                'Total Files Found'    => trim($target->filestotal),
+                'Total Files Scanned'     => trim($target->filesdone),
+                'Total Bytes Found'    => trim($target->bytestotal),
+                'Total Bytes Scanned'     => trim($target->bytesdone),
+                'Last Updated'   => trim($target->updated),
+                'Scan Status'        => trim($target->control),
+                'pid'           => trim($target->pid),
+                'dbtotal'       => trim($target->dbtotal),
+                'dbdone'        => trim($target->dbdone),
+                'tabletotal'    => trim($target->tabletotal),
+                'tabledone'     => trim($target->tabledone),
+                'columntotal'   => trim($target->columntotal),
+                'columndone'    => trim($target->columntotal),
+                'Scan Type'      => trim($target->scantype),
+                'Results Found'   => count($target->results->result),
+                'resultType'    => $typeCount,
+                'results'       => $fileCount
+            );
+
+
+        }
+
+        $this->report = array (
+
+            'scanname'          => trim($this->xmlObj->scanname),
+            'totalfilesfound'   => $this->totalFiles,
+            'totalfilesscanned' => $this->totalFilesDone,
+            'totalbytesfound'   => $this->totalBytesFound,
+            'totalbytesscanned' => $this->totalBytesScanned,
+
+        );
+
+        $this->report['systems'] = array();
+//        foreach( $this->reportResults as $result)
+//        {
+//            array_push($this->report['systems'], $result);
+//        }
+
+        array_push($this->report['systems'], $this->reportResults);
+
+        return $this->report;
+
+    }
 } 

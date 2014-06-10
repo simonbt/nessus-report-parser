@@ -7,7 +7,10 @@
  */
 
 require_once(__DIR__ . "/config.php");
-
+include_once(__DIR__ . '/Library/Files.php');
+$files = new \Library\files();
+$openDLPDirecory = __DIR__ . '/opendlpUploads';
+date_default_timezone_set('Europe/London');
 
 
 echo '  <html>
@@ -34,35 +37,38 @@ echo "
 ";
 
 echo '<div class="menu">';
-echo '<div><a href="index.php" onclick="loadingScreen()"><img src="images/logo.png" alt="RandomStorm Limited" /></a></div>';
+echo '<div><a href="openDLP.php" onclick="loadingScreen()"><img src="images/logo.png" alt="RandomStorm Limited" /></a></div>';
 echo '<div>
 <br>
 <b>Options</b>
 <br>
 Your severity setting is: ' . $severity . '<br>
-<p><a class="myButton"; href="openDLP.php" onclick="loadingScreen()">OpenDLP Reports</a>
-<p><a class="myButton"; href="Library/severity.html" onclick="centeredPopup(this.href,\'myWindow\',\'500\',\'300\',\'yes\');return false">Change Severity</a>
+<p><a class="myButton"; href="index.php" onclick="loadingScreen()">Nessus Reports</a>
 <p><a class="myButton"; href="files.php" onclick="loadingScreen()">File Management</a>
 <p><b>Imported Reports</b>
 ';
 
-$reports = json_decode(getReportList($url, $auth));
+$openDLPList = array_slice(scandir($openDLPDirecory),2);
+$openDLPArray = array();
+foreach ( $openDLPList as $fileName )
+{
+    $openDLPArray[$fileName] = $files->encodeName($fileName);
+}
 
-if (!$reports)
+
+
+if (!$openDLPArray)
 {
     echo "There are no reports available on the system<br>";
 } else {
-    foreach ($reports as $report) {
-        echo '<p><b>' . $report->report_name . '</b> (' . $report->created . ') - ';
+
+    foreach ($openDLPArray as $name => $hash) {
+        echo '<p><b>' . $name . '</b> (' . date ("d F Y H:i:s",filemtime($openDLPDirecory .'/' . $name)) . ') - ';
         echo '
 <label>
     <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
         <option selected> Select Report </option>
-        <option value="reports/hosts.php?reportid=' . $report->id . '&severity=' . $severity . '">Hosts Report</option>
-        <option value="reports/vulnerabilities.php?reportid=' . $report->id . '&severity=' . $severity . '">Vulnerabilities Report</option>
-        <option value="reports/descriptions.php?reportid=' . $report->id . '&severity=' . $severity . '">Descriptions Report</option>
-        <option value="reports/pci.php?reportid=' . $report->id . '&severity=0">PCI Report</option>
-        <option value="reports/opendlp.php?reportid=' . $report->id . '">OpenDLP Report</option>
+        <option value="reports/opendlp.php?filename=' . $name . '">OpenDLP Overview Report</option>
     </select>
 </label>
 
@@ -70,15 +76,6 @@ if (!$reports)
     }
 echo '</div>';
 }
-function getReportList($url, $auth)
-{
-
-    $query = '?listreports=1';
-    $report = curlGet($url, $query, $auth);
-    return $report;
-
-}
-
 
 function curlGet($url, $query, $auth)
 {

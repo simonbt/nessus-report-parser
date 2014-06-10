@@ -7,17 +7,25 @@
  */
 
 $uploadDirectory = __DIR__ . '/uploads';
+$openDLPDirecory = __DIR__ . '/opendlpUploads';
 
 include_once(__DIR__ . '/Library/Files.php');
 $files = new \Library\files();
 date_default_timezone_set('Europe/London');
 
 $fileList = array_slice(scandir($uploadDirectory),2);
+$openDLPList = array_slice(scandir($openDLPDirecory),2);
 
 $fileArray = array();
 foreach ( $fileList as $fileName )
 {
     $fileArray[$fileName] = $files->encodeName($fileName);
+}
+
+$openDLPArray = array();
+foreach ( $openDLPList as $fileName )
+{
+    $openDLPArray[$fileName] = $files->encodeName($fileName);
 }
 
 echo '  <html>
@@ -40,10 +48,10 @@ echo '  <html>
 
 
 
-//Checkboxes
+//Nessus Table
 print('
 <form action="form.php" method="post">
-    <h2>Stored Reports</h2>
+    <h2>Stored Nessus Reports</h2>
 ');
 
 print '<table class="center">
@@ -76,13 +84,59 @@ echo '
 </html>
 ';
 
-//Upload
+print('
+<h2>Upload Nessus File</h2>
+<form action="getfile.php" method="post" enctype="multipart/form-data">
+  <input type="file" name="uploadFile" size="50" maxlength="25" />
+  <input type="submit" name="upload" value="Upload!" />
+</form>
+');
+
+
+//OpenDLP Table
+print('
+<form action="form.php" method="post">
+    <h2>Stored OpenDLP Reports</h2>
+');
+
+print '<table class="center">
+        <tr>
+            <td>Report Name</td>
+            <td>Last Updated</td>
+            <td>Select</td>
+        </td>
+
+';
+foreach ($openDLPArray as $file => $hash)
+{
+    print'<tr>';
+    print('
+            <td> ' . $file . ' </td>
+            <td>' . date ("d F Y H:i:s",filemtime($openDLPDirecory .'/' . $file)) . '</td>
+            <td><input type="checkbox" name="reports[]" value="' . $hash . '" /></td>
+    ');
+    print'</tr>';
+}
+
+print '</table>';
+
+echo '
+        <input type="submit" name="formSubmit" value="Delete"/>
+    </form>
+</body>
+</html>
+';
 
 print('
-<h2>Upload File</h2>
-<form action="getfile.php" method="post" enctype="multipart/form-data">
+<h2>Upload OpenDLP File</h2>
+<form action="getOpenfile.php" method="post" enctype="multipart/form-data">
   <input type="file" name="uploadFile" size="50" maxlength="25" />
   <input type="submit" name="upload" value="Upload!" />
 </form>
 </div>
 ');
+
+
+
+//Upload
+
