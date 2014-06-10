@@ -1,31 +1,27 @@
 nessus-report-parser
 ====================
 
-Parser and outputter for Nessus XML reports
+Parser and outputter for Nessus and OpenDLP XML reports
 
 REQUIREMENTS:
 
 apache2
 sqlite3
 php5-sqlite
-php5-curl
-curl
-
 
 CONFIGURATION:
 
 Create Apache2 vhost with Web as the root directory
-Edit Web/config.php and ensure that the path is correct to the reportsAPI.php.
-If you are using htaccess for authentication you will need to add the username and password into Web/config.php
+If you are using htaccess for authentication you will need to add the username and password into config.php
 
 APACHE2 Vhost Template: (You'll need to add "127.0.0.1  reports.local" into /etc/hosts for this template to work correctly
 
 <VirtualHost *:80>
         ServerName reports.local
         ServerAdmin simon.beattie@randomstorm.com
-        DocumentRoot "/Users/simonbeattie/Repos/Git/nessus-report-parser/Web/"
+        DocumentRoot "/Users/simonbeattie/Repos/Git/nessus-report-parser/"
 
-        <Directory "/Users/simonbeattie/Repos/Git/nessus-report-parser/Web/">
+        <Directory "/Users/simonbeattie/Repos/Git/nessus-report-parser/">
                 Options Indexes FollowSymLinks MultiViews
                 AllowOverride All
                 Order allow,deny
@@ -36,17 +32,14 @@ APACHE2 Vhost Template: (You'll need to add "127.0.0.1  reports.local" into /etc
 </VirtualHost>
 
 
-USAGE:
+INSTALLATION:
 
-To Import a Report:
+Simply run ./install.sh to setup the database and config file.
 
-Run import.php with the Nessus xml report filename as an argument
 
-        php import.php nessus_report.nessus
+UPDATING:
 
-To view the output:
-
-Navigate to Web/index.php from a browser.
+Simply run ./update to pull all the latest changes.
 
 Updates:
 
