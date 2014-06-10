@@ -16,20 +16,20 @@ If you are using htaccess for authentication you will need to add the username a
 
 APACHE2 Vhost Template: (You'll need to add "127.0.0.1  reports.local" into /etc/hosts for this template to work correctly
 
-<VirtualHost *:80>
-        ServerName reports.local
-        ServerAdmin simon.beattie@randomstorm.com
-        DocumentRoot "/Users/simonbeattie/Repos/Git/nessus-report-parser/"
+    <VirtualHost *:80>
+            ServerName reports.local
+            ServerAdmin simon.beattie@randomstorm.com
+            DocumentRoot "/Users/simonbeattie/Repos/Git/nessus-report-parser/"
 
-        <Directory "/Users/simonbeattie/Repos/Git/nessus-report-parser/">
-                Options Indexes FollowSymLinks MultiViews
-                AllowOverride All
-                Order allow,deny
-                allow from all
-        </Directory>
-        ErrorLog "/private/var/log/apache2/reports-vhost.log"
-        LogLevel warn
-</VirtualHost>
+            <Directory "/Users/simonbeattie/Repos/Git/nessus-report-parser/">
+                    Options Indexes FollowSymLinks MultiViews
+                    AllowOverride All
+                    Order allow,deny
+                    allow from all
+            </Directory>
+            ErrorLog "/private/var/log/apache2/reports-vhost.log"
+            LogLevel warn
+    </VirtualHost>
 
 
 INSTALLATION:
@@ -63,23 +63,23 @@ Updates:
         Interface Updates
             A number of changes to how information is displayed, and generally CSSing
 
-10th June 2014:
-    Limitation to file upload type (.xml & .nessus) -- REMOVED DUE TO SAFARI BUG
-    Added 900row limit for vulnerability report tables due to pages bug
-    Report output for OpenDLP reports
-    Added file management functionality for OpenDLP
-    Added OpenDLP reports list
+    10th June 2014:
+        Limitation to file upload type (.xml & .nessus) -- REMOVED DUE TO SAFARI BUG
+        Added 900row limit for vulnerability report tables due to pages bug
+        Report output for OpenDLP reports
+        Added file management functionality for OpenDLP
+        Added OpenDLP reports list
 
-11th June 2014:
-    Complete rewrite of a large portion of the application
-    Integrated slim micro framework
-    Removed all reliance on Curl
-    Nessus report importing fully available through interface
+    11th June 2014:
+        Complete rewrite of a large portion of the application
+        Integrated slim micro framework
+        Removed all reliance on Curl
+        Nessus report importing fully available through interface
 
-TO - DO
-    Restriction on uploaded files - server-side
-    Limitation to file upload sizes
-    .xls output for all vulnerabilities
-    Authentication
-    Template download / storage
-    General code tidy up
+    TO - DO
+        Restriction on uploaded files - server-side
+        Limitation to file upload sizes
+        .xls output for all vulnerabilities
+        Authentication
+        Template download / storage
+        General code tidy up
