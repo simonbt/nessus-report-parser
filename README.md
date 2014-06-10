@@ -77,8 +77,14 @@ Updates:
     Added file management functionality for OpenDLP
     Added OpenDLP reports list
 
+11th June 2014:
+    Complete rewrite of a large portion of the application
+    Integrated slim micro framework
+    Removed all reliance on Curl
+    Nessus report importing fully available through interface
+
 TO - DO
-    Classification for different filetypes (OpenDLP & Nessus)
+    Restriction on uploaded files - server-side
     Limitation to file upload sizes
     .xls output for all vulnerabilities
     Authentication
