@@ -6,6 +6,7 @@ if [ -f reports.sqlite ]; then
     echo "System already installed, setting permissions!"
     chmod 777 reports.sqlite
     chmod 777 Web/uploads
+    chmod 777 `pwd`
 fi
 
 echo "Copying Database"
@@ -15,6 +16,7 @@ cp Web/config.php.template Web/config.php
 echo "Setting permissions"
     chmod 777 reports.sqlite
     chmod 777 Web/uploads
+    chmod 777 `pwd`
 
 echo  "Complete"
 exit 0
