@@ -70,11 +70,14 @@ Updates:
         Interface Updates
             A number of changes to how information is displayed, and generally CSSing
 
+10th June 2014:
+    Limitation to file upload type (.xml & .nessus) -- REMOVED DUE TO SAFARI BUG
+    Added 900row limit for vulnerability report tables due to pages bug
+
 TO - DO
     Report output for OpenDLP reports
     Classification for different filetypes (OpenDLP & Nessus)
     Limitation to file upload sizes
-    Limitation to file upload type
     .xls output for all vulnerabilities
     Authentication
     Template download / storage

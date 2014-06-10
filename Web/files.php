@@ -81,7 +81,7 @@ echo '
 print('
 <h2>Upload File</h2>
 <form action="getfile.php" method="post" enctype="multipart/form-data">
-  <input type="file" name="uploadFile" accept="text/xml,.nessus" size="50" maxlength="25" />
+  <input type="file" name="uploadFile" size="50" maxlength="25" />
   <input type="submit" name="upload" value="Upload!" />
 </form>
 </div>
