@@ -11,10 +11,11 @@ REQUIREMENTS:
 
 CONFIGURATION:
 
-Create Apache2 vhost with Web as the root directory
-If you are using htaccess for authentication you will need to add the username and password into config.php
+    Create Apache2 vhost with Web as the root directory
+    If you are using htaccess for authentication you will need to add the username and password into config.php
 
-APACHE2 Vhost Template: (You'll need to add "127.0.0.1  reports.local" into /etc/hosts for this template to work correctly
+APACHE2 Configuration:
+    Vhost Template: (You'll need to add "127.0.0.1  reports.local" into /etc/hosts for this template to work correctly
 
     <VirtualHost *:80>
             ServerName reports.local
@@ -75,7 +76,8 @@ UPDATES:
             Removed all reliance on Curl
             Nessus report importing fully available through interface
 
-TO - DO
+TO-DO:
+
     Restriction on uploaded files - server-side
     Limitation to file upload sizes
     .xls output for all vulnerabilities
