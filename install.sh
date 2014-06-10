@@ -6,6 +6,7 @@ if [ -f reports.sqlite ]; then
     echo "System already installed, setting permissions!"
     chmod 777 reports.sqlite
     chmod 777 Web/uploads
+    chmod 777 Web/opendlpUploads
     chmod 777 `pwd`
     exit 0
 elif [ -f reports.sqlite.template ]; then
@@ -16,6 +17,7 @@ elif [ -f reports.sqlite.template ]; then
     echo "Setting permissions"
     chmod 777 reports.sqlite
     chmod 777 Web/uploads
+    chmod 777 Web/opendlpUploads
     chmod 777 `pwd`
     echo  "Complete"
     exit 0
