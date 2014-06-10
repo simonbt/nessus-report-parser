@@ -42,10 +42,9 @@ echo '<div>
 <br>
 <b>Options</b>
 <br>
-Your severity setting is: ' . $severity . '<br>
 <p><a class="myButton"; href="index.php" onclick="loadingScreen()">Nessus Reports</a>
 <p><a class="myButton"; href="files.php" onclick="loadingScreen()">File Management</a>
-<p><b>Imported Reports</b>
+<p><b>Imported OpenDLP Reports</b>
 ';
 
 $openDLPList = array_slice(scandir($openDLPDirecory),2);

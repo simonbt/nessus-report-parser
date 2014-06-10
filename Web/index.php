@@ -43,7 +43,7 @@ Your severity setting is: ' . $severity . '<br>
 <p><a class="myButton"; href="openDLP.php" onclick="loadingScreen()">OpenDLP Reports</a>
 <p><a class="myButton"; href="Library/severity.html" onclick="centeredPopup(this.href,\'myWindow\',\'500\',\'300\',\'yes\');return false">Change Severity</a>
 <p><a class="myButton"; href="files.php" onclick="loadingScreen()">File Management</a>
-<p><b>Imported Reports</b>
+<p><b>Imported Nessus Reports</b>
 ';
 
 $reports = json_decode(getReportList($url, $auth));

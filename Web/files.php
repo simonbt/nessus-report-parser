@@ -43,10 +43,9 @@ echo '  <html>
         <body>
         <div class="menu">
         <div><a href="index.php" onclick="loadingScreen()"><img src="images/logo.png" alt="RandomStorm Limited" /></a></div>
-        <div><p><a class="myButton" href="index.php" onclick="loadingScreen()">Return to the index</a></div>
+        <div><p><a class="myButton" href="index.php" onclick="loadingScreen()">Return to Nessus reports</a></div>
+        <div><p><a class="myButton" href="openDLP.php" onclick="loadingScreen()">Return to OpenDLP reports</a></div>
         ';
-
-
 
 //Nessus Table
 print('
