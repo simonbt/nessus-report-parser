@@ -73,9 +73,11 @@ Updates:
 10th June 2014:
     Limitation to file upload type (.xml & .nessus) -- REMOVED DUE TO SAFARI BUG
     Added 900row limit for vulnerability report tables due to pages bug
+    Report output for OpenDLP reports
+    Added file management functionality for OpenDLP
+    Added OpenDLP reports list
 
 TO - DO
-    Report output for OpenDLP reports
     Classification for different filetypes (OpenDLP & Nessus)
     Limitation to file upload sizes
     .xls output for all vulnerabilities
