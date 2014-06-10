@@ -40,9 +40,7 @@ class Common extends files{
 <br>
 <b>Options</b>
 <br>
-Your severity setting is: ' . $severity . '<br>
 <p><a class="myButton"; href="/opendlp" onclick="loadingScreen()">OpenDLP Reports</a>
-<p><a class="myButton"; href="" onclick="centeredPopup(this.href,\'myWindow\',\'500\',\'300\',\'yes\');return false">Change Severity</a>
 <p><a class="myButton"; href="/files" onclick="loadingScreen()">File Management</a>
 <p><b>Imported Nessus Reports</b>
 ';

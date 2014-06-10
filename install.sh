@@ -5,6 +5,7 @@ echo "Installing..."
 if [ -f .installed ]; then
     echo "System already installed, setting permissions!"
     chmod 777 Database
+    chmod 777 Database/reports.sqlite
     chmod 777 Library/Uploads/Nessus
     chmod 777 Library/Uploads/OpenDLP
     exit 0
@@ -15,8 +16,10 @@ else
     cp config.php.template config.php
     echo "Setting permissions"
     chmod 777 Database
+    chmod 777 Database/reports.sqlite
     chmod 777 Library/Uploads/Nessus
     chmod 777 Library/Uploads/OpenDLP
     echo  "Complete"
+    touch .installed
     exit 0
 fi

@@ -26,6 +26,7 @@ try {
     $pdo = new PDO('sqlite:Database/reports.sqlite');
 } catch (PDOException $pdoError) {
     echo $pdoError->getMessage();
+    echo '<p> You may need to run install.sh to complete installation';
     exit;
 }
 
