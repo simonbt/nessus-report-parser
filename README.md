@@ -9,28 +9,6 @@ REQUIREMENTS:
     sqlite3
     php5-sqlite
 
-CONFIGURATION:
-
-    Create Apache2 vhost with Web as the root directory
-    If you are using htaccess for authentication you will need to add the username and password into config.php
-
-    Vhost Template: (You'll need to add "127.0.0.1  reports.local" into /etc/hosts for this template to work correctly
-
-    <VirtualHost *:80>
-            ServerName reports.local
-            ServerAdmin simon.beattie@randomstorm.com
-            DocumentRoot "/Users/simonbeattie/Repos/Git/nessus-report-parser/"
-
-            <Directory "/Users/simonbeattie/Repos/Git/nessus-report-parser/">
-                    Options Indexes FollowSymLinks MultiViews
-                    AllowOverride All
-                    Order allow,deny
-                    allow from all
-            </Directory>
-            ErrorLog "/private/var/log/apache2/reports-vhost.log"
-            LogLevel warn
-    </VirtualHost>
-
 
 INSTALLATION:
 
