@@ -101,6 +101,7 @@ UPDATES:
             Integrated slim micro framework
             Removed all reliance on Curl
             Nessus report importing fully available through interface
+            Moved all reports onto view templates and implemented render() method
 
 TO-DO:
 
