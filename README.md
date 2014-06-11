@@ -12,7 +12,7 @@ REQUIREMENTS:
 
 INSTALLATION:
 
-    Installation instructions for Mac OSX Mavericks
+    Installation instructions for Mac OSX Mavericks (If you have XAMMP installed you'll need to uninstall for this to work)
 
     Create web directory (change my name for your username):
         mkdir -p /Users/simonbeattie/www
@@ -33,8 +33,9 @@ INSTALLATION:
 
     Edit the Apache Configuration:
         sudo nano /private/etc/apache2/httpd.conf
-        ADD (top of the file underneath "NameVirtualHost *:80"):
-
+        ADD (right at the top of the file):
+        
+                NameVirtualHost *:80
                   <VirtualHost *:80>
                           ServerName reports.local
                           ServerAdmin simon.beattie@randomstorm.com
