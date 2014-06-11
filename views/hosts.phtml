@@ -1,0 +1,59 @@
+<?php
+/**
+ * nessus-report-parser -- hosts.phtml
+ * User: Simon Beattie
+ * Date: 11/06/2014
+ * Time: 12:21
+ */
+
+echo '
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/main.css">
+<title>Report Host View</title>
+
+                <script language=\"javascript\">
+
+                function loadingScreen(){
+   document.body.innerHTML += \'<div class="loading">Loading&#8230;</div>\';
+                }
+                </script>
+
+</head>
+<a onclick="loadingScreen()" class="myButton" href="/">Return to Menu</a></p>
+';
+
+foreach ($reportData as $vulnerability) {
+    echo '
+
+<div class="headers"><br> ' . $vulnerability[0][0]['vulnerability'] . ' </div>
+<table>
+
+';
+
+    $loop = 0;
+    foreach ($vulnerability[1] as $hostObj) {
+
+        if ($loop == 0) {
+            $loop++;
+            print('<tr>');
+        }
+
+        echo '
+                    <td>' . $hostObj['host_id'] . '</td>
+                    <td>' . strtoupper($hostObj['protocol']) . '/' . $hostObj['port'] . '</td>
+                    ';
+        $loop++;
+        if ($loop == 5) {
+            echo '</tr>';
+            $loop = 0;
+            continue;
+        }
+
+    }
+
+
+    echo '</tr>';
+    echo '</table>';
+}

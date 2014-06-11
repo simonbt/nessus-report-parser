@@ -1,0 +1,102 @@
+<?php
+/**
+ * nessus-report-parser -- opendlp.phtml
+ * User: Simon Beattie
+ * Date: 11/06/2014
+ * Time: 12:24
+ */
+
+echo '<html>';
+echo '<head>';
+echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
+echo '<link rel="stylesheet" type="text/css" href="/css/main.css">';
+echo '<title>Report Descriptions</title>';
+echo "
+<script language=\"javascript\">
+var popupWindow = null;
+function centeredPopup(url,winName,w,h,scroll){
+    LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
+    TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
+    settings =
+        'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',resizable';
+popupWindow = window.open(url,winName,settings)
+}
+
+function loadingScreen(){
+   document.body.innerHTML += '<div class=\"loading\">Loading&#8230;</div>';
+}
+</script>
+";
+echo '</head>';
+echo "<a onclick='loadingScreen()' class=\"myButton\"; href=\"/opendlp\">Return to Menu</a></p>";
+
+
+echo '<p>Scan Details';
+echo '<p><table>';
+foreach ( $return as $mainKey => $mainValue)
+{
+    if ( $mainKey == 'systems' )
+    {
+        continue;
+    }
+    echo "
+    <tr>
+        <td>" . $mainKey . "</td>
+        <td>" . $mainValue . "</td>
+    </tr>
+    ";
+}
+echo '</table>';
+
+
+
+
+foreach ($return['systems'][0] as $systems)
+{
+    echo '<p>System';
+    echo '<p><table>';
+    foreach ( $systems as $systemKey => $systemValue)
+    {
+        if (( !$systemValue) || ( $systemKey == 'results') || $systemKey == 'resultType')
+        {
+            continue;
+        }
+        echo "
+        <tr>
+            <td>" . $systemKey . "</td>
+            <td>" . $systemValue . "</td>
+        </tr>
+        ";
+    }
+    echo '</table>';
+    echo '<p>Type Count';
+    echo '<p><table>';
+    foreach ( $systems['resultType'] as $typesKey => $typesValue)
+    {
+        echo "
+        <tr>
+            <td>" . $typesKey . "</td>
+            <td>" . $typesValue . "</td>
+        </tr>
+        ";
+    }
+    echo '</tr>';
+    echo '</table>';
+    echo '<p>File Locations and Count';
+    echo '<p><table>';
+    echo '<tr><td class=\"main\">Location</td><td class=\"main\">Count</td>';
+    foreach ( $systems['results'] as $resultsKey => $resultsValue)
+    {
+        echo "
+        <tr>
+            <td>" . $resultsKey . "</td>
+            <td>" . $resultsValue . "</td>
+        </tr>
+        ";
+    }
+    echo '</tr>';
+    echo '</table>';
+
+}
+
+echo '</div>';

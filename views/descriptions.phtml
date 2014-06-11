@@ -1,0 +1,56 @@
+<?php
+/**
+ * nessus-report-parser -- descriptions.phtml
+ * User: Simon Beattie
+ * Date: 11/06/2014
+ * Time: 12:23
+ */
+
+echo '
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/main.css">
+<title>Descriptions View</title>
+<script language=\"javascript\">
+
+function loadingScreen(){
+   document.body.innerHTML += \'<div class="loading">Loading&#8230;</div>\';
+}
+</script>
+</head>
+
+<a onclick="loadingScreen()" class="myButton" href="/">Return to Menu</a></p>
+<table border=0 cellpadding=0 cellspacing=0>
+
+';
+
+foreach ($reportData as $vulnerability)
+{
+    echo "<div class=\"main\">";
+    echo "<b>" . $vulnerability[0]['vulnerability'] . "</b><br>";
+    if ($vulnerability[0]->randomstormed == 1)
+    {
+        echo '<font color="green"><i>This has been updated by a RandomStorm staff member</i><br><br></font>';
+    } else {
+        echo '<font color="red"><i>This has NOT been updated by a RandomStorm staff member</i><br><br></font>';
+    }
+    echo "<b>Synopsis</b><br>";
+    echo $vulnerability[0]['synopsis'] . "<br>";
+    echo "<b>Description</b><br>";
+    echo $vulnerability[0]['description'] . "<br>";
+    echo "<b>Solution</b><br>";
+    echo $vulnerability[0]['solution'] . "<br>";
+    echo "<b>Plugin Family</b><br>";
+    echo $vulnerability[0]['pluginFamily'] . "<br>";
+    echo "<b>CVE References</b><br>";
+    echo $vulnerability[0]['cve'] . "<br>";
+    echo "<b>Risk Factor</b><br>";
+    echo $vulnerability[0]['risk_factor'] . "<br>";
+    echo "<b>See Also</b><br>";
+    echo $vulnerability[0]['see_also'];
+
+    echo "<hr>";
+    echo "</div>";
+}
