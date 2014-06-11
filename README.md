@@ -34,8 +34,57 @@ CONFIGURATION:
 
 INSTALLATION:
 
-    Simply run ./install.sh to setup the database and config file.
+    Installation instructions for Mac OSX Mavericks
 
+    Create web directory (change my name for your username):
+        mkdir -p /Users/simonbeattie/www
+        cd /Users/simonbeattie/www
+
+    Clone the repository:
+        git clone https://github.com/simonbt/nessus-report-parser.git
+
+    Setup the system:
+        cd nessus-report-parser
+        ./install.sh
+
+    Add host line within hosts file:
+        sudo nano /etc/hosts
+        ADD:
+
+            127.0.0.1  reports.local
+
+    Edit the Apache Configuration:
+        sudo nano /private/etc/apache2/httpd.conf
+        ADD (top of the file underneath "NameVirtualHost *:80"):
+
+                  <VirtualHost *:80>
+                          ServerName reports.local
+                          ServerAdmin simon.beattie@randomstorm.com
+                          DocumentRoot "/Users/simonbeattie/www/nessus-report-parser/"
+
+                          <Directory "/Users/simonbeattie/www/nessus-report-parser/">
+                                  Options Indexes FollowSymLinks MultiViews
+                                  AllowOverride All
+                                  Order allow,deny
+                                  allow from all
+                          </Directory>
+                          ErrorLog "/private/var/log/apache2/reports-vhost.log"
+                          LogLevel warn
+                  </VirtualHost>
+
+        REPLACE:
+
+            #LoadModule php5_module libexec/apache2/libphp5.so
+
+        WITH:
+
+            LoadModule php5_module libexec/apache2/libphp5.so
+
+    Restart Apache
+        sudo apachectl restart
+
+    Completed:
+        You should now be able to navigate to the system: http://reports.local
 
 UPDATING:
 
