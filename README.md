@@ -12,7 +12,7 @@ REQUIREMENTS:
 
 INSTALLATION:
 
-    Installation instructions for Mac OSX Mavericks
+    Installation instructions for Mac OSX Mavericks (If you have XAMMP installed you'll need to uninstall for this to work)
 
     Create web directory (change my name for your username):
         mkdir -p /Users/simonbeattie/www
