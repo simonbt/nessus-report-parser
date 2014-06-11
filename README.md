@@ -33,8 +33,9 @@ INSTALLATION:
 
     Edit the Apache Configuration:
         sudo nano /private/etc/apache2/httpd.conf
-        ADD (top of the file underneath "NameVirtualHost *:80"):
-
+        ADD (right at the top of the file):
+        
+                NameVirtualHost *:80
                   <VirtualHost *:80>
                           ServerName reports.local
                           ServerAdmin simon.beattie@randomstorm.com
