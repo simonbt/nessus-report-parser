@@ -42,6 +42,8 @@ class Common extends files{
 <br>
 <p><a class="myButton"; href="/opendlp" onclick="loadingScreen()">OpenDLP Reports</a>
 <p><a class="myButton"; href="/files" onclick="loadingScreen()">File Management</a>
+<p><a class="myButton"; href="/logout" onclick="loadingScreen()">Logout</a>
+
 <p><b>Imported Nessus Reports</b>
 ';
 
@@ -97,6 +99,8 @@ echo '<div>
 <br>
 <p><a class="myButton"; href="/" onclick="loadingScreen()">Nessus Reports</a>
 <p><a class="myButton"; href="/files" onclick="loadingScreen()">File Management</a>
+<p><a class="myButton"; href="/logout" onclick="loadingScreen()">Logout</a>
+
 <p><b>Imported OpenDLP Reports</b>
 ';
 

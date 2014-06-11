@@ -41,11 +41,13 @@ $app = new \Slim\Slim(array(
     'templates.path' => './views'
 ));
 
+session_start();
+
 $reportData = new \Library\ReportData($pdo);
 $common = new \Library\Common();
 $import = new \Library\Import($pdo);
 
-
+include_once('Routes/authentication.php');
 include_once('Routes/main.php');
 include_once('Routes/reports.php');
 include_once('Routes/files.php');
