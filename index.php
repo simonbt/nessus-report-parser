@@ -43,7 +43,7 @@ $reportData = new \Library\ReportData($pdo);
 $reportTemplates = new \Library\ReportTemplates();
 $common = new \Library\Common();
 $files = new \Library\Files();
-$forms = new \Library\Forms();
+
 $import = new \Library\Import($pdo);
 
 $app->get('/', function() use($reportData, $common, $config)
@@ -87,13 +87,15 @@ $app->get('/opendlp/:filename', function ($filename) use($reportData, $reportTem
     $reportTemplates->openDLP($reportData);
 });
 
-$app->get('/files', function () use($files)
+$app->get('/files', function ()
 {
+    $files = new \Library\Files();
     $files->fileIndex();
 });
 
-$app->post('/files/upload', function() use($forms)
+$app->post('/files/upload', function()
 {
+    $forms = new \Library\Forms();
     $tempName = $_FILES['uploadFile']['tmp_name'];
     $fileName = $_FILES['uploadFile']['name'];
 
@@ -108,9 +110,9 @@ $app->post('/files/upload', function() use($forms)
     }
 });
 
-$app->post('/files/admin', function () use($forms, $import)
+$app->post('/files/admin', function () use($import)
 {
-
+    $forms = new \Library\Forms();
     switch ($_POST['formSubmit'])
     {
         case 'Delete Nessus':
