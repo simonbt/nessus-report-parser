@@ -33,7 +33,7 @@ echo "<a onclick='loadingScreen()' class=\"myButton\"; href=\"/opendlp\">Return 
 
 echo '<p>Scan Details';
 echo '<p><table>';
-foreach ( $return as $mainKey => $mainValue)
+foreach ( $reportData as $mainKey => $mainValue)
 {
     if ( $mainKey == 'systems' )
     {
@@ -51,7 +51,7 @@ echo '</table>';
 
 
 
-foreach ($return['systems'][0] as $systems)
+foreach ($reportData['systems'][0] as $systems)
 {
     echo '<p>System';
     echo '<p><table>';

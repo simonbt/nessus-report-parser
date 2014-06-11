@@ -37,12 +37,15 @@ try {
     die('You may need to run install.sh to complete installation');
 }
 
-$app = new \Slim\Slim();
+$app = new \Slim\Slim(array(
+    'templates.path' => './views'
+));
+
 $reportData = new \Library\ReportData($pdo);
 $reportTemplates = new \Library\ReportTemplates();
 $common = new \Library\Common();
-
 $import = new \Library\Import($pdo);
+
 
 include_once('Routes/main.php');
 include_once('Routes/reports.php');
