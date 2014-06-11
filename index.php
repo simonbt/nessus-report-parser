@@ -42,7 +42,6 @@ $app = new \Slim\Slim(array(
 ));
 
 $reportData = new \Library\ReportData($pdo);
-$reportTemplates = new \Library\ReportTemplates();
 $common = new \Library\Common();
 $import = new \Library\Import($pdo);
 

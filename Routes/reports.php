@@ -18,19 +18,19 @@ $app->get('/descriptions/:reportId/:severity', function ($reportId, $severity) u
     $app->render('descriptions.phtml', array('reportData' => $data));
 });
 
-$app->get('/test/:reportId/:severity', function ($reportId, $severity) use($app, $reportData, $reportTemplates)
+$app->get('/vulnerabilities/:reportId/:severity', function ($reportId, $severity) use($app, $reportData, $reportTemplates)
 {
     $data = $reportData->getVulnerabilities($reportId, $severity);
     $app->render('vulnerabilities.phtml', array('reportData' => $data));
 });
 
-$app->get('/test/:reportId', function ($reportId) use($app, $reportData, $reportTemplates)
+$app->get('/pci/:reportId', function ($reportId) use($app, $reportData, $reportTemplates)
 {
     $data = $reportData->getPCI($reportId);
     $app->render('pci.phtml', array('reportData' => $data));
 });
 
-$app->get('/test/:filename', function ($filename) use($app, $reportData, $reportTemplates)
+$app->get('/opendlp/:filename', function ($filename) use($app, $reportData, $reportTemplates)
 {
     $reportData = $reportData->getOpenDLP($filename);
     $app->render('opendlp.phtml', array('reportData' => $reportData));
