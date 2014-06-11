@@ -20,7 +20,15 @@ spl_autoload_register(function($className)
 });
 
 \Slim\Slim::registerAutoloader();
-$config = require(__DIR__ . '/config.php');
+
+if (file_exists(__DIR__ . '/config.php'))
+{
+    $config = require(__DIR__ . '/config.php');
+}
+else
+{
+    die('Config.php does not exist - Please run install.sh');
+}
 
 try {
     $pdo = new PDO('sqlite:Database/reports.sqlite');
