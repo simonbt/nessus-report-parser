@@ -52,8 +52,8 @@ session_start();
 $reportData = new \Library\ReportData($pdo);
 $import = new \Library\Import($pdo);
 
-include_once('Routes/authentication.php');
-include_once('Routes/main.php');
+include_once('Routes/users.php');
+include_once('Routes/menus.php');
 include_once('Routes/reports.php');
 include_once('Routes/files.php');
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * nessus-report-parser -- authentication.php
+ * nessus-report-parser -- users.php
  * User: Simon Beattie
  * Date: 11/06/2014
  * Time: 16:46
@@ -37,7 +37,7 @@ $app->post('/admin/adduser', function() use($app, $pdo)
 
 $app->get('/admin/adduser', function() use($app)
 {
-    $app->render('adduser.phtml', array('app' => $app));
+    $app->render('users/adduser.phtml', array('app' => $app));
 });
 
 
@@ -57,7 +57,7 @@ $app->post('/admin/changepass', function() use($app, $pdo)
 
 $app->get('/admin/changepass', function() use($app)
 {
-    $app->render('changePass.phtml', array('app' => $app));
+    $app->render('users/changePass.phtml', array('app' => $app));
 });
 
 $app->post('/login', function() use($app, $pdo)
@@ -91,7 +91,7 @@ $app->get('/logout', function() use($app)
 
 $app->get('/login', function() use($app)
 {
-    $app->render('login.phtml', array('app' => $app));
+    $app->render('users/login.phtml', array('app' => $app));
 })->setName('loginGet');
 
 

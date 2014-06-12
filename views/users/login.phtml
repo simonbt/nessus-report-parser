@@ -8,7 +8,8 @@
 
 $badLogin = $app->request()->get('loggedIn');
 
-include('menuHeader.phtml');
+include(__DIR__ . '/../includes/menuHeader.phtml');
+
 echo '
             <div class="menu">
             <p><b>Please enter your login credentials</b></p>
@@ -20,4 +21,4 @@ if($badLogin)
 }
 echo '         </div>';
 
-include('footer.phtml');
+include(__DIR__ . '/../includes/footer.phtml');

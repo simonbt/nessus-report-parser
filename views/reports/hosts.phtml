@@ -6,7 +6,7 @@
  * Time: 12:21
  */
 
-include('nessusReportHeader.phtml');
+include(__DIR__ . '/../includes/nessusReportHeader.phtml');
 
 foreach ($reportData as $vulnerability) {
     echo '
@@ -43,4 +43,4 @@ foreach ($reportData as $vulnerability) {
 
 }
 
-include('footer.phtml');
+include(__DIR__ . '/../includes/footer.phtml');

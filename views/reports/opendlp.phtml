@@ -6,7 +6,7 @@
  * Time: 12:24
  */
 
-include('openDlpReportHeader.phtml');
+include(__DIR__ . '/../includes/openDlpReportHeader.phtml');
 
 echo '<p>Scan Details';
 echo '<p><table>';
@@ -78,4 +78,4 @@ foreach ($reportData['systems'][0] as $systems)
 
 echo '</div>';
 
-include('footer.phtml');
+include(__DIR__ . '/../includes/footer.phtml');

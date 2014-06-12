@@ -9,7 +9,7 @@
 $app->get('/openDlpMenu', function() use($app)
 {
     $files = new \Library\Files();
-    $app->render('openDlpFiles.phtml', array('reports' => $files->getOpenDlpList(), 'app' => $app));
+    $app->render('files/openDlpFiles.phtml', array('reports' => $files->getOpenDlpList(), 'app' => $app));
 });
 
 $app->post('/openDlpMenu/upload', function() use($app)
@@ -43,7 +43,7 @@ $app->post('/openDlpMenu/admin', function () use ($app)
 $app->get('/nessusMenu', function() use($app)
 {
     $files = new \Library\Files();
-    $app->render('nessusFiles.phtml', array('reports' => $files->getNessusList(), 'app' => $app));
+    $app->render('files/nessusFiles.phtml', array('reports' => $files->getNessusList(), 'app' => $app));
 });
 
 $app->post('/nessusMenu/upload', function() use($app)
@@ -95,7 +95,7 @@ $app->post('/nessusMenu/admin', function () use($import, $app)
             else
             {
             $result = $import->importNessusXML($_SESSION['userId'], $xml );
-            $app->redirect('/nessusMenu?admin='.$result);
+            $app->redirect('files/nessusMenu?admin='.$result);
             }
             break;
 
