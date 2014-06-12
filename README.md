@@ -7,12 +7,12 @@ REQUIREMENTS:
 
     apache2
     sqlite3
+    PHP 5.4+
     php5-sqlite
+    mysql-server
 
 
 INSTALLATION:
-
-    Installation instructions for Mac OSX Mavericks (If you have XAMMP installed you'll need to uninstall for this to work)
 
     Create web directory (change my name for your username):
         mkdir -p /Users/simonbeattie/www
@@ -21,9 +21,13 @@ INSTALLATION:
     Clone the repository:
         git clone https://github.com/simonbt/nessus-report-parser.git
 
-    Setup the system:
-        cd nessus-report-parser
-        ./install.sh
+    Create MYSQL Database
+        mysql -u root -p reports > Database/mysql_schema.sql
+
+        Setup privileges for another user on the reports database
+
+    Configure System
+        edit config.php with Database authentication details
 
     Add host line within hosts file:
         sudo nano /etc/hosts
@@ -104,11 +108,27 @@ UPDATES:
             Nessus report importing fully available through interface
             Moved all reports onto view templates and implemented render() method
 
+    12th June 2014:
+            Refactored application for a server model
+            Added authentication
+            Added user administration (add, remove, change)
+            Added user specific report views
+            Separated user uploads
+            Major interface overhaul
+            Moved all templates into view folders
+            Added site wide headers and footers
+            Removed all CSS loading screens
+            Moved back to MySQL
+
 TO-DO:
 
     Restriction on uploaded files - server-side
     Limitation to file upload sizes
     .xls output for all vulnerabilities
-    Authentication
     Template download / storage
-    General code tidy up
+    Reinstate the ability to change severity filter through interface
+    Move footer to float at the bottom!
+    CSS menu drop downs to fit correctly
+    Implement privilege levels
+    Add user management page
+    Add custom report creation
