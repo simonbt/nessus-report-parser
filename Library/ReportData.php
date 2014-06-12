@@ -11,7 +11,8 @@ namespace Library;
 include_once(__DIR__ . '/ReportAbstract.php');
 
 
-class ReportData extends \Library\ReportAbstract {
+class ReportData extends \Library\ReportAbstract
+{
 
     function listReports($userId)
     { // List all reports that have been imported into the system
@@ -41,8 +42,7 @@ class ReportData extends \Library\ReportAbstract {
         $getVulnerabilites->execute(array($reportID, $severity));
         $vulnerabilites = $getVulnerabilites->fetchall(\PDO::FETCH_COLUMN);
 
-        foreach ($vulnerabilites as $vulnerability)
-        {
+        foreach ($vulnerabilites as $vulnerability) {
             $getDetails->execute(array($vulnerability));
             $details = $getDetails->fetchAll(\PDO::FETCH_ASSOC);
             $returnArray[$vulnerability] = $details;
@@ -63,8 +63,7 @@ class ReportData extends \Library\ReportAbstract {
             die('Sorry, we couldn\'t get the host ID list: ' . $getHostIDs->errorInfo()[2] . PHP_EOL);
         }
 
-        foreach ($hosts as $key => $host)
-        {
+        foreach ($hosts as $key => $host) {
             $getHostName->execute(array($host['host_id']));
             $hostName = $getHostName->fetchall(\PDO::FETCH_ASSOC);
             $hosts[$key]['hostname'] = $hostName[0]['host_name'];
@@ -74,8 +73,7 @@ class ReportData extends \Library\ReportAbstract {
             $getVulnerabilites->execute(array($reportID, $host['host_id'], $severity));
             $vulnerabilites = $getVulnerabilites->fetchall(\PDO::FETCH_COLUMN);
 
-            foreach ($vulnerabilites as $id => $vulnerability)
-            {
+            foreach ($vulnerabilites as $id => $vulnerability) {
                 $vulnerabilites[$id] = array();
                 $getDetails->execute(array($vulnerability));
                 $details = $getDetails->fetchAll(\PDO::FETCH_ASSOC);
@@ -146,16 +144,14 @@ class ReportData extends \Library\ReportAbstract {
             die('Sorry, we couldn\'t get the host ID list: ' . $getHostIDs->errorInfo()[2] . PHP_EOL);
         }
 
-        foreach ($hosts as $key => $host)
-        {
+        foreach ($hosts as $key => $host) {
             $getHostName->execute(array($host['host_id']));
             $hostName = $getHostName->fetchall(\PDO::FETCH_ASSOC);
             $hosts[$key]['hostname'] = $hostName[0]['host_name'];
             $getVulnerabilites->execute(array($reportID, $host['host_id']));
             $vulnerabilites = $getVulnerabilites->fetchall(\PDO::FETCH_ASSOC);
 
-            foreach ($vulnerabilites as $id => $vulnerability)
-            {
+            foreach ($vulnerabilites as $id => $vulnerability) {
                 $vulnerabilites[$id] = array();
                 $getDetails->execute(array($vulnerability['plugin_id']));
                 $details = $getDetails->fetchAll(\PDO::FETCH_ASSOC);
@@ -189,13 +185,10 @@ class ReportData extends \Library\ReportAbstract {
         $this->xmlObj = $xml;
         $this->report = array();
 
-        foreach ( $this->xmlObj->systems->system as $target )
-        {
+        foreach ($this->xmlObj->systems->system as $target) {
             $typeCount = array();
-            foreach ($target->results->result as $result )
-            {
-                if (array_key_exists(trim($result->type), $typeCount))
-                {
+            foreach ($target->results->result as $result) {
+                if (array_key_exists(trim($result->type), $typeCount)) {
                     $typeCount[trim($result->type)]++;
                 } else {
                     $typeCount[trim($result->type)] = 1;
@@ -203,10 +196,8 @@ class ReportData extends \Library\ReportAbstract {
             }
 
             $fileCount = array();
-            foreach ($target->results->result as $result )
-            {
-                if (array_key_exists(trim($result->file), $fileCount))
-                {
+            foreach ($target->results->result as $result) {
+                if (array_key_exists(trim($result->file), $fileCount)) {
                     $fileCount[trim($result->file)]++;
                 } else {
                     $fileCount[trim($result->file)] = 1;
@@ -220,20 +211,19 @@ class ReportData extends \Library\ReportAbstract {
 
             $systemDetails = array();
 
-            foreach ($target->results->result as $details)
-            {
+            foreach ($target->results->result as $details) {
                 $systemDetails[] = array(
 
-                    'Type'          => trim($details->type),
+                    'Type'            => trim($details->type),
                     // 'Base64'           => trim($details->raw_pattern_base64),
-                    'Matched Pattern'       => trim($details->filtered_pattern),
-                    'File Location'          => trim($details->file),
-                    'Offset'        => trim($details->offset),
+                    'Matched Pattern' => trim($details->filtered_pattern),
+                    'File Location'   => trim($details->file),
+                    'Offset'          => trim($details->offset),
                     // 'MD5 Hash'           => trim($details->md5),
-                    'Database Name'      => trim($details->database),
-                    'Table'         => trim($details->table),
-                    'Column'        => trim($details->column),
-                    'Row'           => trim($details->row)
+                    'Database Name'   => trim($details->database),
+                    'Table'           => trim($details->table),
+                    'Column'          => trim($details->column),
+                    'Row'             => trim($details->row)
 
                 );
             }
@@ -241,34 +231,34 @@ class ReportData extends \Library\ReportAbstract {
 
             $this->reportResults[] = array(
 
-                'System Name'   => trim($target->system_name),
-                'Workgroup'     => trim($target->workgroup),
-                'IP Address'            => trim($target->ip),
-                'Total Files Found'    => trim($target->filestotal),
-                'Total Files Scanned'     => trim($target->filesdone),
-                'Total Bytes Found'    => trim($target->bytestotal),
-                'Total Bytes Scanned'     => trim($target->bytesdone),
-                'Last Updated'   => trim($target->updated),
-                'Scan Status'        => trim($target->control),
-                'pid'           => trim($target->pid),
-                'Databases Found'       => trim($target->dbtotal),
-                'Databases Scanned'        => trim($target->dbdone),
-                'Tables Found'    => trim($target->tabletotal),
-                'Tables Scanned'     => trim($target->tabledone),
-                'Columns Found'   => trim($target->columntotal),
-                'Columns Scanned'    => trim($target->columntotal),
-                'Scan Type'      => trim($target->scantype),
-                'Results Found'   => count($target->results->result),
-                'resultType'    => $typeCount,
-                'results'       => $fileCount
+                'System Name'         => trim($target->system_name),
+                'Workgroup'           => trim($target->workgroup),
+                'IP Address'          => trim($target->ip),
+                'Total Files Found'   => trim($target->filestotal),
+                'Total Files Scanned' => trim($target->filesdone),
+                'Total Bytes Found'   => trim($target->bytestotal),
+                'Total Bytes Scanned' => trim($target->bytesdone),
+                'Last Updated'        => trim($target->updated),
+                'Scan Status'         => trim($target->control),
+                'pid'                 => trim($target->pid),
+                'Databases Found'     => trim($target->dbtotal),
+                'Databases Scanned'   => trim($target->dbdone),
+                'Tables Found'        => trim($target->tabletotal),
+                'Tables Scanned'      => trim($target->tabledone),
+                'Columns Found'       => trim($target->columntotal),
+                'Columns Scanned'     => trim($target->columntotal),
+                'Scan Type'           => trim($target->scantype),
+                'Results Found'       => count($target->results->result),
+                'resultType'          => $typeCount,
+                'results'             => $fileCount
             );
 
 
         }
 
-        $this->report = array (
+        $this->report = array(
 
-            'Scan Name'          => trim($this->xmlObj->scanname),
+            'Scan Name'           => trim($this->xmlObj->scanname),
             'Total Files Found'   => $this->totalFiles,
             'Total Files Scanner' => $this->totalFilesDone,
             'Total Bytes Found'   => $this->totalBytesFound,

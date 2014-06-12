@@ -9,15 +9,15 @@
 namespace Library;
 
 
-class Users extends ReportAbstract{
+class Users extends ReportAbstract
+{
 
 
     public function checkUser($email, $password)
     {
         $userDetails = $this->getUserDetails($email);
 
-        if ($userDetails[0]['email'] == $email && $userDetails[0]['password'] == $password)
-        {
+        if ($userDetails[0]['email'] == $email && $userDetails[0]['password'] == $password) {
             return $userDetails[0];
         }
         return NULL;
@@ -26,12 +26,11 @@ class Users extends ReportAbstract{
     public function createUser($name, $email, $password, $privilege)
     {
         $usernameCheck = $this->getUserDetails($email);
-        if ($usernameCheck)
-        {
+        if ($usernameCheck) {
             return 'exists';
         }
         $insertUser = $this->getPdo()->prepare('INSERT INTO users (email, password, privilege, name, pass_length, last_updated) VALUES(?, ?, ?, ?, ?, ?)');
-        $insertedUser = $insertUser->execute(array($email, $this->createHash($password), $privilege, $name, strlen($password),date('Y-m-d H:i:s') ));
+        $insertedUser = $insertUser->execute(array($email, $this->createHash($password), $privilege, $name, strlen($password), date('Y-m-d H:i:s')));
         if (!$insertedUser) {
             die('Sorry, we couldn\'t add the user: ' . print_r($insertUser->errorInfo()) . PHP_EOL);
         }
@@ -42,8 +41,7 @@ class Users extends ReportAbstract{
     {
         $userQuery = $this->getPdo()->prepare('DELETE FROM users WHERE id =?');
         $userQuery->execute(array($userId));
-        if (!$userQuery)
-        {
+        if (!$userQuery) {
             die('Failed to remove user' . print_r($userQuery->errorInfo()));
         }
     }
@@ -53,11 +51,9 @@ class Users extends ReportAbstract{
 
         $userDetails = $this->getUserDetails($email);
 
-        if ($userDetails[0]['password'] == $this->createHash($password))
-        {
+        if ($userDetails[0]['password'] == $this->createHash($password)) {
 
-            if ($newPass == $repeatPass)
-            {
+            if ($newPass == $repeatPass) {
                 $sql = "UPDATE users SET password = :password, last_updated = :updatetime, pass_length = :pass_length WHERE id = :id;";
                 $query = $this->getPdo()->prepare($sql);
                 $query->bindParam(':password', $this->createHash($newPass), \PDO::PARAM_STR);
@@ -66,23 +62,16 @@ class Users extends ReportAbstract{
                 $query->bindParam(':id', $userId, \PDO::PARAM_INT);
                 $query->execute();
 
-                if (!$query)
-                {
+                if (!$query) {
                     return 'failed';
-                }
-                else
-                {
+                } else {
                     return 'success';
                 }
 
-            }
-            else
-            {
+            } else {
                 return 'match';
             }
-        }
-        else
-        {
+        } else {
             return 'wrongPass';
         }
 
@@ -105,8 +94,7 @@ class Users extends ReportAbstract{
         $userQuery = $this->getPdo()->prepare('SELECT * FROM users WHERE email =?');
         $userQuery->execute(array($email));
         $userDetails = $userQuery->fetchAll(\PDO::FETCH_ASSOC);
-        if (!$userDetails)
-        {
+        if (!$userDetails) {
             return FALSE;
         }
         return $userDetails;

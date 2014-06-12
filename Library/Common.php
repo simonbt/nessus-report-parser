@@ -9,7 +9,8 @@
 namespace Library;
 
 
-class Common extends files{
+class Common extends files
+{
 
     public function index()
     {
@@ -68,8 +69,16 @@ class Common extends files{
 
 </div>
 
+<div id="footer">
+Copyright © ' . date("Y") . ' <a href="https://www.randomstorm.com">RandomStorm</a><br>
+Created and Maintained by <a href="https://twitter.com/si_bt">Simon Beattie</a>
+</div>
+
 </html>
+
+
 ';
+
     }
 
     public function nessusIndex($reports, $severity)
@@ -81,15 +90,6 @@ class Common extends files{
 
                 <title>RandomStorm Report Generator</title>
                 <script language="javascript">
-                    var popupWindow = null;
-                    function centeredPopup(url,winName,w,h,scroll){
-                        LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
-                        TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
-                        settings =
-                        \'height=\'+h+\',width=\'+w+\',top=\'+TopPosition+\',left=\'+LeftPosition+\',scrollbars=\'+scroll+\',resizable\';
-                        popupWindow = window.open(url,winName,settings)
-                    }
-
 
                     function loadingScreen(){
                         document.body.innerHTML += "<div class="loading">Loading&#8230;</div>";
@@ -129,37 +129,45 @@ class Common extends files{
 
 
 <p><br><br><b>Imported Nessus Reports</b></br>
+</div>
+<div class="reportList">
 ';
 
-        if (!$reports)
-        {
+        if (!$reports) {
             echo "There are no reports available on the system<br>";
         } else {
             foreach ($reports as $report) {
-                echo '<p><b>' . $report['report_name'] . '</b> (' . $report['created'] . ') - ';
-                echo '
-<label>
-    <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
-        <option selected> Select Report </option>
-        <option value="hosts/' . $report['id'] . '/' . $severity . '">Hosts Report</option>
-        <option value="vulnerabilities/' . $report['id'] . '/' . $severity . '">Vulnerabilities Report</option>
-        <option value="descriptions/' . $report['id'] . '/' . $severity . '">Descriptions Report</option>
-        <option value="pci/' . $report['id'] . '">PCI Report</option>
-    </select>
-</label>
+                echo'
+                            <p><b>' . $report['report_name'] . '</b> (' . $report['created'] . ')
+                            <label>
+                                <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
+                                    <option selected> Select Report </option>
+                                    <option value="hosts/' . $report['id'] . '/' . $severity . '">Hosts Report</option>
+                                    <option value="vulnerabilities/' . $report['id'] . '/' . $severity . '">Vulnerabilities Report</option>
+                                    <option value="descriptions/' . $report['id'] . '/' . $severity . '">Descriptions Report</option>
+                                    <option value="pci/' . $report['id'] . '">PCI Report</option>
+                                </select>
+                            </label>
 
             ';
             }
             echo '</div>';
         }
+    echo '
+        <div id="footer">
+            Copyright © ' . date("Y") . ' <a href="https://www.randomstorm.com">RandomStorm</a><br>
+            Created and Maintained by <a href="https://twitter.com/si_bt">Simon Beattie</a>
+        </div>
+
+    </html>
+    ';
     }
 
     public function openDlpIndex()
     {
 
 
-
-echo '  <html>
+        echo '  <html>
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
                 <link rel="stylesheet" type="text/css" href="/css/main.css">
@@ -167,7 +175,7 @@ echo '  <html>
                 <script language="javascript">
 
 ';
-echo "
+        echo "
                     function loadingScreen(){
                         document.body.innerHTML += '<div class=\"loading\">Loading&#8230;</div>';
                     }
@@ -175,10 +183,9 @@ echo "
             </head>
 ";
 
-echo '
+        echo '
 
-<div class="menu">
-<div class="menu" ><a href="/" onclick="loadingScreen()"><img src="images/logo.png" alt="RandomStorm Limited" /></a></div>
+<div class="menu" ><a href="/" onclick="loadingScreen()"><img src="images/logo.png" alt="RandomStorm Limited" /></a>
         <nav>
 	<ul>
 		<li><a href="/">Home</a></li>
@@ -203,21 +210,20 @@ echo '
 		</li>
 	</ul>
 </nav>
-
-
 <p><br><br><b>Imported OpenDLP Reports</b>
+
+</div>
+<div class="reportlist">
 ';
 
 
+        if (!$this->getOpenDlpList()) {
+            echo "There are no reports available on the system<br>";
+        } else {
 
-if (!$this->getOpenDlpList())
-{
-    echo "There are no reports available on the system<br>";
-} else {
-
-    foreach ($this->getOpenDlpList() as $name => $hash) {
-        echo '<p>' . $name;
-        echo '
+            foreach ($this->getOpenDlpList() as $name => $hash) {
+                echo '<p>' . $name;
+                echo '
 <label>
     <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
         <option selected> Select Report </option>
@@ -225,12 +231,19 @@ if (!$this->getOpenDlpList())
     </select>
 </label>
 
+
+
             ';
-    }
-    echo '</div>';
-}
+            }
+            echo '</div>';
+        }
+        echo '
 
+        <div id="footer">
+        Copyright © ' . date("Y") . ' <a href="https://www.randomstorm.com">RandomStorm</a><br>
+    Created and Maintained by <a href="https://twitter.com/si_bt">Simon Beattie</a>
+</div>
 
-
+';
     }
 } 

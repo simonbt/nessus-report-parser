@@ -9,7 +9,8 @@
 namespace Library;
 
 
-class ReportAbstract {
+class ReportAbstract
+{
 
     /**
      * @var \PDO $pdo

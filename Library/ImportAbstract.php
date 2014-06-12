@@ -9,7 +9,8 @@
 namespace Library;
 
 
-class ImportAbstract {
+class ImportAbstract
+{
 
     /**
      * @var PDO $pdo

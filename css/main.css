@@ -1,14 +1,19 @@
-
-.style0
+#footer
 {
-    white-space:nowrap;
-    color:black;
-    font-style:normal;
-    text-decoration:none;
-    border:none;
+    color: black;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
     font-size:9.0pt;
+    text-align: center;
 }
+
+.reportlist
+{
+    position: relative;
+    text-align: right;
+    right: 35%;
+}
+
+
 table.center {
     margin-left:auto;
     margin-right:auto;
@@ -131,57 +136,6 @@ td
     vertical-align: bottom;
     font-size:9.0pt;
 }
-
-select {
-    padding:3px;
-    margin: 0;
-    font-size: 11.0pt;
-    width: 200px;
-    -webkit-border-radius:4px;
-    -moz-border-radius:4px;
-    border-radius:4px;
-    -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
-    -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
-    box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
-    background: #f8f8f8;
-    color:#888;
-    border:none;
-    outline:none;
-    display: inline-block;
-    -webkit-appearance:none;
-    -moz-appearance:none;
-    appearance:none;
-    cursor:pointer;
-}
-
-label {position:relative;}
-label:after {
-    content:'<>';
-    font-size: 9.0pt;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
-    color:#aaa;
-    -webkit-transform:rotate(90deg);
-    -moz-transform:rotate(90deg);
-    -ms-transform:rotate(90deg);
-    transform:rotate(90deg);
-    right:8px; top:2px;
-    padding:0 0 2px;
-    border-bottom:1px solid #ddd;
-    position:absolute;
-    pointer-events:none;
-
-}
-label:before {
-    content:'';
-    right:6px; top:0px;
-    width:20px; height:20px;
-    background:#f8f8f8;
-    position:absolute;
-    pointer-events:none;
-    display:block;
-
-}
-
 
 
 /* Absolute Center CSS Spinner */
@@ -311,10 +265,11 @@ body {
     color: #222;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 nav {
+    font-size: 15px;
     background-color: #fff;
     border: 1px solid #dedede;
     border-radius: 4px;
@@ -339,6 +294,8 @@ nav ul li {
     -ms-transition: all 0.2s;
     -o-transition: all 0.2s;
     transition: all 0.2s;
+    z-index: 1000;
+
 }
 
 nav > ul > li > a > .caret {
@@ -355,6 +312,8 @@ nav > ul > li > a > .caret {
     -moz-transition: color 0.1s linear;
     -o-transition: color 0.1s linear;
     transition: color 0.1s linear;
+    z-index: 1000;
+
 }
 
 nav > ul > li > a {
@@ -363,18 +322,26 @@ nav > ul > li > a {
     line-height: 56px;
     padding: 0 24px;
     text-decoration: none;
+    z-index: 1000;
+
 }
 
 nav > ul > li:hover {
     background-color: rgb( 40, 44, 47 );
+    z-index: 1000;
+
 }
 
 nav > ul > li:hover > a {
     color: rgb( 255, 255, 255 );
+    z-index: 1000;
+
 }
 
 nav > ul > li:hover > a > .caret {
     border-top-color: rgb( 255, 255, 255 );
+    z-index: 1000;
+
 }
 
 nav > ul > li > div {
@@ -394,12 +361,15 @@ nav > ul > li > div {
     -ms-transition: opacity 0.2s;
     -o-transition: opacity 0.2s;
     -transition: opacity 0.2s;
+    z-index: 1000;
+
 }
 
 nav > ul > li:hover > div {
     display: block;
     opacity: 1;
-    visibility: visible;
+    visibility: visible;    z-index: 1000;
+
 }
 
 nav > ul > li > div ul > li {

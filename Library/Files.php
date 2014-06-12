@@ -8,7 +8,8 @@
 
 namespace Library;
 
-class Files {
+class Files
+{
 
     protected $saltPre = 'fd393fncaa7201';
     protected $saltPost = 'asf23180r1nogvbs';
@@ -16,11 +17,10 @@ class Files {
     public function getNessusList()
     {
         $nessusDirectory = __DIR__ . '/Uploads/Nessus';
-        $nessusList = array_slice(scandir($nessusDirectory),2);
+        $nessusList = array_slice(scandir($nessusDirectory), 2);
 
         $nessusFiles = array();
-        foreach ( $nessusList as $fileName )
-        {
+        foreach ($nessusList as $fileName) {
             $nessusFiles[$fileName] = $this->encodeName($fileName);
         }
         return $nessusFiles;
@@ -29,11 +29,10 @@ class Files {
     public function getOpenDlpList()
     {
         $openDlpDirectory = __DIR__ . '/uploads/opendlp';
-        $openDlpList = array_slice(scandir($openDlpDirectory),2);
+        $openDlpList = array_slice(scandir($openDlpDirectory), 2);
 
         $openDlpFiles = array();
-        foreach ( $openDlpList as $fileName )
-        {
+        foreach ($openDlpList as $fileName) {
             $openDlpFiles[$fileName] = $this->encodeName($fileName);
         }
 
@@ -52,32 +51,31 @@ class Files {
         $data = json_decode(base64_decode($fileHash), true);
         $newHash = hash('sha512', $this->saltPost . $data[0] . $this->saltPost);
 
-        if($data[1] ==  $newHash)
-        {
+        if ($data[1] == $newHash) {
             return $data[0];
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 
-    public function rand_string($length) {
+    public function rand_string($length)
+    {
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $str = '';
-        $size = strlen( $chars );
-        for( $i = 0; $i < $length; $i++ ) {
-            $str .= $chars[ rand( 0, $size - 1 ) ];
+        $size = strlen($chars);
+        for ($i = 0; $i < $length; $i++) {
+            $str .= $chars[rand(0, $size - 1)];
         }
 
         return $str;
     }
 
 
-    public function fileIndex() {
+    public function fileIndex()
+    {
 
 
-echo '  <html>
+        echo '  <html>
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
                 <link rel="stylesheet" type="text/css" href="/css/main.css">
@@ -100,7 +98,7 @@ echo '  <html>
       <a href="#">Reports <span class="caret"></span></a>
 			<div>
 				<ul>
-					<li><a href="/">Nessus</a></li>
+					<li><a href="/nessus">Nessus</a></li>
                     <li><a href="/opendlp">OpenDLP</a></li>
 				</ul>
 			</div>
@@ -109,7 +107,8 @@ echo '  <html>
 		<li><a href="#">' . $_SESSION['name'] . '<span class="caret"></span></a>
 		    <div>
 				<ul>
-					<li><a href="/admin">Administration</a></li>
+				    <li><a href="/admin/adduser">Add User</a></li>
+					<li><a href="/admin/changepass">Change Password</a></li>
                     <li><a href="/logout">Logout</a></li>
 				</ul>
 			</div>
@@ -121,31 +120,30 @@ echo '  <html>
         ';
 
 //Nessus Table
-print('
+        print('
 <form action="/files/admin" method="post">
     <h2>Stored Nessus Reports</h2>
 ');
 
-print '<table class="center">
+        print '<table class="center">
         <tr>
             <td>Report Name</td>
             <td>Select</td>
         </td>
 
 ';
-foreach ($this->getNessusList() as $file => $hash)
-{
-    print'<tr>';
-    print('
+        foreach ($this->getNessusList() as $file => $hash) {
+            print'<tr>';
+            print('
             <td> ' . $file . ' </td>
             <td><input type="checkbox" name="reports[]" value="' . $hash . '" /></td>
     ');
-    print'</tr>';
-}
+            print'</tr>';
+        }
 
-print '</table>';
+        print '</table>';
 
-echo '
+        echo '
         <input type="submit" name="formSubmit" value="Delete Nessus"/>
         <input type="submit" name="formSubmit" value="Merge"/>
         <input type="submit" name="formSubmit" value="Import"/>
@@ -155,7 +153,7 @@ echo '
 ';
 
 
-print('
+        print('
 <h2>Upload Nessus File</h2>
 <form action="/files/upload" method="post" enctype="multipart/form-data">
   <input type="file" name="uploadFile" size="50" maxlength="25" />
@@ -165,38 +163,37 @@ print('
 
 
 //OpenDLP Table
-print('
+        print('
 <form action="/files/admin" method="post">
     <h2>Stored OpenDLP Reports</h2>
 ');
 
-print '<table class="center">
+        print '<table class="center">
         <tr>
             <td>Report Name</td>
             <td>Select</td>
         </td>
 
 ';
-foreach ($this->getOpenDlpList() as $file => $hash)
-{
-    print'<tr>';
-    print('
+        foreach ($this->getOpenDlpList() as $file => $hash) {
+            print'<tr>';
+            print('
             <td> ' . $file . ' </td>
             <td><input type="checkbox" name="reports[]" value="' . $hash . '" /></td>
     ');
-    print'</tr>';
-}
+            print'</tr>';
+        }
 
-print '</table>';
+        print '</table>';
 
-echo '
+        echo '
         <input type="submit" name="formSubmit" value="Delete OpenDLP"/>
     </form>
 </body>
 </html>
 ';
 
-print('
+        print('
 <h2>Upload OpenDLP File</h2>
 <form action="/files/upload" method="post" enctype="multipart/form-data">
   <input type="file" name="uploadFile" size="50" maxlength="25" />
@@ -204,6 +201,15 @@ print('
 </form>
 </div>
 ');
+
+        echo '
+
+        <div id="footer">
+        Copyright © ' . date("Y") . ' <a href="https://www.randomstorm.com">RandomStorm</a><br>
+    Created and Maintained by <a href="https://twitter.com/si_bt">Simon Beattie</a>
+</div>
+
+';
 
     }
 } 

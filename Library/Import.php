@@ -9,7 +9,8 @@
 namespace Library;
 
 
-class Import extends ImportAbstract{
+class Import extends ImportAbstract
+{
 
     protected $xmlObj;
     protected $reportName;
@@ -104,13 +105,11 @@ class Import extends ImportAbstract{
 
         foreach ($host->ReportItem as $item) /* @var SimpleXMLElement $item */ {
             $attributes = array();
-            if (!$item->cvss_base_score)
-            {
+            if (!$item->cvss_base_score) {
                 $cvss = 0.0;
             } else {
                 $cvss = $item->cvss_base_score;
             }
-
 
 
             $addVuln = $this->getPdo()->prepare('INSERT IGNORE INTO vulnerabilities (pluginID, vulnerability, svc_name, severity, pluginFamily, description, cve, risk_factor, see_also, solution, synopsis) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
@@ -140,6 +139,6 @@ class Import extends ImportAbstract{
 
         echo "Found " . count($foundVulnerabilities) . " vulnerabilities<br>";
 
-}
+    }
 
 } 
