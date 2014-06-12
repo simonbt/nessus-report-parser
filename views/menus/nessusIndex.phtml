@@ -10,14 +10,14 @@
 include(__DIR__ . '/../includes/menuHeader.phtml');
 
 echo '
-<p><br><br><b>Imported Nessus Reports</b></br>
-</div>
+<p><b>Imported Nessus Reports</b>
+
 <div class="reportList">
 ';
 
     foreach ($reports as $report) {
         echo'
-            <p><b>' . $report['report_name'] . '</b> (' . $report['created'] . ')
+            <p>' . $report['report_name'] . ' (' . $report['created'] . ')
             <label>
                 <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
                     <option selected> Select Report </option>

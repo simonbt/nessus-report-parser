@@ -9,25 +9,21 @@
 include(__DIR__ . '/../includes/menuHeader.phtml');
 
 echo '
-<p><br><br><b>Imported OpenDLP Reports</b>
+<p><b>Imported OpenDLP Reports</b>
 
-</div>
 <div class="reportlist">
 ';
 
 
     foreach ($reports as $name => $hash) {
-        echo '<p>' . $name;
-        echo '
-<label>
-    <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
-        <option selected> Select Report </option>
-        <option value="/opendlp/' . $name . '">OpenDLP Overview Report</option>
-    </select>
-</label>
+        echo '<p>' . $name . '
 
-
-
+                <label>
+                    <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
+                        <option selected> Select Report </option>
+                        <option value="/opendlp/' . $name . '">OpenDLP Overview Report</option>
+                    </select>
+                </label>
             ';
     }
     echo '</div>';

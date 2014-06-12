@@ -9,7 +9,7 @@
 namespace Library;
 
 
-class Users extends ReportAbstract
+class Users extends ReportsAbstract
 {
 
 
@@ -25,6 +25,7 @@ class Users extends ReportAbstract
 
     public function createUser($name, $email, $password, $privilege)
     {
+
         $usernameCheck = $this->getUserDetails($email);
         if ($usernameCheck) {
             return 'exists';
@@ -34,7 +35,19 @@ class Users extends ReportAbstract
         if (!$insertedUser) {
             die('Sorry, we couldn\'t add the user: ' . print_r($insertUser->errorInfo()) . PHP_EOL);
         }
-        return $this->getPdo()->lastInsertId();
+
+        $userId = $this->getPdo()->lastInsertId();
+        $nessusDirectory = __DIR__ . '/uploads/nessus/' . $userId;
+        $openDlpDirectory = __DIR__ . '/uploads/opendlp/' . $userId;
+
+        $nessusCreate = mkdir($nessusDirectory);
+        $OpenDlpCreate = mkdir($openDlpDirectory);
+
+        if ((!$nessusCreate) || (!$OpenDlpCreate))
+        {
+            die('Unable to create directories: ' . $nessusDirectory . ' :AND: ' . $openDlpDirectory);
+        }
+        return $userId;
     }
 
     public function removeUser($userId)

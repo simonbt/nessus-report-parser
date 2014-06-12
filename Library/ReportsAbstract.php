@@ -1,35 +1,37 @@
 <?php
 /**
- * slim -- ImportAbstract.php
+ * slim -- ReportsAbstract.php
  * User: Simon Beattie
  * Date: 10/06/2014
- * Time: 20:51
+ * Time: 16:15
  */
 
 namespace Library;
 
 
-class ImportAbstract
+class ReportsAbstract
 {
 
     /**
-     * @var PDO $pdo
+     * @var \PDO $pdo
      */
     protected $pdo;
 
+    /**
+     * @var array $config
+     */
+    protected $config;
 
     public function __construct($pdo)
     {
         $this->setPdo($pdo);
     }
 
-
     /**
      * setPdo sets the pdo property in object storage
      *
      * @param \PDO $pdo
-     * @throws InvalidArgumentException
-     * @return StatusAbstract
+     * @throws \InvalidArgumentException
      */
     public function setPdo($pdo)
     {
@@ -49,6 +51,5 @@ class ImportAbstract
     {
         return $this->pdo;
     }
-
 
 } 

@@ -8,10 +8,7 @@
 
 namespace Library;
 
-include_once(__DIR__ . '/ReportAbstract.php');
-
-
-class ReportData extends \Library\ReportAbstract
+class ReportData extends ReportsAbstract
 {
 
     function listReports($userId)

@@ -12,9 +12,9 @@ namespace Library;
 class Forms extends Files
 {
 
-    public function deleteNessus($files)
+    public function deleteNessus($files, $userId)
     {
-        $nessusDirectory = __DIR__ . '/Uploads/Nessus/';
+        $nessusDirectory = __DIR__ . '/Uploads/Nessus/' . $userId .'/';
 
         if (count($files) > 1)
         {
@@ -31,9 +31,9 @@ class Forms extends Files
         }
     }
 
-    public function deleteOpenDLP($files)
+    public function deleteOpenDLP($files, $userId)
     {
-        $openDlpDirectory = __DIR__ . '/uploads/opendlp/';
+        $openDlpDirectory = __DIR__ . '/uploads/opendlp/' . $userId . '/';
 
         if (count($files) > 1)
         {
@@ -51,9 +51,9 @@ class Forms extends Files
 
     }
 
-    public function merge($mergeResults)
+    public function merge($mergeResults, $userId)
     {
-        $nessusDirectory = __DIR__ . '/uploads/nessus/';
+        $nessusDirectory = __DIR__ . '/uploads/nessus/' . $userId . '/';
 
         if (!$mergeResults)
         {
@@ -66,7 +66,7 @@ class Forms extends Files
             {
                 $toMerge = $toMerge . ' ' . $nessusDirectory . $this->decodeName($report);
             }
-            $command = 'python ' . __DIR__ . '/merger.py ' . $this->decodeName($mergeResults[0]) . $this->rand_string(4) . '.merged ' . $toMerge . ' 2>&1';
+            $command = 'python ' . __DIR__ . '/merger.py ' . $this->decodeName($mergeResults[0]) . $this->rand_string(4) . '.merged ' . $_SESSION['userId'] . ' ' . $toMerge . ' 2>&1';
             exec($command, $output, $return);
             if ($return == 0)
             {
@@ -97,9 +97,9 @@ class Forms extends Files
 
     }
 
-    public function uploadNessus($tempName, $fileName)
+    public function uploadNessus($tempName, $fileName, $userId)
     {
-        $nessusDirectory = __DIR__ . '/uploads/nessus/';
+        $nessusDirectory = __DIR__ . '/uploads/nessus/' . $userId . '/';
 
         if (move_uploaded_file($tempName, $nessusDirectory . $fileName))
         {
@@ -111,9 +111,9 @@ class Forms extends Files
         }
     }
 
-    public function uploadOpenDLP($tempName, $fileName)
+    public function uploadOpenDLP($tempName, $fileName, $userId)
     {
-        $openDlpDirectory = __DIR__ . '/uploads/opendlp/';
+        $openDlpDirectory = __DIR__ . '/uploads/opendlp/' . $userId . '/';
 
         if (move_uploaded_file($tempName, $openDlpDirectory . $fileName))
         {

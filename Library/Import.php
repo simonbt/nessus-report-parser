@@ -9,7 +9,7 @@
 namespace Library;
 
 
-class Import extends ImportAbstract
+class Import extends ReportsAbstract
 {
 
     protected $xmlObj;
@@ -18,7 +18,7 @@ class Import extends ImportAbstract
 
     public function importNessusXML($userId, $fileName)
     {
-        $nessusDirectory = __DIR__ . '/Uploads/Nessus/';
+        $nessusDirectory = __DIR__ . '/Uploads/Nessus/' . $userId . '/';
         $xmlFile = $nessusDirectory . $fileName;
 
         $this->createReport($userId, $xmlFile); // Output any return from report import.

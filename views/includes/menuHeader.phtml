@@ -19,58 +19,57 @@ echo '  <html>
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
                 <link rel="stylesheet" type="text/css" href="/css/main.css">
-
                 <title>RandomStorm Report Generator</title>
-                <script language="javascript">
-                    var popupWindow = null;
-                    function centeredPopup(url,winName,w,h,scroll){
-                        LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
-                        TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
-                        settings =
-                        \'height=\'+h+\',width=\'+w+\',top=\'+TopPosition+\',left=\'+LeftPosition+\',scrollbars=\'+scroll+\',resizable\';
-                        popupWindow = window.open(url,winName,settings)
-                    }
-                    function loadingScreen(){
-                        document.body.innerHTML += "<div class="loading">Loading&#8230;</div>";
-                    }
-                </script>
             </head>
-<html>
-
-<div class="menu" ><a href="/" onclick="loadingScreen()"><img src="/images/logo.png" alt="RandomStorm Limited" /></a>
-        <nav>
-	<ul>
-		<li><a href="/">Home</a></li>
-		<li>
-      <a href="#">Reports <span class="caret"></span></a>
-			<div>
-				<ul>
-					<li><a href="/nessus">Nessus</a></li>
-                    <li><a href="/opendlp">OpenDLP</a></li>
-				</ul>
-			</div>
-		</li>
-
-		<li><a href="#">File Management<span class="caret"></span></a>
-			<div>
-				<ul>
-					<li><a href="/nessusMenu">Nessus</a></li>
-                    <li><a href="/openDlpMenu">OpenDLP</a></li>
-				</ul>
-			</div>
-
-		</li>
-
-		<li><a href="#">' . $username . '<span class="caret"></span></a>
-		    <div>
-				<ul>
-                    <li><a href="/admin/adduser">Add User</a></li>
-					<li><a href="/admin/changepass">Change Password</a></li>
-                    <li><a href="/logout">Logout</a></li>
-				</ul>
-			</div>
-		</li>
-	</ul>
-</nav>
-
+            <body>
+                <div class="menu" ><a href="/"><img src="/images/logo.png" alt="RandomStorm Limited" /></a>
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="/">Home</a>
+                        </li>
+                        <li>
+                            <a href="#">Reports <span class="caret"></span></a>
+                            <div>
+                                <ul>
+                                    <li>
+                                        <a href="/nessus">Nessus</a>
+                                    </li>
+                                    <li>
+                                        <a href="/opendlp">OpenDLP</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#">File Management<span class="caret"></span></a>
+                            <div>
+                                <ul>
+                                    <li>
+                                        <a href="/nessusMenu">Nessus</a>
+                                    </li>
+                                    <li>
+                                        <a href="/openDlpMenu">OpenDLP</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#">' . $username . '<span class="caret"></span></a>
+                            <div>
+                                <ul>
+                                    <li>
+                                        <a href="/admin/adduser">Add User</a>
+                                    </li>
+                                    <li>
+                                        <a href="/admin/changepass">Change Password</a>
+                                    </li>
+                                    <li>
+                                        <a href="/logout">Logout</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
 ';

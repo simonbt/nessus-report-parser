@@ -20,5 +20,5 @@ $app->get('/nessus', function() use($app,$reportData, $config)
 $app->get('/opendlp', function () use($app)
 {
     $files = new \Library\Files();
-    $app->render('menus/openDlpIndex.phtml', array('reports' => $files->getOpenDlpList()));
+    $app->render('menus/openDlpIndex.phtml', array('reports' => $files->getOpenDlpList($_SESSION['userId'])));
 });

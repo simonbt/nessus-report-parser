@@ -14,30 +14,33 @@ class Files
     protected $saltPre = 'fd393fncaa7201';
     protected $saltPost = 'asf23180r1nogvbs';
 
-    public function getNessusList()
+    public function getNessusList($userId)
     {
-        $nessusDirectory = __DIR__ . '/Uploads/Nessus';
+        $nessusDirectory = __DIR__ . '/Uploads/Nessus/' . $userId;
         $nessusList = array_slice(scandir($nessusDirectory), 2);
 
         $nessusFiles = array();
-        foreach ($nessusList as $fileName) {
+        foreach ($nessusList as $fileName)
+        {
             $nessusFiles[$fileName] = $this->encodeName($fileName);
         }
         return $nessusFiles;
     }
 
-    public function getOpenDlpList()
+    public function getOpenDlpList($userId)
     {
-        $openDlpDirectory = __DIR__ . '/uploads/opendlp';
+        $openDlpDirectory = __DIR__ . '/uploads/opendlp/' . $userId;
         $openDlpList = array_slice(scandir($openDlpDirectory), 2);
 
         $openDlpFiles = array();
-        foreach ($openDlpList as $fileName) {
+        foreach ($openDlpList as $fileName)
+        {
             $openDlpFiles[$fileName] = $this->encodeName($fileName);
         }
 
         return $openDlpFiles;
     }
+
 
     public function encodeName($fileName)
     {
