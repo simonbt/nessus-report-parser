@@ -6,44 +6,99 @@
  * Time: 12:41
  */
 
-$app->post('/files/upload', function()
+$app->get('/openDlpMenu', function() use($app)
+{
+    $files = new \Library\Files();
+    $app->render('openDlpFiles.phtml', array('reports' => $files->getOpenDlpList(), 'app' => $app));
+});
+
+$app->post('/openDlpMenu/upload', function() use($app)
 {
     $forms = new \Library\Forms();
     $tempName = $_FILES['uploadFile']['tmp_name'];
     $fileName = $_FILES['uploadFile']['name'];
 
-    switch ($_POST['upload'])
+    $result = $forms->uploadOpenDLP($tempName, $fileName);
+    $app->redirect('/openDlpMenu?upload='.$result);
+});
+
+$app->post('/openDlpMenu/admin', function () use ($app)
+{
+    $type = $app->request()->post('formSubmit');
+    $reports = $app->request()->post('reports');
+    $forms = new \Library\Forms();
+    switch ($type)
     {
-        case 'Upload Nessus XML':
-            $forms->uploadNessus($tempName, $fileName);
-            break;
-        case 'Upload OpenDLP XML':
-            $forms->uploadOpenDLP($tempName, $fileName);
+        case 'Delete OpenDLP':
+            $result = $forms->deleteOpenDLP($reports);
+            $app->redirect('/openDlpMenu?admin='.$result);
             break;
     }
 });
 
-$app->post('/files/admin', function () use($import)
+
+
+
+
+$app->get('/nessusMenu', function() use($app)
+{
+    $files = new \Library\Files();
+    $app->render('nessusFiles.phtml', array('reports' => $files->getNessusList(), 'app' => $app));
+});
+
+$app->post('/nessusMenu/upload', function() use($app)
 {
     $forms = new \Library\Forms();
-    switch ($_POST['formSubmit'])
+    $tempName = $_FILES['uploadFile']['tmp_name'];
+    $fileName = $_FILES['uploadFile']['name'];
+
+    $result = $forms->uploadNessus($tempName, $fileName);
+    $app->redirect('/nessusMenu?upload='.$result);
+
+});
+
+
+$app->post('/nessusMenu/admin', function () use($import, $app)
+{
+    $type = $app->request()->post('formSubmit');
+    $reports = $app->request()->post('reports');
+    $forms = new \Library\Forms();
+    switch ($type)
     {
         case 'Delete Nessus':
-            $forms->deleteNessus($_POST['reports']);
-            break;
-
-        case 'Delete OpenDLP':
-            $forms->deleteOpenDLP($_POST['reports']);
+            $result = $forms->deleteNessus($reports);
+            $app->redirect('/nessusMenu?admin='.$result);
             break;
 
         case 'Merge':
-            $forms->merge($_POST['reports']);
+            $result = $forms->merge($reports);
+            if ($result == 'none')
+            {
+                $app->redirect('/nessusMenu?admin='.$result);
+            }
+            else
+            {
+                $app->redirect('/nessusMenu?admin='.$result);
+            }
             break;
 
         case 'Import':
-            $postReport = $_POST['reports'];
-            $import->importNessusXML($_SESSION['userId'], $forms->import($postReport));
+            $xml = $forms->import($reports);
+            if ($xml == 'none')
+            {
+                $app->redirect('/nessusMenu?admin='.$xml);
+            }
+            elseif ($xml == 'multiple')
+            {
+                $app->redirect('/nessusMenu?admin='.$xml);
+            }
+            else
+            {
+            $result = $import->importNessusXML($_SESSION['userId'], $xml );
+            $app->redirect('/nessusMenu?admin='.$result);
+            }
             break;
+
     }
 
 });

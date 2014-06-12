@@ -1,0 +1,37 @@
+<?php
+/**
+ * nessus-report-parser -- adduser.phtml
+ * User: Simon Beattie
+ * Date: 12/06/2014
+ * Time: 18:01
+ */
+
+include('menuHeader.phtml');
+
+echo '
+            <div class="menu">
+            <p><b>Add New User</b></p>
+
+            <p><form method="post">
+                <input type="text" name="email" placeholder="Email Address"><br><br>
+                <input type="text" name="name" placeholder="Full Name"><br><br>
+                <input type="password" name="password" placeholder="Password"><br>
+                <input type="text" name="priv" placeholder="Privilege Level"><br>
+                <input type="submit" value="Add User"></form>
+
+                <form action="/"><input type="submit" value="Cancel"></form>
+';
+$success = $app->request()->get('result');
+if ($success == 'exists')
+{
+    echo '<a class="red">That user already exists, please try again</a>';
+
+}
+elseif (is_numeric($success))
+{
+    echo '<a href="/" class="green">User successfully added with ID: ' . $success . ' - Click here to return<a>';
+}
+
+echo '</div>';
+
+include('footer.phtml');

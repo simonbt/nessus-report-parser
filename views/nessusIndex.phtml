@@ -6,38 +6,18 @@
  * Time: 12:25
  */
 
-echo '  <html>
-            <head>
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-                <link rel="stylesheet" type="text/css" href="/css/main.css">
-                <title>RandomStorm Report Generator</title>
-                <script language="javascript">
 
+include('menuHeader.phtml');
+
+echo '
+<p><br><br><b>Imported Nessus Reports</b></br>
+</div>
+<div class="reportList">
 ';
-echo "
-                    function loadingScreen(){
-                        document.body.innerHTML += '<div class=\"loading\">Loading&#8230;</div>';
-                    }
-                </script>
-            </head>
-";
-
-echo '<div class="menu">';
-echo '<div><a href="/" onclick="loadingScreen()"><img src="/images/logo.png" alt="RandomStorm Limited" /></a></div>';
-echo '<div>
-<br>
-<b>Options</b>
-<br>
-<p><a class="myButton"; href="/opendlp" onclick="loadingScreen()">OpenDLP Reports</a>
-<p><a class="myButton"; href="/files" onclick="loadingScreen()">File Management</a>
-<p><a class="myButton"; href="/logout" onclick="loadingScreen()">Logout</a>
-<p><b>Imported Nessus Reports</b>
-';
-
 
     foreach ($reports as $report) {
-        echo '<p><b>' . $report['report_name'] . '</b> (' . $report['created'] . ') - ';
-        echo '
+        echo'
+            <p><b>' . $report['report_name'] . '</b> (' . $report['created'] . ')
             <label>
                 <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
                     <option selected> Select Report </option>
@@ -51,3 +31,5 @@ echo '<div>
             ';
     }
     echo '</div>';
+
+include('footer.phtml');

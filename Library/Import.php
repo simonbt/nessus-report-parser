@@ -21,9 +21,9 @@ class Import extends ImportAbstract
         $nessusDirectory = __DIR__ . '/Uploads/Nessus/';
         $xmlFile = $nessusDirectory . $fileName;
 
-        echo "<p>Creating report";
-        echo "<p>Completed creating report: " . $this->createReport($userId, $xmlFile); // Output any return from report import.
-        print '<p><a href="/files">Return to menu</a></p>';
+        $this->createReport($userId, $xmlFile); // Output any return from report import.
+
+        return 'success';
     }
 
     public function createReport($userId, $xml) // Create report in database and spawn further functions for vulnerabilities and hosts.

@@ -1,0 +1,82 @@
+<?php
+/**
+ * nessus-report-parser -- openDlpFiles.phtml
+ * User: Simon Beattie
+ * Date: 12/06/2014
+ * Time: 16:57
+ */
+
+include('menuHeader.phtml');
+
+if ($app->request()->get('upload'))
+{
+    if ($app->request()->get('upload') == 'success' )
+    {
+        $result = '<a class="green">The file has been successfully uploaded</a>';
+    }
+    else
+    {
+        $result = '<a class="red">The file has failed to upload</a>';
+    }
+}
+if ($app->request()->get('admin'))
+{
+    if ($app->request()->get('admin') == 'success' )
+    {
+        $admin = '<a class="green">Successful</a>';
+    }
+    elseif ($app->request()->get('admin') == 'none')
+    {
+        $admin = '<a class="red">Failed, you must select a report</a>';
+    }
+    elseif ($app->request()->get('admin') == 'multiple')
+    {
+        $admin = '<a class="red">Failed, you can only import a single report</a>';
+    }
+    else
+    {
+        $admin = '<a class="red">Failed, please try again</a>';
+    }
+}
+
+echo '
+<form action="/openDlpMenu/admin" method="post">
+    </p><b><br><br>Stored OpenDLP Reports</b></p>
+
+
+    <table class="center">
+        <tr>
+            <td>Report Name</td>
+            <td>Select</td>
+        </td>
+';
+foreach ($reports as $file => $hash) {
+    echo '<tr>
+            <td> ' . $file . ' </td>
+            <td><input type="checkbox" name="reports[]" value="' . $hash . '" /></td>
+        </tr>';
+}
+
+echo '</table>';
+if($admin){echo $admin.'<br>';};
+echo '
+        <input type="submit" name="formSubmit" value="Delete OpenDLP"/>
+    </form>
+</body>
+</html>
+';
+
+echo '
+<p><b>Upload OpenDLP File</b></p>
+';
+if($result){echo $result;};
+echo'
+<form action="/openDlpMenu/upload" method="post" enctype="multipart/form-data">
+  <input type="file" name="uploadFile" size="50" maxlength="25" />
+
+  <input type="submit" name="upload" value="Upload OpenDLP XML" />
+</form>
+
+';
+
+include('footer.phtml');

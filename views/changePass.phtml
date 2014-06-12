@@ -1,0 +1,43 @@
+<?php
+/**
+ * nessus-report-parser -- changePass.phtml
+ * User: Simon Beattie
+ * Date: 12/06/2014
+ * Time: 17:39
+ */
+
+include('menuHeader.phtml');
+
+echo '
+            <div class="menu">
+            <h3>Password change</h3>
+
+            <p><form method="post">
+                <input type="password" name="oldpass" placeholder="Existing Password"><br><br>
+                <input type="password" name="newpass" placeholder="New Password"><br>
+                <input type="password" name="repeat" placeholder="Repeat Password"><br>
+                <input type="submit" value="Change"></form>
+
+                <form action="/"><input type="submit" value="Cancel"></form>
+
+';
+
+$success = $app->request()->get('result');
+switch ($success)
+{
+    case 'success':
+        echo '<a href="/" class="green">Password changed successfully - Click to return to the menu</a>';
+        break;
+    case 'match':
+        echo '<a class="red">Your passwords did not match, please try again</a>';
+        break;
+    case 'failed':
+        echo '<a class="red">The password change failed, please try again</a>';
+        break;
+    case 'wrongPass':
+        echo '<a class="red">You have entered the wrong password, please try again</a>';
+        break;
+}
+echo '</div>';
+
+include('footer.phtml');

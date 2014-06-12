@@ -6,30 +6,7 @@
  * Time: 12:24
  */
 
-echo '<html>';
-echo '<head>';
-echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
-echo '<link rel="stylesheet" type="text/css" href="/css/main.css">';
-echo '<title>Report Descriptions</title>';
-echo "
-<script language=\"javascript\">
-var popupWindow = null;
-function centeredPopup(url,winName,w,h,scroll){
-    LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
-    TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
-    settings =
-        'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',resizable';
-popupWindow = window.open(url,winName,settings)
-}
-
-function loadingScreen(){
-   document.body.innerHTML += '<div class=\"loading\">Loading&#8230;</div>';
-}
-</script>
-";
-echo '</head>';
-echo "<a onclick='loadingScreen()' class=\"myButton\"; href=\"/opendlp\">Return to Menu</a></p>";
-
+include('openDlpReportHeader.phtml');
 
 echo '<p>Scan Details';
 echo '<p><table>';

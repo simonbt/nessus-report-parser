@@ -6,24 +6,19 @@
  * Time: 12:40
  */
 
-$app->get('/', function() use($reportData, $common, $config)
+$app->get('/', function() use($app)
 {
-    $common->index();
+    $app->render('index.phtml', array());
 });
 
-$app->get('/nessus', function() use($reportData, $common, $config)
+$app->get('/nessus', function() use($app,$reportData, $config)
 {
     $reportList = $reportData->listReports($_SESSION['userId']);
-    $common->nessusIndex($reportList, $config['severity']);
+    $app->render('nessusIndex.phtml',array('reports' => $reportList, 'severity' => $config['severity']));
 });
 
-$app->get('/opendlp', function () use($common)
-{
-    $common->openDlpIndex();
-});
-
-$app->get('/files', function ()
+$app->get('/opendlp', function () use($app)
 {
     $files = new \Library\Files();
-    $files->fileIndex();
+    $app->render('openDlpIndex.phtml', array('reports' => $files->getOpenDlpList()));
 });

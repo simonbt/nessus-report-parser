@@ -50,7 +50,6 @@ $app = new \Slim\Slim(array(
 session_start();
 
 $reportData = new \Library\ReportData($pdo);
-$common = new \Library\Common();
 $import = new \Library\Import($pdo);
 
 include_once('Routes/authentication.php');

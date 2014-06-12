@@ -1,0 +1,23 @@
+<?php
+/**
+ * nessus-report-parser -- login.phtml
+ * User: Simon Beattie
+ * Date: 12/06/2014
+ * Time: 18:06
+ */
+
+$badLogin = $app->request()->get('loggedIn');
+
+include('menuHeader.phtml');
+echo '
+            <div class="menu">
+            <p><b>Please enter your login credentials</b></p>
+            <p><form method="post"><input type="text" name="username" placeholder="Email Address"><input type="password" name="password" placeholder="Password"><input type="submit" value="Login"></form>
+ ';
+if($badLogin)
+{
+    echo '<strong class="red">You have entered an incorrect username and password!</strong>';
+}
+echo '         </div>';
+
+include('footer.phtml');

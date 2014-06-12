@@ -6,23 +6,7 @@
  * Time: 12:21
  */
 
-echo '
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="/css/main.css">
-<title>Report Host View</title>
-
-                <script language=\"javascript\">
-
-                function loadingScreen(){
-   document.body.innerHTML += \'<div class="loading">Loading&#8230;</div>\';
-                }
-                </script>
-
-</head>
-<a onclick="loadingScreen()" class="myButton" href="/nessus">Return to Menu</a></p>
-';
+include('nessusReportHeader.phtml');
 
 foreach ($reportData as $vulnerability) {
     echo '
