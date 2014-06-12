@@ -1,7 +1,7 @@
 nessus-report-parser
 ====================
 
-Parser and outputter for Nessus and OpenDLP XML reports
+Parser and report generation for Nessus and OpenDLP XML reports
 
 REQUIREMENTS:
 
