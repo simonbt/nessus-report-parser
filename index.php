@@ -30,12 +30,18 @@ else
     die('Config.php does not exist - Please run install.sh');
 }
 
+
 try {
-    $pdo = new PDO('sqlite:Database/reports.sqlite');
-} catch (PDOException $pdoError) {
-    echo $pdoError->getMessage();
-    die('You may need to run install.sh to complete installation');
+    $pdo = new \PDO(
+        'mysql:host=' . $config['db']['hostname'] . ';dbname=' . $config['db']['database'],
+        $config['db']['username'],
+        $config['db']['password']
+    );
+} catch (\PDOException $pdoError)
+{
+    print $pdoError->getMessage() . PHP_EOL;
 }
+
 
 $app = new \Slim\Slim(array(
     'templates.path' => './views'

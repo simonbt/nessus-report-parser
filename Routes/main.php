@@ -8,7 +8,12 @@
 
 $app->get('/', function() use($reportData, $common, $config)
 {
-    $reportList = $reportData->listReports();
+    $common->index();
+});
+
+$app->get('/nessus', function() use($reportData, $common, $config)
+{
+    $reportList = $reportData->listReports($_SESSION['userId']);
     $common->nessusIndex($reportList, $config['severity']);
 });
 

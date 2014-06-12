@@ -13,13 +13,13 @@ include_once(__DIR__ . '/ReportAbstract.php');
 
 class ReportData extends \Library\ReportAbstract {
 
-    function listReports()
+    function listReports($userId)
     { // List all reports that have been imported into the system
 
         $reports = array();
 
-        $listReportQuery = $this->getPdo()->prepare('SELECT * FROM reports ORDER BY id DESC');
-        $listReportQuery->execute();
+        $listReportQuery = $this->getPdo()->prepare('SELECT * FROM reports WHERE userid =? ORDER BY id DESC');
+        $listReportQuery->execute(array($userId));
         $reportList = $listReportQuery->fetchAll(\PDO::FETCH_ASSOC);
 
         foreach ($reportList as $report) {

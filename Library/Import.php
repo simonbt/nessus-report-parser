@@ -15,23 +15,23 @@ class Import extends ImportAbstract{
     protected $reportName;
     protected $reportID;
 
-    public function importNessusXML($fileName)
+    public function importNessusXML($userId, $fileName)
     {
         $nessusDirectory = __DIR__ . '/Uploads/Nessus/';
         $xmlFile = $nessusDirectory . $fileName;
 
         echo "<p>Creating report";
-        echo "<p>Completed creating report: " . $this->createReport($xmlFile); // Output any return from report import.
+        echo "<p>Completed creating report: " . $this->createReport($userId, $xmlFile); // Output any return from report import.
         print '<p><a href="/files">Return to menu</a></p>';
     }
 
-    public function createReport($xml) // Create report in database and spawn further functions for vulnerabilities and hosts.
+    public function createReport($userId, $xml) // Create report in database and spawn further functions for vulnerabilities and hosts.
     {
         date_default_timezone_set('Europe/London');
         $this->xmlObj = simplexml_load_file($xml);
         $this->reportName = $this->xmlObj->Report[0]['name'];
-        $createReport = $this->getPdo()->prepare('INSERT INTO reports (report_name, created) VALUES(?, ?)');
-        $createdOk = $createReport->execute(array($this->xmlObj->Report[0]['name'], date('Y-m-d H:i:s')));
+        $createReport = $this->getPdo()->prepare('INSERT INTO reports (report_name, created, userid) VALUES(?, ?, ?)');
+        $createdOk = $createReport->execute(array($this->xmlObj->Report[0]['name'], date('Y-m-d H:i:s'), $userId));
         if (!$createdOk) {
             die('Sorry, we couldn\'t create the new report: ' . print_r($createReport->errorInfo()) . PHP_EOL);
         }
@@ -113,7 +113,7 @@ class Import extends ImportAbstract{
 
 
 
-            $addVuln = $this->getPdo()->prepare('INSERT OR REPLACE INTO vulnerabilities (pluginID, vulnerability, svc_name, severity, pluginFamily, description, cve, risk_factor, see_also, solution, synopsis) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+            $addVuln = $this->getPdo()->prepare('INSERT IGNORE INTO vulnerabilities (pluginID, vulnerability, svc_name, severity, pluginFamily, description, cve, risk_factor, see_also, solution, synopsis) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
             $addVulnLink = $this->getPdo()->prepare('INSERT INTO host_vuln_link (report_id, host_id, plugin_id, port, protocol, service) VALUES(?, ?, ?, ?, ?, ?)');
 
             foreach ($item->attributes() as $attribute => $value) {

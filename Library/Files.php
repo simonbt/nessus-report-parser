@@ -92,8 +92,32 @@ echo '  <html>
         <body>
         <div class="menu">
         <div><a href="/" onclick="loadingScreen()"><img src="/images/logo.png" alt="RandomStorm Limited" /></a></div>
-        <div><p><a class="myButton" href="/" onclick="loadingScreen()">Return to Nessus reports</a></div>
-        <div><p><a class="myButton" href="/opendlp" onclick="loadingScreen()">Return to OpenDLP reports</a></div>
+
+        <nav>
+	<ul>
+		<li><a href="/">Home</a></li>
+		<li>
+      <a href="#">Reports <span class="caret"></span></a>
+			<div>
+				<ul>
+					<li><a href="/">Nessus</a></li>
+                    <li><a href="/opendlp">OpenDLP</a></li>
+				</ul>
+			</div>
+		</li>
+		<li><a href="/files">File Management</a></li>
+		<li><a href="#">' . $_SESSION['name'] . '<span class="caret"></span></a>
+		    <div>
+				<ul>
+					<li><a href="/admin">Administration</a></li>
+                    <li><a href="/logout">Logout</a></li>
+				</ul>
+			</div>
+		</li>
+	</ul>
+</nav>
+
+
         ';
 
 //Nessus Table

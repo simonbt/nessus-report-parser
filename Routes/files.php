@@ -42,7 +42,7 @@ $app->post('/files/admin', function () use($import)
 
         case 'Import':
             $postReport = $_POST['reports'];
-            $import->importNessusXML($forms->import($postReport));
+            $import->importNessusXML($_SESSION['userId'], $forms->import($postReport));
             break;
     }
 

@@ -11,12 +11,13 @@ namespace Library;
 
 class Common extends files{
 
-    public function nessusIndex($reports, $severity)
+    public function index()
     {
         echo '  <html>
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
                 <link rel="stylesheet" type="text/css" href="css/main.css">
+
                 <title>RandomStorm Report Generator</title>
                 <script language="javascript">
                     var popupWindow = null;
@@ -34,17 +35,100 @@ class Common extends files{
                     }
                 </script>
             </head>
-<div class="menu">
-<div><a href="/" onclick="loadingScreen()"><img src="images/logo.png" alt="RandomStorm Limited" /></a></div>
-<div>
-<br>
-<b>Options</b>
-<br>
-<p><a class="myButton"; href="/opendlp" onclick="loadingScreen()">OpenDLP Reports</a>
-<p><a class="myButton"; href="/files" onclick="loadingScreen()">File Management</a>
-<p><a class="myButton"; href="/logout" onclick="loadingScreen()">Logout</a>
+<html>
 
-<p><b>Imported Nessus Reports</b>
+<div class="menu" ><a href="/" onclick="loadingScreen()"><img src="images/logo.png" alt="RandomStorm Limited" /></a>
+        <nav>
+	<ul>
+		<li><a href="#">Home</a></li>
+		<li>
+      <a href="#">Reports <span class="caret"></span></a>
+			<div>
+				<ul>
+					<li><a href="/nessus">Nessus</a></li>
+                    <li><a href="/opendlp">OpenDLP</a></li>
+				</ul>
+			</div>
+		</li>
+		<li><a href="/files">File Management</a></li>
+		<li><a href="#">' . $_SESSION['name'] . '<span class="caret"></span></a>
+		    <div>
+				<ul>
+                    <li><a href="/admin/adduser">Add User</a></li>
+					<li><a href="/admin/changepass">Change Password</a></li>
+                    <li><a href="/logout">Logout</a></li>
+				</ul>
+			</div>
+		</li>
+	</ul>
+</nav>
+
+<p><br><br>Welcome to the RandomStorm Report Generator
+<p>Please select reports from above
+
+</div>
+
+</html>
+';
+    }
+
+    public function nessusIndex($reports, $severity)
+    {
+        echo '  <html>
+            <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                <link rel="stylesheet" type="text/css" href="css/main.css">
+
+                <title>RandomStorm Report Generator</title>
+                <script language="javascript">
+                    var popupWindow = null;
+                    function centeredPopup(url,winName,w,h,scroll){
+                        LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
+                        TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
+                        settings =
+                        \'height=\'+h+\',width=\'+w+\',top=\'+TopPosition+\',left=\'+LeftPosition+\',scrollbars=\'+scroll+\',resizable\';
+                        popupWindow = window.open(url,winName,settings)
+                    }
+
+
+                    function loadingScreen(){
+                        document.body.innerHTML += "<div class="loading">Loading&#8230;</div>";
+                    }
+                </script>
+            </head>
+<html>
+
+<div class="menu" ><a href="/" onclick="loadingScreen()"><img src="images/logo.png" alt="RandomStorm Limited" /></a>
+        <nav>
+	<ul>
+		<li><a href="/">Home</a></li>
+		<li>
+      <a href="#">Reports <span class="caret"></span></a>
+			<div>
+				<ul>
+					<li><a href="/nessus">Nessus</a></li>
+                    <li><a href="/opendlp">OpenDLP</a></li>
+				</ul>
+			</div>
+		</li>
+		<li><a href="/files">File Management</a></li>
+		<li><a href="#">' . $_SESSION['name'] . '<span class="caret"></span></a>
+		    <div>
+				<ul>
+                    <li><a href="/admin/adduser">Add User</a></li>
+					<li><a href="/admin/changepass">Change Password</a></li>
+                    <li><a href="/logout">Logout</a></li>
+				</ul>
+			</div>
+		</li>
+	</ul>
+</nav>
+
+
+
+
+
+<p><br><br><b>Imported Nessus Reports</b></br>
 ';
 
         if (!$reports)
@@ -91,17 +175,37 @@ echo "
             </head>
 ";
 
-echo '<div class="menu">';
-echo '<div><a href="/opendlp" onclick="loadingScreen()"><img src="/images/logo.png" alt="RandomStorm Limited" /></a></div>';
-echo '<div>
-<br>
-<b>Options</b>
-<br>
-<p><a class="myButton"; href="/" onclick="loadingScreen()">Nessus Reports</a>
-<p><a class="myButton"; href="/files" onclick="loadingScreen()">File Management</a>
-<p><a class="myButton"; href="/logout" onclick="loadingScreen()">Logout</a>
+echo '
 
-<p><b>Imported OpenDLP Reports</b>
+<div class="menu">
+<div class="menu" ><a href="/" onclick="loadingScreen()"><img src="images/logo.png" alt="RandomStorm Limited" /></a></div>
+        <nav>
+	<ul>
+		<li><a href="/">Home</a></li>
+		<li>
+      <a href="#">Reports <span class="caret"></span></a>
+			<div>
+				<ul>
+					<li><a href="/nessus">Nessus</a></li>
+                    <li><a href="/opendlp">OpenDLP</a></li>
+				</ul>
+			</div>
+		</li>
+		<li><a href="/files">File Management</a></li>
+		<li><a href="#">' . $_SESSION['name'] . '<span class="caret"></span></a>
+		    <div>
+				<ul>
+				    <li><a href="/admin/adduser">Add User</a></li>
+					<li><a href="/admin/changepass">Change Password</a></li>
+                    <li><a href="/logout">Logout</a></li>
+				</ul>
+			</div>
+		</li>
+	</ul>
+</nav>
+
+
+<p><br><br><b>Imported OpenDLP Reports</b>
 ';
 
 
@@ -112,7 +216,7 @@ if (!$this->getOpenDlpList())
 } else {
 
     foreach ($this->getOpenDlpList() as $name => $hash) {
-        echo '<p><b>' . $name . '</b> ';
+        echo '<p>' . $name;
         echo '
 <label>
     <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
