@@ -14,7 +14,7 @@ class Forms extends Files
 
     public function deleteNessus($files, $userId)
     {
-        $nessusDirectory = __DIR__ . '/Uploads/Nessus/' . $userId .'/';
+        $nessusDirectory = __DIR__ . '/uploads/nessus/' . $userId .'/';
 
         if (count($files) > 1)
         {

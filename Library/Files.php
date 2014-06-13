@@ -16,7 +16,7 @@ class Files
 
     public function getNessusList($userId)
     {
-        $nessusDirectory = __DIR__ . '/Uploads/Nessus/' . $userId;
+        $nessusDirectory = __DIR__ . '/uploads/nessus/' . $userId;
         $nessusList = array_slice(scandir($nessusDirectory), 2);
 
         $nessusFiles = array();
