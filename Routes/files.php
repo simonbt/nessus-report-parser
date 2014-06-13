@@ -52,6 +52,13 @@ $app->post('/nessusMenu/upload', function() use($app)
 {
     $forms = new \Library\Forms();
 
+    if (!array_key_exists('uploadFile', $_FILES))
+    {
+        $result = 'failed';
+        $app->redirect('/nessusMenu?upload='.$result);
+        return;
+    }
+
     $tempName = $_FILES['uploadFile']['tmp_name'];
     $fileName = $_FILES['uploadFile']['name'];
     $userId = $_SESSION['userId'];

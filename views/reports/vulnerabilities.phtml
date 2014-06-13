@@ -20,7 +20,7 @@ foreach ($reportData as $hostData) {
     $potentialOperatingSystems = explode(PHP_EOL, $hostData['OS']);
     $OS = trim(array_shift($potentialOperatingSystems));
 
-    if ($hostData->fqdn == "") {
+    if ($hostData['fqdn'] == "") {
         $name = $hostData['netbios'];
     } else {
         $name = $hostData['fqdn'];
