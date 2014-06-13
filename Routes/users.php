@@ -17,7 +17,10 @@ $app->hook('slim.before.dispatch', function() use($app){
         return;
     }
 
-    $app->userId = $_SESSION['userId'];
+    if(array_key_exists('userId', $_SESSION))
+    {
+        $app->userId = $_SESSION['userId'];
+    }
 
 });
 
