@@ -14,7 +14,5 @@ return array(
         'database'  =>  'reports',
         'username'  =>  'root',
         'password'  =>  'pa55word'
-    ),
-    'sqlite3' => 'Database/reports.sqlite',
-    'severity' => '4'
+    )
 );

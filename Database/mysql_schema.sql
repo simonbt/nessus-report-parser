@@ -84,6 +84,8 @@ CREATE TABLE `reports` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `report_name` varchar(255) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
+  `total_hosts` int(11) DEFAULT NULL,
+  `completed_hosts` int(11) DEFAULT NULL,
   `userId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -113,8 +115,9 @@ CREATE TABLE `users` (
   `name` varchar(255) DEFAULT NULL,
   `pass_length` int(11) DEFAULT NULL,
   `last_updated` datetime DEFAULT NULL,
+  `severity` float DEFAULT '4',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,7 +126,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'simon.beattie@randomstorm.com','9af8dbcb12f5e8924d5e0d69e50b1813c1b4c530d3122a5bfb9ecdaba6e914ab32fdfb35e22bcd72a00001592e51eb75555ecd2b4f848654442a837df713cf4c',0,'Simon Beattie',8,'2014-06-12 21:42:49');
+INSERT INTO `users` VALUES (1,'simon.beattie@randomstorm.com','3caf84e8248c5d086862d40bb2c37fe3578930cc763f036ca0fd1a84f61cec2651ae431ea8495f8984224b3dc62e463ec00a4fc259de49e47d60bcaa34652133',0,'Simon Beattie',8,'2014-06-13 23:56:24',4.4);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -169,4 +172,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-06-12 21:44:37
+-- Dump completed on 2014-06-13 23:57:55

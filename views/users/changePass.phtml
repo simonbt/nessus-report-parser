@@ -39,16 +39,16 @@ $success = $app->request()->get('result');
 switch ($success)
 {
     case 'success':
-        echo '<a href="/" class="green">Password changed successfully - Click to return to the menu</a>';
+        echo '<p><a href="/" class="green">Password changed successfully - Click to return to the menu</a></p>';
         break;
     case 'match':
-        echo '<a class="red">Your passwords did not match, please try again</a>';
+        echo '<p><a class="red">Your passwords did not match, please try again</a></p>';
         break;
     case 'failed':
-        echo '<a class="red">The password change failed, please try again</a>';
+        echo '<p><a class="red">The password change failed, please try again</a></p>';
         break;
     case 'wrongPass':
-        echo '<a class="red">You have entered the wrong password, please try again</a>';
+        echo '<p><a class="red">You have entered the wrong password, please try again</a></p>';
         break;
 }
 echo '</div>';
