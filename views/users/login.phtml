@@ -10,6 +10,10 @@ $badLogin = $app->request()->get('loggedIn');
 
 include(__DIR__ . '/../includes/menuHeader.phtml');
 
+if($badLogin)
+{
+    echo '<p class="red">You have entered an incorrect username and password!</p>';
+}
 echo '
 
             <p class="header">Please enter your login credentials</p>
@@ -30,11 +34,6 @@ echo '
                     </ul>
                 </form>
             </div>
- ';
-if($badLogin)
-{
-    echo '<strong class="red">You have entered an incorrect username and password!</strong>';
-}
-echo '         </div>';
+';
 
 include(__DIR__ . '/../includes/footer.phtml');
