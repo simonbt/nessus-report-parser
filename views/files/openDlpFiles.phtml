@@ -58,7 +58,7 @@ foreach ($reports as $file => $hash) {
 }
 
 echo '</table>';
-if($admin){echo $admin.'<br>';};
+if(isset($admin)){echo $admin.'<br>';};
 echo '
         <input type="submit" name="formSubmit" value="Delete OpenDLP"/>
     </form>
@@ -69,7 +69,7 @@ echo '
 echo '
 <p><b>Upload OpenDLP File</b></p>
 ';
-if($result){echo $result;};
+if(isset($result)){echo $result;};
 echo'
 <form action="/openDlpMenu/upload" method="post" enctype="multipart/form-data">
   <input type="file" name="uploadFile" size="50" maxlength="25" />

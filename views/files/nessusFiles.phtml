@@ -59,7 +59,7 @@ echo '
         }
 
         echo '      </table>';
-            if($admin){echo $admin.'<br>';};
+            if(isset($admin)){echo $admin.'<br>';};
         echo '
                     <input type="submit" name="formSubmit" value="Delete Nessus"/>
                     <input type="submit" name="formSubmit" value="Merge"/>
@@ -70,7 +70,7 @@ echo '
 <p><b>Upload Nessus File</b></p>
 ';
 
-if($result){echo $result;};
+if(isset($result)){echo $result;};
 
 echo '
 <form action="/nessusMenu/upload" method="post" enctype="multipart/form-data">
