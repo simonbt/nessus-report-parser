@@ -12,7 +12,7 @@ if (!array_key_exists('name', $_SESSION))
 }
 else
 {
-    $username = $_SESSION['name'];
+    $username = htmlspecialchars($_SESSION['name']);
 }
 
 echo '  <html>

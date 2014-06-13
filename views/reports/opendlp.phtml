@@ -18,8 +18,8 @@ foreach ( $reportData as $mainKey => $mainValue)
     }
     echo "
     <tr>
-        <td>" . $mainKey . "</td>
-        <td>" . $mainValue . "</td>
+        <td>" . htmlspecialchars($mainKey) . "</td>
+        <td>" . htmlspecialchars($mainValue) . "</td>
     </tr>
     ";
 }
@@ -40,8 +40,8 @@ foreach ($reportData['systems'][0] as $systems)
         }
         echo "
         <tr>
-            <td>" . $systemKey . "</td>
-            <td>" . $systemValue . "</td>
+            <td>" . htmlspecialchars($systemKey) . "</td>
+            <td>" . htmlspecialchars($systemValue) . "</td>
         </tr>
         ";
     }
@@ -52,8 +52,8 @@ foreach ($reportData['systems'][0] as $systems)
     {
         echo "
         <tr>
-            <td>" . $typesKey . "</td>
-            <td>" . $typesValue . "</td>
+            <td>" . htmlspecialchars($typesKey) . "</td>
+            <td>" . htmlspecialchars($typesValue) . "</td>
         </tr>
         ";
     }
@@ -66,8 +66,8 @@ foreach ($reportData['systems'][0] as $systems)
     {
         echo "
         <tr>
-            <td>" . $resultsKey . "</td>
-            <td>" . $resultsValue . "</td>
+            <td>" . htmlspecialchars($resultsKey) . "</td>
+            <td>" . htmlspecialchars($resultsValue) . "</td>
         </tr>
         ";
     }

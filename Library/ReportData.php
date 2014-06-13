@@ -174,9 +174,9 @@ class ReportData extends ReportsAbstract
     protected $totalBytesFound;
     protected $totalBytesScanned;
 
-    function getOpenDLP($fileName)
+    function getOpenDLP($fileName, $userId)
     {
-        $openDlpDirectory = __DIR__ . '/uploads/opendlp/';
+        $openDlpDirectory = __DIR__ . '/uploads/opendlp/' . $userId . '/';
         $xml = $xml = simplexml_load_file($openDlpDirectory . $fileName);
 
         $this->xmlObj = $xml;

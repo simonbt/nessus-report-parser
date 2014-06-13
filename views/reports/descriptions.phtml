@@ -16,7 +16,7 @@ echo '
 foreach ($reportData as $vulnerability)
 {
     echo "<div class=\"report\">";
-    echo "<b>" . $vulnerability[0]['vulnerability'] . "</b><br>";
+    echo "<b>" . htmlspecialchars($vulnerability[0]['vulnerability']) . "</b><br>";
     if ($vulnerability[0]->randomstormed == 1)
     {
         echo '<font color="green"><i>This has been updated by a RandomStorm staff member</i><br><br></font>';
@@ -24,19 +24,19 @@ foreach ($reportData as $vulnerability)
         echo '<font color="red"><i>This has NOT been updated by a RandomStorm staff member</i><br><br></font>';
     }
     echo "<b>Synopsis</b><br>";
-    echo $vulnerability[0]['synopsis'] . "<br>";
+    echo htmlspecialchars($vulnerability[0]['synopsis']) . "<br>";
     echo "<b>Description</b><br>";
-    echo $vulnerability[0]['description'] . "<br>";
+    echo htmlspecialchars($vulnerability[0]['description']) . "<br>";
     echo "<b>Solution</b><br>";
-    echo $vulnerability[0]['solution'] . "<br>";
+    echo htmlspecialchars($vulnerability[0]['solution']) . "<br>";
     echo "<b>Plugin Family</b><br>";
-    echo $vulnerability[0]['pluginFamily'] . "<br>";
+    echo htmlspecialchars($vulnerability[0]['pluginFamily']) . "<br>";
     echo "<b>CVE References</b><br>";
-    echo $vulnerability[0]['cve'] . "<br>";
+    echo htmlspecialchars($vulnerability[0]['cve']) . "<br>";
     echo "<b>Risk Factor</b><br>";
-    echo $vulnerability[0]['risk_factor'] . "<br>";
+    echo htmlspecialchars($vulnerability[0]['risk_factor']) . "<br>";
     echo "<b>See Also</b><br>";
-    echo $vulnerability[0]['see_also'];
+    echo htmlspecialchars($vulnerability[0]['see_also']);
 
     echo "<hr>";
     echo "</div>";

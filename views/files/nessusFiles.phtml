@@ -53,7 +53,7 @@ echo '
 ';
         foreach ($reports as $file => $hash) {
             echo '  <tr>
-                        <td> ' . $file . ' </td>
+                        <td> ' . htmlspecialchars($file) . ' </td>
                         <td><input type="checkbox" name="reports[]" value="' . $hash . '" /></td>
                     </tr>';
         }

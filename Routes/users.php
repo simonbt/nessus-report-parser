@@ -29,10 +29,11 @@ $app->post('/admin/adduser', function() use($app, $pdo)
 {
     $users = new \Library\Users($pdo);
 
-    $email = $app->request()->post('email');
-    $name = $app->request()->post('name');
+    //Sanitise
+    $email = strip_tags($app->request()->post('email'));
+    $name = strip_tags($app->request()->post('name'));
     $password = $app->request()->post('password');
-    $priv = $app->request()->post('priv');
+    $priv = strip_tags($app->request()->post('priv'));
 
     $result = $users->createUser($name, $email, $password, $priv);
     $app->redirect('/admin/adduser?result='.$result);
@@ -65,7 +66,7 @@ $app->get('/admin/changepass', function() use($app)
 
 $app->post('/login', function() use($app, $pdo)
 {
-    $email = $app->request()->post('username');
+    $email = strip_tags($app->request()->post('username'));
     $password = hash('sha512', $app->request()->post('password'));
 
     $users = new \Library\Users($pdo);

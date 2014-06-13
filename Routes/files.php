@@ -15,8 +15,10 @@ $app->get('/openDlpMenu', function() use($app)
 $app->post('/openDlpMenu/upload', function() use($app)
 {
     $forms = new \Library\Forms();
-    $tempName = $_FILES['uploadFile']['tmp_name'];
-    $fileName = $_FILES['uploadFile']['name'];
+
+    //Sanitise
+    $tempName = strip_tags($_FILES['uploadFile']['tmp_name']);
+    $fileName = strip_tags($_FILES['uploadFile']['name']);
 
     $result = $forms->uploadOpenDLP($tempName, $fileName, $_SESSION['userId']);
     $app->redirect('/openDlpMenu?upload='.$result);
@@ -49,8 +51,10 @@ $app->get('/nessusMenu', function() use($app)
 $app->post('/nessusMenu/upload', function() use($app)
 {
     $forms = new \Library\Forms();
-    $tempName = $_FILES['uploadFile']['tmp_name'];
-    $fileName = $_FILES['uploadFile']['name'];
+
+    //Sanitise
+    $tempName = strip_tags($_FILES['uploadFile']['tmp_name']);
+    $fileName = strip_tags($_FILES['uploadFile']['name']);
     $userId = $_SESSION['userId'];
 
     $result = $forms->uploadNessus($tempName, $fileName, $userId);
@@ -61,7 +65,9 @@ $app->post('/nessusMenu/upload', function() use($app)
 
 $app->post('/nessusMenu/admin', function () use($import, $app)
 {
-    $type = $app->request()->post('formSubmit');
+
+    //Sanitise
+    $type = strip_tags($app->request()->post('formSubmit'));
     $reports = $app->request()->post('reports');
     $userId = $_SESSION['userId'];
 

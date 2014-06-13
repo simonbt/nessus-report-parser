@@ -17,7 +17,7 @@ echo '
 
     foreach ($reports as $report) {
         echo'
-            <p>' . $report['report_name'] . ' (' . $report['created'] . ')
+            <p>' . htmlspecialchars($report['report_name']) . ' (' . htmlspecialchars($report['created']) . ')
             <label>
                 <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
                     <option selected> Select Report </option>
@@ -33,3 +33,4 @@ echo '
     echo '</div>';
 
 include(__DIR__ . '/../includes/footer.phtml');
+

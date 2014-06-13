@@ -99,9 +99,9 @@ foreach ($data as $vuln) {
         $rowCount++;
         print("
             <tr>
-                <td class=" . $colour . ">" . $vuln['vuln'] . "</td>
-                <td class=" . $colour . ">" . $vuln['risk'] . "</td>
-                <td class=" . $colour . ">" . $vuln['severity'] . "</td>
+                <td class=" . $colour . ">" . htmlspecialchars($vuln['vuln']) . "</td>
+                <td class=" . $colour . ">" . htmlspecialchars($vuln['risk']) . "</td>
+                <td class=" . $colour . ">" . htmlspecialchars($vuln['severity']) . "</td>
             </tr>
             ");
     } else {
@@ -115,12 +115,12 @@ foreach ($data as $vuln) {
         }
         print("
             <tr>
-                <td border:solid 1pt gray; vertical-align: top; rowspan='" . $counts[$vuln['ip']] . "'>" . long2ip($vuln['ip']) . "</td>
-                <td border:solid 1pt gray; vertical-align: top; rowspan='" . $counts[$vuln['ip']] . "'>" . $vuln['name'] . "</td>
-                <td border:solid 1pt gray; vertical-align: top; rowspan='" . $counts[$vuln['ip']] . "'>" . $vuln['os'] . "</td>
-                <td class=" . $colour . ">" . $vuln['vuln'] . "</td>
-                <td class=" . $colour . ">" . $vuln['risk'] . "</td>
-                <td class=" . $colour . ">" . $vuln['severity'] . "</td>
+                <td border:solid 1pt gray; vertical-align: top; rowspan='" . $counts[$vuln['ip']] . "'>" . htmlspecialchars(long2ip($vuln['ip'])) . "</td>
+                <td border:solid 1pt gray; vertical-align: top; rowspan='" . $counts[$vuln['ip']] . "'>" . htmlspecialchars($vuln['name']) . "</td>
+                <td border:solid 1pt gray; vertical-align: top; rowspan='" . $counts[$vuln['ip']] . "'>" . htmlspecialchars($vuln['os']) . "</td>
+                <td class=" . $colour . ">" . htmlspecialchars($vuln['vuln']) . "</td>
+                <td class=" . $colour . ">" . htmlspecialchars($vuln['risk']) . "</td>
+                <td class=" . $colour . ">" . htmlspecialchars($vuln['severity']) . "</td>
             </tr>
 
             ");

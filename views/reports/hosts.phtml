@@ -11,7 +11,7 @@ include(__DIR__ . '/../includes/nessusReportHeader.phtml');
 foreach ($reportData as $vulnerability) {
     echo '
 
-<div class="headers"><br> ' . $vulnerability[0][0]['vulnerability'] . ' </div>
+<div class="headers"><br> ' . htmlspecialchars($vulnerability[0][0]['vulnerability']) . ' </div>
 <table>
 
 ';
@@ -25,8 +25,8 @@ foreach ($reportData as $vulnerability) {
         }
 
         echo '
-                    <td>' . $hostObj['host_id'] . '</td>
-                    <td>' . strtoupper($hostObj['protocol']) . '/' . $hostObj['port'] . '</td>
+                    <td>' . htmlspecialchars($hostObj['host_id']) . '</td>
+                    <td>' . htmlspecialchars(strtoupper($hostObj['protocol'])) . '/' . htmlspecialchars($hostObj['port']) . '</td>
                     ';
         $loop++;
         if ($loop == 5) {

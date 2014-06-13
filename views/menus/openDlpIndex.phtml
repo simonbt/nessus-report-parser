@@ -16,7 +16,7 @@ echo '
 
 
     foreach ($reports as $name => $hash) {
-        echo '<p>' . $name . '
+        echo '<p>' . htmlspecialchars($name) . '
 
                 <label>
                     <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
