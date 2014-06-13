@@ -6,6 +6,11 @@ body {
     font-size: 14px;
 }
 
+.slider-width100
+{
+    width: 300px;
+}
+
 #footer
 {
     color: black;

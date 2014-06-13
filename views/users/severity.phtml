@@ -16,7 +16,7 @@ echo '
             Your current severity level is: ' . $severity . '
             <p><form method="post">
                 <span id="range">' . $severity . '</span><br>
-                <input type="range" min="0.0" max="10.0" onchange="showValue(this.value)" value="' . $severity . '" name="severity" step="0.1" placeholder="Severity"><br>
+                <input class="slider-width100" type="range" min="0.0" max="10.0" onchange="showValue(this.value)" value="' . $severity . '" name="severity" step="0.1" placeholder="Severity"><br>
 
                 <script type="text/javascript">
                     function showValue(newValue)
