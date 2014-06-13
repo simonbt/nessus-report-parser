@@ -72,4 +72,41 @@ class Files
 
         return $str;
     }
+
+    public function validateFile($file, $type)
+    {
+        switch ($type)
+        {
+            case 'nessus':
+                $searchTerms = array(
+                    'ReportItem port=', 'risk_factor', 'plugin_output'
+                );
+                break;
+            case 'opendlp':
+                $searchTerms = array(
+                    'OpenDLP version=', 'systems', 'result'
+                );
+                break;
+            default:
+                return false;
+                break;
+        }
+
+
+        $valid = false;
+        $handle = fopen($file, 'r');
+
+        foreach ($searchTerms as $id)
+        {
+            while (($buffer = fgets($handle)) !== false) {
+                if (strpos($buffer, $id) !== false) {
+                    $valid = true;
+                    break;
+                }
+            }
+        }
+
+        fclose($handle);
+        return $valid;
+    }
 } 

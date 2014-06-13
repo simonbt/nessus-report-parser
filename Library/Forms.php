@@ -101,13 +101,24 @@ class Forms extends Files
     {
         $nessusDirectory = __DIR__ . '/uploads/nessus/' . $userId . '/';
 
-        if (move_uploaded_file($tempName, $nessusDirectory . $fileName))
+        if (!$tempName)
         {
-            return 'success';
+            return 'failed';
+        }
+        if ($this->validateFile($tempName, 'nessus'))
+        {
+            if (move_uploaded_file($tempName, $nessusDirectory . $fileName))
+            {
+                return 'success';
+            }
+            else
+            {
+                return 'failed';
+            }
         }
         else
         {
-            return 'failed';
+            return 'notvalid';
         }
     }
 
@@ -115,14 +126,24 @@ class Forms extends Files
     {
         $openDlpDirectory = __DIR__ . '/uploads/opendlp/' . $userId . '/';
 
-        if (move_uploaded_file($tempName, $openDlpDirectory . $fileName))
-        {
-            return 'success';
-        }
-        else
+        if (!$tempName)
         {
             return 'failed';
         }
+        if ($this->validateFile($tempName, 'opendlp'))
+        {
+            if (move_uploaded_file($tempName, $openDlpDirectory . $fileName))
+            {
+                return 'success';
+            }
+            else
+            {
+                return 'failed';
+            }
+        }
+        else
+        {
+            return 'notvalid';
+        }
     }
-
 } 

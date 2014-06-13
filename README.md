@@ -11,7 +11,6 @@ REQUIREMENTS:
     php5-sqlite
     mysql-server
 
-
 INSTALLATION:
 
     Create web directory (change my name for your username):
@@ -120,15 +119,17 @@ UPDATES:
             Removed all CSS loading screens
             Moved back to MySQL
 
+    13th June 2014:
+            Added validation for OpenDLP and Nessus XML uploads
+
 TO-DO:
 
-    Restriction on uploaded files - server-side
-    Limitation to file upload sizes
-    .xls output for all vulnerabilities
-    Template download / storage
-    Reinstate the ability to change severity filter through interface
-    Move footer to float at the bottom!
-    CSS menu drop downs to fit correctly
-    Implement privilege levels
-    Add user management page
-    Add custom report creation
+        Limitation to file upload sizes
+        .xls output for all vulnerabilities
+        Template download / storage
+        Reinstate the ability to change severity filter through interface
+        Move footer to float at the bottom!
+        CSS menu drop downs to fit correctly
+        Implement privilege levels
+        Add user management page
+        Add custom report creation
