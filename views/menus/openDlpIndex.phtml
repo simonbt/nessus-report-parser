@@ -9,23 +9,24 @@
 include(__DIR__ . '/../includes/menuHeader.phtml');
 
 echo '
-<p><b>Imported OpenDLP Reports</b>
+<p class="header">Imported OpenDLP Reports</p>
 
-<div class="reportlist">
+<div class="reportFormContainer">
+    <ul class="reportForm">
 ';
-
-
     foreach ($reports as $name => $hash) {
-        echo '<p>' . htmlspecialchars($name) . '
-
-                <label>
-                    <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
-                        <option selected> Select Report </option>
-                        <option value="/opendlp/' . $name . '">OpenDLP Overview Report</option>
-                    </select>
-                </label>
+        echo '
+        <li>
+            <label>' . htmlspecialchars($name) . '</label>
+            <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
+                <option selected> Select Report </option>
+                <option value="/opendlp/' . $name . '">OpenDLP Overview Report</option>
+            </select>
+        </li>
             ';
     }
-    echo '</div>';
+echo '</ul>
+</div>';
 
 include(__DIR__ . '/../includes/footer.phtml');
+

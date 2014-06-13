@@ -6,18 +6,120 @@ body {
     font-size: 14px;
 }
 
-p
-{
+p {
     text-align: center;
 }
 
-.slider-width100
-{
-    width: 300px;
+.fileMenu {
+    position: relative;
+    width: 480px;
+    margin: 0 auto;
+    text-align: center;
 }
 
-#updateListBox
+.fileMenu input[type=submit] {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: 10pt;
+    width: 150px;
+    height: 30px;
+    padding:5px 15px;
+    background:#ccc;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+}
+.fileMenu input[type=submit]:hover {
+    background:#666666;
+}
+
+.fileMenu table {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+.reportFormContainer {
+    position: relative;
+    width: 800px;
+    margin: 0 auto;
+}
+
+.reportForm li {
+    height: 30px;
+    list-style: none;
+}
+
+.reportForm label {
+    display: inline-block;
+    width: 45%;
+    text-align: right;
+    margin-right: 20px;
+}
+
+.reportForm select {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: 10.0pt;
+    width: 200px;
+    border: 1px solid #cccccc;
+}
+
+.form li {
+    height: 60px;
+    list-style: none;
+}
+
+.form label{
+    display: inline-block;
+    width: 130px;
+}
+
+.userForm {
+    position: relative;
+    width: 400px;
+    margin: 0 auto;
+
+}
+.userForm input[type=text] {
+    width: 200px;
+    height: 30px;
+}
+.userForm input[type=password] {
+    width: 200px;
+    height: 30px;
+}
+.userForm input[type=number] {
+    width: 50px;
+    height: 30px;
+}
+
+.userForm input[type=submit] {
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+    height: 30px;
+    padding:5px 15px;
+    background:#ccc;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.userForm input[type=submit]:hover {
+    background:#666666;
+}
+
+.userForm input[type=range]
 {
+    display: block;
+    margin: 0 auto;
+    width:300px;
+}
+
+#updateListBox {
     position: relative;
     left: 30%;
     right: 30%;
@@ -25,143 +127,135 @@ p
     margin-bottom: 10px;
 }
 
-#updateList
-{
-    text-align:left;
+#updateList {
+    text-align: left;
 }
 
-#footer
-{
+
+
+#footer {
     color: black;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
-    font-size:9.0pt;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    font-size: 9.0pt;
     text-align: center;
 }
 
-.menu
-{
+.menu {
     text-align: center;
     color: black;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
-    font-size:12.0pt;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    font-size: 12.0pt;
 
 }
 
-.report
-{
+.report {
     color: black;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
-    font-size:12.0pt;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    font-size: 12.0pt;
 }
 
-.headers
-{
+.header {
     color: black;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
-    font-size:12.0pt;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    font-size: 12.0pt;
 }
 
-table.center {
-    margin-left:auto;
-    margin-right:auto;
-}
 hr {
     height: 10px;
     color: #74b807;
     background-color: #74b807;
 }
-td
-{
-    padding-top:1px;
-    padding-right:10px;
-    padding-left:10px;
-    color:black;
-    font-style:normal;
-    text-decoration:none;
+
+td {
+    padding-top: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+    color: black;
+    font-style: normal;
+    text-decoration: none;
     vertical-align: top;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
-    font-size:9.0pt;
-    border:solid 1pt gray;
-    white-space:nowrap;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    font-size: 9.0pt;
+    border: solid 1pt gray;
+    white-space: nowrap;
     background-color: white;
 }
 
-.red
-{
-    color:#FF0003;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
+.red {
+    color: #FF0003;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
     vertical-align: bottom;
-    font-size:9.0pt;
+    font-size: 9.0pt;
 }
 
-.orange
-{
-    color:#FF6F00;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
+.orange {
+    color: #FF6F00;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
     vertical-align: bottom;
-    font-size:9.0pt;
-}
-.green
-{
-    color:limegreen;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
-    vertical-align: bottom;
-    font-size:9.0pt;
-}
-.blue
-{
-    color:dodgerblue;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
-    vertical-align: bottom;
-    font-size:9.0pt;
-}
-.black
-{
-    color:black;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
-    vertical-align: bottom;
-    font-size:9.0pt;
+    font-size: 9.0pt;
 }
 
-.pass
-{
-    color:limegreen;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
+.green {
+    color: limegreen;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
     vertical-align: bottom;
-    font-size:9.0pt;
+    font-size: 9.0pt;
 }
-.fail
-{
-    color:#FF0003;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",sans-serif;
+
+.blue {
+    color: dodgerblue;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
     vertical-align: bottom;
-    font-size:9.0pt;
+    font-size: 9.0pt;
+}
+
+.black {
+    color: black;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    vertical-align: bottom;
+    font-size: 9.0pt;
+}
+
+.pass {
+    color: limegreen;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    vertical-align: bottom;
+    font-size: 9.0pt;
+}
+
+.fail {
+    color: #FF0003;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    vertical-align: bottom;
+    font-size: 9.0pt;
 }
 
 .myButton {
 
     width: 130px;
-    background:linear-gradient(to bottom, #89c403 5%, #77a809 100%);
-    background-color:#89c403;
-    border-radius:6px;
-    border:1px solid #74b807;
-    display:inline-block;
-    cursor:pointer;
-    color:#ffffff;
+    background: linear-gradient(to bottom, #89c403 5%, #77a809 100%);
+    background-color: #89c403;
+    border-radius: 6px;
+    border: 1px solid #74b807;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
     font-family: "HelveticaNeue-Light", sans-serif;
-    font-size:14px;
-    padding:4px 24px;
-    text-decoration:none;
-    text-shadow:0px 1px 0px #528009;
+    font-size: 14px;
+    padding: 4px 24px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #528009;
 }
+
 .myButton:hover {
 
-    background:linear-gradient(to bottom, #77a809 5%, #89c403 100%);
-    background-color:#77a809;
+    background: linear-gradient(to bottom, #77a809 5%, #89c403 100%);
+    background-color: #77a809;
 }
+
 .myButton:active {
-    position:relative;
-    top:1px;
+    position: relative;
+    top: 1px;
 }
 
 nav {
@@ -173,7 +267,6 @@ nav {
     color: #888;
     display: block;
     margin: 8px 22px 8px 22px;
-    overflow: hidden;
 }
 
 nav ul {
@@ -182,6 +275,7 @@ nav ul {
 }
 
 nav ul li {
+    position: relative;
     display: inline-block;
     list-style-type: none;
 
@@ -203,6 +297,7 @@ nav > ul > li > a > .caret {
     height: 0;
     width: 0;
     vertical-align: middle;
+    margin-left: 6px;
 
     -webkit-transition: color 0.1s linear;
     -moz-transition: color 0.1s linear;
@@ -249,7 +344,9 @@ nav > ul > li > div {
     margin: 0;
     opacity: 0;
     position: absolute;
-    width: 165px;
+    left: 0;
+    right: 0;
+    top: 50px;
     visibility: hidden;
 
     -webkit-transiton: opacity 0.2s;
@@ -264,7 +361,8 @@ nav > ul > li > div {
 nav > ul > li:hover > div {
     display: block;
     opacity: 1;
-    visibility: visible;    z-index: 1000;
+    visibility: visible;
+    z-index: 1000;
 
 }
 

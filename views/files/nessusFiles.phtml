@@ -12,78 +12,85 @@ if ($app->request()->get('upload'))
 {
     if ($app->request()->get('upload') == 'success' )
     {
-        $result = '<a class="green">The file has been successfully uploaded</a>';
+        $result = '<p><a class="green">The file has been successfully uploaded</a></p>';
     }
     elseif ($app->request()->get('upload') == 'notvalid')
     {
-        $result = '<a class="red">That file has not been identified as a valid Nessus file</a>';
+        $result = '<p><a class="red">That file has not been identified as a valid Nessus file</a></p>';
     }
     else
     {
-        $result = '<a class="red">The file has failed to upload</a>';
+        $result = '<p><a class="red">The file has failed to upload</a></p>';
     }
 }
 if ($app->request()->get('admin'))
 {
     if ($app->request()->get('admin') == 'success' )
     {
-        $admin = '<a class="green">Successful</a>';
+        $admin = '<p><a class="green">Successful</a></p>';
     }
     elseif ($app->request()->get('admin') == 'none')
     {
-        $admin = '<a class="red">Failed, you must select a report</a>';
+        $admin = '<p><a class="red">Failed, you must select a report</a></p>';
     }
     elseif ($app->request()->get('admin') == 'multiple')
     {
-        $admin = '<a class="red">Failed, you can only import a single report</a>';
+        $admin = '<p><a class="red">Failed, you can only import a single report</a></p>';
     }
     else
     {
-        $admin = '<a class="red">Failed, please try again</a>';
+        $admin = '<p><a class="red">Failed, please try again</a></p>';
     }
 }
 
 echo '
 
-<form action="/nessusMenu/admin" method="post">
-    <p><b>Stored Nessus Reports</b></p>
+<p class="header">Stored Nessus Reports</p>
 
-<table class="center">
-        <tr>
-            <td>Report Name</td>
-            <td>Select</td>
-        </td>
-
-';
-        foreach ($reports as $file => $hash) {
-            echo '  <tr>
-                        <td> ' . htmlspecialchars($file) . ' </td>
-                        <td><input type="checkbox" name="reports[]" value="' . $hash . '" /></td>
-                    </tr>';
-        }
-
-        echo '      </table>';
-            if(isset($admin)){echo $admin.'<br>';};
-        echo '
-                    <input type="submit" name="formSubmit" value="Delete Nessus"/>
-                    <input type="submit" name="formSubmit" value="Merge"/>
-                    <input type="submit" name="formSubmit" value="Import"/>
-                </form>
-
-
-<p><b>Upload Nessus File</b></p>
+<div class="fileMenu">
+    <form action="/nessusMenu/admin" method="post">
+        <p><table>
+            <tr>
+                <td>Report Name</td>
+                <td>Select</td>
+            </td>
 ';
 
-if(isset($result)){echo $result;};
+foreach ($reports as $file => $hash) {
+    echo '
+            <tr>
+                <td> ' . htmlspecialchars($file) . ' </td>
+                <td><input type="checkbox" name="reports[]" value="' . $hash . '" /></td>
+            </tr>
+        ';
+}
 
 echo '
-<form action="/nessusMenu/upload" method="post" enctype="multipart/form-data">
-  <input type="file" name="uploadFile" size="50" maxlength="25" />
-  <input type="submit" name="upload" value="Upload Nessus XML"" />
-</form>
-</div>
+        </table></p>
+';
+if(isset($admin))
+{
+    echo $admin;
+};
+echo '
+        <input type="submit" name="formSubmit" value="Delete Nessus"/>
+        <input type="submit" name="formSubmit" value="Merge"/>
+        <input type="submit" name="formSubmit" value="Import"/>
+    </form>
+    <p class="header">Upload Nessus File</p>
 ';
 
+if(isset($result))
+{
+    echo $result;
+};
 
+echo '
+    <form action="/nessusMenu/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="uploadFile" size="50" maxlength="25" />
+        <input type="submit" name="upload" value="Upload Nessus XML"" />
+    </form>
+</div>
+';
 
 include(__DIR__ . '/../includes/footer.phtml');

@@ -9,16 +9,29 @@
 include(__DIR__ . '/../includes/menuHeader.phtml');
 
 echo '
-            <div class="menu">
-            <p><b>Change Your Password</b></p>
 
-            <p><form method="post">
-                <input type="password" name="oldpass" placeholder="Existing Password"><br><br>
-                <input type="password" name="newpass" placeholder="New Password"><br>
-                <input type="password" name="repeat" placeholder="Repeat Password"><br>
-                <input type="submit" value="Change"></form>
+<p class="header">Change Your Password</p>
+<div class="userForm">
+    <form method="post">
+        <ul class="form">
+            <li>
+            	<label for="oldPassword">Existing Password</label>
+            	<input type="password" name="oldpass" placeholder="Existing Password" id="oldPassword">
+        	</li>
+            <li>
+            	<label for="newPass">New Password</label>
+            	<input type="password" name="newpass" placeholder="New Password" id="newPass">
+        	</li>
+            <li>
+            	<label for="repeatPass">Repeat Password</label>
+            	<input type="password" name="repeat" placeholder="Repeat Password" id="repeatPass">
+        	</li>
+            <li><input type="submit" value="Change"></form></li>
+        </ul>
+    </form>
+</div>
 
-                <form action="/"><input type="submit" value="Cancel"></form>
+
 
 ';
 

@@ -9,7 +9,7 @@
 include(__DIR__ . '/../includes/menuHeader.phtml');
 
 echo '
-<p>Welcome to the RandomStorm Report Generator, ' . htmlspecialchars($_SESSION['name']) . '</p>
+<p class="header" >Welcome to the RandomStorm Report Generator, ' . htmlspecialchars($_SESSION['name']) . '</p>
 ';
 
 echo'
@@ -18,6 +18,8 @@ echo'
         <ul>
             <li>13th June 2014:</li>
             <ul>
+                <li>Many CSS changes and improvements</li>
+                <li>Added severity option</li>
                 <li>Added validation for OpenDLP and Nessus XML uploads</li>
             </ul>
         </ul>

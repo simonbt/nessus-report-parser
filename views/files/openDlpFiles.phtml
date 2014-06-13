@@ -12,75 +12,79 @@ if ($app->request()->get('upload'))
 {
     if ($app->request()->get('upload') == 'success' )
     {
-        $result = '<a class="green">The file has been successfully uploaded</a>';
+        $result = '<p></p><a class="green">The file has been successfully uploaded</a></p>';
     }
     elseif ($app->request()->get('upload') == 'notvalid')
     {
-        $result = '<a class="red">That file has not been identified as a valid OpenDLP file</a>';
+        $result = '<p><a class="red">That file has not been identified as a valid OpenDLP file</a></p>';
     }
     else
     {
-        $result = '<a class="red">The file has failed to upload</a>';
+        $result = '<p><a class="red">The file has failed to upload</a></p>';
     }
 }
 if ($app->request()->get('admin'))
 {
     if ($app->request()->get('admin') == 'success' )
     {
-        $admin = '<a class="green">Successful</a>';
+        $admin = '<p><a class="green">Successful</a></p>';
     }
     elseif ($app->request()->get('admin') == 'none')
     {
-        $admin = '<a class="red">Failed, you must select a report</a>';
+        $admin = '<p><a class="red">Failed, you must select a report</a></p>';
     }
     elseif ($app->request()->get('admin') == 'multiple')
     {
-        $admin = '<a class="red">Failed, you can only import a single report</a>';
+        $admin = '<p><a class="red">Failed, you can only import a single report</a></p>';
     }
     else
     {
-        $admin = '<a class="red">Failed, please try again</a>';
+        $admin = '<p><a class="red">Failed, please try again</a></p>';
     }
 }
 
 echo '
-<form action="/openDlpMenu/admin" method="post">
-    </p><b>Stored OpenDLP Reports</b></p>
-
-
-    <table class="center">
-        <tr>
-            <td>Report Name</td>
-            <td>Select</td>
-        </td>
+<p class="header">Stored OpenDLP Reports</p>
+<div class="fileMenu">
+    <form action="/openDlpMenu/admin" method="post">
+        <p>
+        <table>
+            <tr>
+                <td>Report Name</td>
+                <td>Select</td>
+            </td>
 ';
 foreach ($reports as $file => $hash) {
-    echo '<tr>
+echo '
+        <tr>
             <td> ' . htmlspecialchars($file) . ' </td>
             <td><input type="checkbox" name="reports[]" value="' . $hash . '" /></td>
-        </tr>';
+        </tr>
+';
 }
-
-echo '</table>';
-if(isset($admin)){echo $admin.'<br>';};
+echo '
+        </table>
+        </p>
+';
+if(isset($admin))
+{
+    echo $admin;
+};
 echo '
         <input type="submit" name="formSubmit" value="Delete OpenDLP"/>
     </form>
-</body>
-</html>
 ';
 
 echo '
-<p><b>Upload OpenDLP File</b></p>
+<p class="header">Upload OpenDLP File</p>
 ';
 if(isset($result)){echo $result;};
 echo'
-<form action="/openDlpMenu/upload" method="post" enctype="multipart/form-data">
-  <input type="file" name="uploadFile" size="50" maxlength="25" />
-
-  <input type="submit" name="upload" value="Upload OpenDLP XML" />
-</form>
-
+    <form action="/openDlpMenu/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="uploadFile" size="50" maxlength="25" />
+        <input type="submit" name="upload" value="Upload OpenDLP XML" />
+    </form>
+</div>
 ';
 
 include(__DIR__ . '/../includes/footer.phtml');

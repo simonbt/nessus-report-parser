@@ -11,20 +11,25 @@ include(__DIR__ . '/../includes/menuHeader.phtml');
 $severity = $userDetails[0]['severity'];
 
 echo '
-            <div class="menu">
-            <p><b>Change Your Severity</b></p>
-            Your current severity level is: ' . $severity . '
-            <p><form method="post">
-                <span id="range">' . $severity . '</span><br>
-                <input class="slider-width100" type="range" min="0.0" max="10.0" onchange="showValue(this.value)" value="' . $severity . '" name="severity" step="0.1" placeholder="Severity"><br>
+<p class="header">Change Your Severity</p>
+            <p>Your current severity level is: ' . $severity . '</p>';
 
-                <script type="text/javascript">
-                    function showValue(newValue)
-                    {
-                        document.getElementById("range").innerHTML=newValue;
-                    }
-                </script>
-                <p><input type="submit" value="Change"></form>
+echo '
+<div class=userForm>
+<form method="post">
+    <p id="range">' . $severity . '</p>';
+echo '
+    <input class="slider-width100" type="range" min="0.0" max="10.0" onchange="showValue(this.value)" value="' . $severity . '" name="severity" step="0.1" placeholder="Severity"><br>
+
+    <script type="text/javascript">
+        function showValue(newValue)
+        {
+            document.getElementById("range").innerHTML=newValue;
+        }
+    </script>
+
+    <input type="submit" value="Change"></form>
+<div>
 ';
 
 $success = $app->request()->get('result');
@@ -33,10 +38,10 @@ if (isset($success))
     switch ($success)
     {
         case 'success':
-            echo '<a class="green">Severity changed successfully</a>';
+            echo '<p><a class="green">Severity changed successfully</a></p>';
             break;
         case 'failed':
-            echo '<a class="red">The Severity change failed, please try again</a>';
+            echo '<p><a class="red">The Severity change failed, please try again</a></p>';
             break;
     }
 }

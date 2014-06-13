@@ -10,27 +10,28 @@
 include(__DIR__ . '/../includes/menuHeader.phtml');
 
 echo '
-<p><b>Imported Nessus Reports</b>
+<p class="header">Imported Nessus Reports</p>
 
-<div class="reportList">
+<div class="reportFormContainer">
+    <ul class="reportForm">
 ';
 
     foreach ($reports as $report) {
         echo'
-            <p>' . htmlspecialchars($report['report_name']) . ' (' . htmlspecialchars($report['created']) . ')
-            <label>
-                <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
-                    <option selected> Select Report </option>
-                    <option value="hosts/' . $report['id'] . '/' . $severity . '">Hosts Report</option>
-                    <option value="vulnerabilities/' . $report['id'] . '/' . $severity . '">Vulnerabilities Report</option>
-                    <option value="descriptions/' . $report['id'] . '/' . $severity . '">Descriptions Report</option>
-                    <option value="pci/' . $report['id'] . '">PCI Report</option>
-                </select>
-            </label>
-
+        <li>
+            <label>' . htmlspecialchars($report['report_name']) . ' (' . htmlspecialchars($report['created']) . ')</label>
+            <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
+                <option selected>Select Report</option>
+                <option value="hosts/' . $report['id'] . '/' . $severity . '">Hosts Report</option>
+                <option value="vulnerabilities/' . $report['id'] . '/' . $severity . '">Vulnerabilities Report</option>
+                <option value="descriptions/' . $report['id'] . '/' . $severity . '">Descriptions Report</option>
+                <option value="pci/' . $report['id'] . '">PCI Report</option>
+            </select>
+        </li>
             ';
     }
-    echo '</div>';
+    echo '</ul>
+</div>';
 
 include(__DIR__ . '/../includes/footer.phtml');
 

@@ -11,9 +11,25 @@ $badLogin = $app->request()->get('loggedIn');
 include(__DIR__ . '/../includes/menuHeader.phtml');
 
 echo '
-            <div class="menu">
-            <p><b>Please enter your login credentials</b></p>
-            <p><form method="post"><input type="text" name="username" placeholder="Email Address"><input type="password" name="password" placeholder="Password"><input type="submit" value="Login"></form>
+
+            <p class="header">Please enter your login credentials</p>
+            <div class="userForm">
+                <form method="post">
+                    <ul class="form">
+                        <li>
+                            <label for="username">Username</label>
+                            <input type="text" name="username" placeholder="Email Address" id="username">
+                        </li>
+                        <li>
+                            <label for="password">Password</label>
+                            <input type="password" name="password" placeholder="Password" id="password">
+                        </li>
+                        <li>
+                            <input type="submit" value="Login">
+                        </li>
+                    </ul>
+                </form>
+            </div>
  ';
 if($badLogin)
 {

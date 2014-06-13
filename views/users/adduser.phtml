@@ -9,29 +9,40 @@
 include(__DIR__ . '/../includes/menuHeader.phtml');
 
 echo '
-            <div class="menu">
-            <p><b>Add New User</b></p>
-
-            <p><form method="post">
-                <input type="text" name="email" placeholder="Email Address"><br><br>
-                <input type="text" name="name" placeholder="Full Name"><br><br>
-                <input type="password" name="password" placeholder="Password"><br>
-                <input type="text" name="priv" placeholder="Privilege Level"><br>
-                <input type="submit" value="Add User"></form>
-
-                <form action="/"><input type="submit" value="Cancel"></form>
+<p class="header">Add New User</p>
+<div class="userForm">
+    <form method="post">
+        <ul class="form">
+            <li>
+            	<label for="email">Email Address</label>
+            	<input type="text" name="email" placeholder="Email Address" id="email">
+        	</li>
+            <li>
+            	<label for="name">Full Name</label>
+            	<input type="text" name="name" placeholder="Full Name" id="name">
+        	</li>
+            <li>
+            	<label for="password">Password</label>
+            	<input type="password" name="password" placeholder="Password" id="password">
+        	</li>
+            <li>
+            	<label for="privilege">Privilege Level</label>
+        		<input type="number" min="1" max="10" name="priv" value="1" id="privilege">
+    		</li>
+            <li><input type="submit" value="Add User"></li>
+        </ul>
+    </form>
+</div>
 ';
 $success = $app->request()->get('result');
 if ($success == 'exists')
 {
-    echo '<a class="red">That user already exists, please try again</a>';
+    echo '<p><a class="red">That user already exists, please try again</a><p>';
 
 }
 elseif (is_numeric($success))
 {
-    echo '<a href="/" class="green">User successfully added with ID: ' . $success . ' - Click here to return<a>';
+    echo '<p><a href="/" class="green">User successfully added with ID: ' . $success . ' - Click here to return<a></p>';
 }
-
-echo '</div>';
 
 include(__DIR__ . '/../includes/footer.phtml');
