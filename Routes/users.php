@@ -45,6 +45,30 @@ $app->get('/admin/adduser', function() use($app)
 });
 
 
+$app->get('/admin/severity', function() use($app, $pdo)
+{
+    $users = new \Library\Users($pdo);
+
+    $userDetails = $users->getUserDetails($_SESSION['email']);
+    $app->render('users/severity.phtml', array( 'userDetails' => $userDetails, 'app' => $app));
+});
+
+$app->post('/admin/severity', function() use ($app, $pdo)
+{
+    $severity = strip_tags($app->request()->post('severity'));
+
+    $users = new \Library\Users($pdo);
+
+    $result = $users->setSeverity($_SESSION['userId'], $severity);
+
+    $app->redirect('/admin/severity?result='.$result);
+});
+
+$app->get('/admin/changepass', function() use($app)
+{
+    $app->render('users/changePass.phtml', array('app' => $app));
+});
+
 $app->post('/admin/changepass', function() use($app, $pdo)
 {
 
@@ -59,10 +83,6 @@ $app->post('/admin/changepass', function() use($app, $pdo)
     $app->redirect('/admin/changepass?result='.$result);
 });
 
-$app->get('/admin/changepass', function() use($app)
-{
-    $app->render('users/changePass.phtml', array('app' => $app));
-});
 
 $app->post('/login', function() use($app, $pdo)
 {

@@ -1,0 +1,45 @@
+<?php
+/**
+ * nessus-report-parser -- changePass.phtml
+ * User: Simon Beattie
+ * Date: 12/06/2014
+ * Time: 17:39
+ */
+
+include(__DIR__ . '/../includes/menuHeader.phtml');
+
+$severity = $userDetails[0]['severity'];
+
+echo '
+            <div class="menu">
+            <p><b>Change Your Severity</b></p>
+            Your current severity level is: ' . $severity . '
+            <p><form method="post">
+                <span id="range">' . $severity . '</span><br>
+                <input type="range" min="0.0" max="10.0" onchange="showValue(this.value)" value="' . $severity . '" name="severity" step="0.1" placeholder="Severity"><br>
+
+                <script type="text/javascript">
+                    function showValue(newValue)
+                    {
+                        document.getElementById("range").innerHTML=newValue;
+                    }
+                </script>
+                <p><input type="submit" value="Change"></form>
+';
+
+$success = $app->request()->get('result');
+if (isset($success))
+{
+    switch ($success)
+    {
+        case 'success':
+            echo '<a class="green">Severity changed successfully</a>';
+            break;
+        case 'failed':
+            echo '<a class="red">The Severity change failed, please try again</a>';
+            break;
+    }
+}
+echo '</div>';
+
+include(__DIR__ . '/../includes/footer.phtml');

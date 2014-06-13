@@ -11,10 +11,13 @@ $app->get('/', function() use($app)
     $app->render('menus/index.phtml', array());
 });
 
-$app->get('/nessus', function() use($app,$reportData, $config)
+$app->get('/nessus', function() use($app,$reportData, $config, $pdo)
 {
+    $users = new \Library\Users($pdo);
+    $userDetails = $users->getUserDetails($_SESSION['email']);
+
     $reportList = $reportData->listReports($_SESSION['userId']);
-    $app->render('menus/nessusIndex.phtml',array('reports' => $reportList, 'severity' => $config['severity']));
+    $app->render('menus/nessusIndex.phtml',array('reports' => $reportList, 'severity' => $userDetails[0]['severity']));
 });
 
 $app->get('/opendlp', function () use($app)

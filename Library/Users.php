@@ -91,9 +91,19 @@ class Users extends ReportsAbstract
 
     }
 
-    private function validatePassword($password)
+    public function setSeverity($userId, $severity)
     {
+        $sql = "UPDATE users SET severity = :severity WHERE id = :id;";
+        $query = $this->getPdo()->prepare($sql);
+        $query->bindParam(':severity', $severity, \PDO::PARAM_STR);
+        $query->bindParam(':id', $userId, \PDO::PARAM_INT);
+        $query->execute();
 
+        if (!$query)
+        {
+            return 'failed';
+        }
+        return 'success';
     }
 
     private function createHash($password)
@@ -102,7 +112,7 @@ class Users extends ReportsAbstract
         return $hash;
     }
 
-    private function getUserDetails($email)
+    public function getUserDetails($email)
     {
         $userQuery = $this->getPdo()->prepare('SELECT * FROM users WHERE email =?');
         $userQuery->execute(array($email));
