@@ -6,9 +6,28 @@ body {
     font-size: 14px;
 }
 
+p
+{
+    text-align: center;
+}
+
 .slider-width100
 {
     width: 300px;
+}
+
+#updateListBox
+{
+    position: relative;
+    left: 30%;
+    right: 30%;
+    width: 50%;
+    margin-bottom: 10px;
+}
+
+#updateList
+{
+    text-align:left;
 }
 
 #footer

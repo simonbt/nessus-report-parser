@@ -9,7 +9,77 @@
 include(__DIR__ . '/../includes/menuHeader.phtml');
 
 echo '
-<p>Welcome to the RandomStorm Report Generator, ' . htmlspecialchars($_SESSION['name']) . '</p>';
+<p>Welcome to the RandomStorm Report Generator, ' . htmlspecialchars($_SESSION['name']) . '</p>
+';
 
+echo'
+<div id="updateListBox">
+    <div id="updateList">
+        <ul>
+            <li>13th June 2014:</li>
+            <ul>
+                <li>Added validation for OpenDLP and Nessus XML uploads</li>
+            </ul>
+        </ul>
+        <ul>
+            <li>12th June 2014:</li>
+            <ul>
+                <li>Refactored application for a server model</li>
+                <li>Added authentication</li>
+                <li>Added user administration (add, remove, change)</li>
+                <li>Added user specific report views</li>
+                <li>Separated user uploads</li>
+                <li>Major interface overhaul</li>
+                <li>Moved all templates into view folders</li>
+                <li>Added site wide headers and footers</li>
+                <li>Removed all CSS loading screens</li>
+                <li>Moved back to MySQL</li>
+            </ul>
+        </ul>
+        <ul>
+            <li>11th June 2014:</li>
+            <ul>
+                <li>Complete rewrite of a large portion of the application</li>
+                <li>Integrated slim micro framework</li>
+                <li>Removed all reliance on Curl</li>
+                <li>Nessus report importing fully available through interface</li>
+                <li>Moved all reports onto view templates and implemented render() method</li>
+            </ul>
+        </ul>
+        <ul>
+            <li>10th June 2014:</li>
+            <ul>
+                <li>Limitation to file upload type (.xml & .nessus) -- REMOVED DUE TO SAFARI BUG</li>
+                <li>Added 900row limit for vulnerability report tables due to pages bug</li>
+                <li>Report output for OpenDLP reports</li>
+                <li>Added file management functionality for OpenDLP</li>
+                <li>Added OpenDLP reports list</li>
+            </ul>
+        </ul>
+        <ul>
+            <li>9th June 2014:</li>
+            <ul>
+                <li>Added the ability to upload reports</li>
+                <li>Added the ability to import reports</li>
+                <li>Added the ability to delete reports</li>
+                <li>Added the ability to merge report</li>
+                <li>A number of changes to how information is displayed, and generally CSSing</li>
+            </ul>
+        </ul>
+        <ul>
+            <li>4th June 2014:</li>
+            <ul>
+                <li>Added PCI report output</li>
+            </ul>
+        </ul>
+        <ul>
+            <li>16th April 2014:</li>
+            <ul>
+                <li>Changed storage engine from MySQL to SQLite3</li>
+            </ul>
+        </ul>
+    </div>
+</div>
+';
 
 include(__DIR__ . '/../includes/footer.phtml');
