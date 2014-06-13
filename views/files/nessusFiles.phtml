@@ -10,39 +10,38 @@ include(__DIR__ . '/../includes/menuHeader.phtml');
 
 if ($app->request()->get('upload'))
 {
-    if ($app->request()->get('upload') == 'success' )
+    switch($app->request()->get('upload'))
     {
-        $result = '<p><a class="green">The file has been successfully uploaded</a></p>';
-    }
-    elseif ($app->request()->get('upload') == 'notvalid')
-    {
-        $result = '<p><a class="red">That file has not been identified as a valid Nessus file</a></p>';
-    }
-    else
-    {
-        $result = '<p><a class="red">The file has failed to upload</a></p>';
-    }
-}
-if ($app->request()->get('admin'))
-{
-    if ($app->request()->get('admin') == 'success' )
-    {
-        $admin = '<p><a class="green">Successful</a></p>';
-    }
-    elseif ($app->request()->get('admin') == 'none')
-    {
-        $admin = '<p><a class="red">Failed, you must select a report</a></p>';
-    }
-    elseif ($app->request()->get('admin') == 'multiple')
-    {
-        $admin = '<p><a class="red">Failed, you can only import a single report</a></p>';
-    }
-    else
-    {
-        $admin = '<p><a class="red">Failed, please try again</a></p>';
+        case 'success':
+            $result = '<p><a class="green">The file has been successfully uploaded</a></p>';
+            break;
+        case 'notvalid':
+            $result = '<p><a class="red">That file has not been identified as a valid Nessus file</a></p>';
+            break;
+        default:
+            $result = '<p><a class="red">The file has failed to upload</a></p>';
+            break;
     }
 }
 
+if ($app->request()->get('admin'))
+{
+    switch ($app->request()->get('admin'))
+    {
+        case 'success':
+            $admin = '<p><a class="green">Successful</a></p>';
+            break;
+        case 'none':
+            $admin = '<p><a class="red">Failed, you must select a report</a></p>';
+            break;
+        case 'multiple':
+            $admin = '<p><a class="red">Failed, you can only import a single report</a></p>';
+            break;
+        default:
+            $admin = '<p><a class="red">Failed, please try again</a></p>';
+            break;
+    }
+}
 echo '
 
 <p class="header">Stored Nessus Reports</p>
@@ -71,6 +70,10 @@ echo '
 if(isset($admin))
 {
     echo $admin;
+};
+if(isset($error))
+{
+    echo $error;
 };
 echo '
         <input type="submit" name="formSubmit" value="Delete Nessus"/>
