@@ -53,8 +53,8 @@ $app->post('/nessusMenu/upload', function() use($app)
     $forms = new \Library\Forms();
 
     //Sanitise
-    $tempName = strip_tags($_FILES['uploadFile']['tmp_name']);
-    $fileName = strip_tags($_FILES['uploadFile']['name']);
+    $tempName = $_FILES['uploadFile']['tmp_name'];
+    $fileName = $_FILES['uploadFile']['name'];
     $userId = $_SESSION['userId'];
 
     $result = $forms->uploadNessus($tempName, $fileName, $userId);

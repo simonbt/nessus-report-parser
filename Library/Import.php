@@ -18,7 +18,7 @@ class Import extends ReportsAbstract
 
     public function importNessusXML($userId, $fileName)
     {
-        $nessusDirectory = __DIR__ . '/Uploads/Nessus/' . $userId . '/';
+        $nessusDirectory = __DIR__ . '/uploads/nessus/' . $userId . '/';
         $xmlFile = $nessusDirectory . $fileName;
 
         $this->createReport($userId, $xmlFile); // Output any return from report import.
