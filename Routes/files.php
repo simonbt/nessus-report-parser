@@ -52,7 +52,6 @@ $app->post('/nessusMenu/upload', function() use($app)
 {
     $forms = new \Library\Forms();
 
-    //Sanitise
     $tempName = $_FILES['uploadFile']['tmp_name'];
     $fileName = $_FILES['uploadFile']['name'];
     $userId = $_SESSION['userId'];
