@@ -6,7 +6,7 @@
  * Time: 16:18
  */
 
-if ($_SESSION['name'] == "")
+if (!array_key_exists('name', $_SESSION))
 {
     $username = 'Not Logged In';
 }
