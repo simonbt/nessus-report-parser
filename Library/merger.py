@@ -16,13 +16,19 @@ for fileName in sys.argv[3:]:
          tree = etree.parse(fileName)
          for host in tree.findall('.//ReportHost'):
             existing_host = report.find(".//ReportHost[@name='"+host.attrib['name']+"']")
-            if existing_host is not None:
+
+            if not existing_host:
 
                 report.append(host)
+
             else:
+
                 for item in host.findall('ReportItem'):
+
                     if not existing_host.find("ReportItem[@port='"+ item.attrib['port'] +"'][@pluginID='"+ item.attrib['pluginID'] +"']"):
 
                         existing_host.append(item)
 
 mainTree.write(os.path.dirname(os.path.abspath(__file__)) + '/Uploads/Nessus/' + sys.argv[2] + '/' + sys.argv[1], encoding="utf-8", xml_declaration=True)
+
+
