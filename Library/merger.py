@@ -29,6 +29,6 @@ for fileName in sys.argv[3:]:
 
                         existing_host.append(item)
 
-mainTree.write(os.path.dirname(os.path.abspath(__file__)) + '/Uploads/Nessus/' + sys.argv[2] + '/' + sys.argv[1], encoding="utf-8", xml_declaration=True)
+mainTree.write(os.path.dirname(os.path.abspath(__file__)) + '/uploads/nessus/' + sys.argv[2] + '/' + sys.argv[1], encoding="utf-8", xml_declaration=True)
 
 
