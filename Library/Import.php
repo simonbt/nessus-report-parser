@@ -36,7 +36,7 @@ class Import extends ReportsAbstract
         $createdOk = $createReport->execute(array($this->xmlObj->Report[0]['name'], date('Y-m-d H:i:s'), $totalHosts, $userId));
         if (!$createdOk)
         {
-            die($createReport->errorInfo());
+            die(print_r($createReport->errorInfo()));
         }
 
         $this->reportID = $this->getPdo()->lastInsertId(); // Set Report ID
@@ -50,7 +50,7 @@ class Import extends ReportsAbstract
         $updated = $updateProgress->execute(array($this->completedHosts, $this->reportID));
         if (!$updated)
         {
-            die($updateProgress->errorInfo());
+            die(print_r($updateProgress->errorInfo()));
         }
     }
 
@@ -63,7 +63,7 @@ class Import extends ReportsAbstract
             $insertedHost = $insertHost->execute(array($this->reportID, $host['name']));
             if (!$insertedHost)
             {
-                die($insertHost->errorInfo());
+                die(print_r($insertHost->errorInfo()));
             }
 
             $hostID = $this->getPdo()->lastInsertId();
@@ -93,7 +93,7 @@ class Import extends ReportsAbstract
                 $updateHost = $hostUpdate->execute(array($value, $hostID));
                 if (!$updateHost)
                 {
-                    die($hostUpdate->errorInfo());
+                    die(print_r($hostUpdate->errorInfo()));
                 }
             }
         }
@@ -129,14 +129,14 @@ class Import extends ReportsAbstract
             $vulnAdded = $addVuln->execute(array($attributes['pluginID'], $item['pluginName'], $attributes['svc_name'], $cvss, $attributes['pluginFamily'], $item->description, $item->cve, $item->risk_factor, $item->see_also, $item->solution, $item->synopsis));
             if (!$vulnAdded)
             {
-                die($addVuln->errorInfo());
+                die(print_r($addVuln->errorInfo()));
             }
 
 
             $vulnLinkAdded = $addVulnLink->execute(array($this->reportID, $hostID, $attributes['pluginID'], $attributes['port'], $attributes['protocol'], $attributes['svc_name']));
             if (!$vulnLinkAdded)
             {
-                die($addVulnLink->errorInfo());
+                die(print_r($addVulnLink->errorInfo()));
             }
 
             $foundVulnerabilities[$attributes['pluginID']] = (string)$item['pluginName'];
