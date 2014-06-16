@@ -23,8 +23,9 @@ class ReportData extends ReportsAbstract
         foreach ($reportList as $report) {
             array_push($reports, array('id'          => $report['id'],
                                        'report_name' => $report['report_name'],
-                                       'created'     => $report['created']));
-
+                                       'created'     => $report['created'],
+                                       'hosts'       => $report['total_hosts'],
+                                       'completed'   => $report['completed_hosts']));
         }
 
         return $reports;

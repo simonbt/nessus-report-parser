@@ -16,12 +16,23 @@ echo '
     <ul class="reportForm">
 ';
 
+
     foreach ($reports as $report) {
+
+        if ( $report['completed'] != $report['hosts'] )
+        {
+            $label = round(intval($report['completed']) / intval($report['hosts']) * 100)  . '% Imported';
+        }
+        else
+        {
+            $label = 'Select Report';
+        }
+
         echo'
         <li>
             <label>' . htmlspecialchars($report['report_name']) . ' (' . htmlspecialchars($report['created']) . ')</label>
             <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
-                <option selected>Select Report</option>
+                <option selected> '. $label .' </option>
                 <option value="hosts/' . $report['id'] . '/' . $severity . '">Hosts Report</option>
                 <option value="vulnerabilities/' . $report['id'] . '/' . $severity . '">Vulnerabilities Report</option>
                 <option value="descriptions/' . $report['id'] . '/' . $severity . '">Descriptions Report</option>
