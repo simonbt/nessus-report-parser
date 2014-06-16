@@ -101,7 +101,11 @@ class Import extends ReportsAbstract
 
     private function addVulnerability($host, $hostID) // Add vulnerabilities. This will add the vulnerability if it doesn't yet exist,
     { // and will add a link between the host and that vulnerability including the protocol and port recorded.
-        $foundVulnerabilities = array();
+
+        $vulnerabilities = [];
+        $vulnerabilityLinks = [];
+        $preparedVulnerabilities = [];
+        $preparedVulnerabilityLink = [];
 
         foreach ($host->ReportItem as $item) /* @var \SimpleXMLElement $item */ {
             $attributes = array();
@@ -113,33 +117,54 @@ class Import extends ReportsAbstract
             {
                 $cvss = $item->cvss_base_score;
             }
-
-
-            $addVuln = $this->getPdo()->prepare('INSERT IGNORE INTO vulnerabilities (pluginID, vulnerability, svc_name, severity, pluginFamily, description, cve, risk_factor, see_also, solution, synopsis) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-            $addVulnLink = $this->getPdo()->prepare('INSERT INTO host_vuln_link (report_id, host_id, plugin_id, port, protocol, service) VALUES(?, ?, ?, ?, ?, ?)');
-
             foreach ($item->attributes() as $attribute => $value) {
-
                 if ($attribute != 'pluginName')
                 {
                     $attributes[$attribute] = (string)$value;
                 }
-
-            }
-            $vulnAdded = $addVuln->execute(array($attributes['pluginID'], $item['pluginName'], $attributes['svc_name'], $cvss, $attributes['pluginFamily'], $item->description, $item->cve, $item->risk_factor, $item->see_also, $item->solution, $item->synopsis));
-            if (!$vulnAdded)
-            {
-                die(print_r($addVuln->errorInfo()));
             }
 
+            $vulnerabilities[] = array(
 
-            $vulnLinkAdded = $addVulnLink->execute(array($this->reportID, $hostID, $attributes['pluginID'], $attributes['port'], $attributes['protocol'], $attributes['svc_name']));
-            if (!$vulnLinkAdded)
-            {
-                die(print_r($addVulnLink->errorInfo()));
-            }
+                $attributes['pluginID'],
+                $item['pluginName'],
+                $attributes['svc_name'],
+                $cvss, $attributes['pluginFamily'],
+                $item->description,
+                $item->cve,
+                $item->risk_factor,
+                $item->see_also,
+                $item->solution,
+                $item->synopsis
 
-            $foundVulnerabilities[$attributes['pluginID']] = (string)$item['pluginName'];
+            );
+
+            $vulnerabilityLinks[] = array(
+
+                $this->reportID,
+                $hostID,
+                $attributes['pluginID'],
+                $attributes['port'],
+                $attributes['protocol'],
+                $attributes['svc_name']
+
+            );
         }
+
+        $addVuln = $this->getPdo()->prepare('INSERT IGNORE INTO vulnerabilities (pluginID, vulnerability, svc_name, severity, pluginFamily, description, cve, risk_factor, see_also, solution, synopsis) VALUES'. implode(',', array_fill(0, count($vulnerabilities), '(?,?,?,?,?,?,?,?,?,?,?)')));
+        $addVulnLink = $this->getPdo()->prepare('INSERT INTO host_vuln_link (report_id, host_id, plugin_id, port, protocol, service) VALUES' . implode(',', array_fill(0, count($vulnerabilityLinks), '(?, ?, ?, ?, ?, ?)')));
+
+        foreach ($vulnerabilities as $vulnerability)
+        {
+            $preparedVulnerabilities = array_merge($preparedVulnerabilities, $vulnerability);
+        }
+        foreach ($vulnerabilityLinks as $vulnerabilityLink)
+        {
+            $preparedVulnerabilityLink = array_merge($preparedVulnerabilityLink, $vulnerabilityLink);
+        }
+
+        $addVuln->execute($preparedVulnerabilities);
+        $addVulnLink->execute($preparedVulnerabilityLink);
+
     }
 } 
