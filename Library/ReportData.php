@@ -34,16 +34,92 @@ class ReportData extends ReportsAbstract
     function getAllVulnerabilities($userId)
     {
         $getVulnerabilties = $this->getPdo()->prepare('SELECT pluginID, vulnerability, risk_factor, severity FROM vulnerabilities ORDER BY vulnerability');
-        $executedOk = $getVulnerabilties->execute(array($userId));
+        $getSeverityChanges = $this->getPdo()->prepare('SELECT plugin_id, severity FROM severities WHERE user_id =?');
 
-        if(!$executedOk)
+        $vulnerabiltiesQuery = $getVulnerabilties->execute(array($userId));
+        if(!$vulnerabiltiesQuery)
         {
             die(print_r($getVulnerabilties->errorInfo()[2], __METHOD__));
         }
 
-        $vulnerabilties = $getVulnerabilties->fetchAll(\PDO::FETCH_ASSOC);
+        $severityChangesQuery = $getSeverityChanges->execute(array($userId));
+        if(!$severityChangesQuery)
+        {
+            die(print_r($getSeverityChanges->errorInfo()[2], __METHOD__));
+        }
 
-        return $vulnerabilties;
+        $severityChanges = $getSeverityChanges->fetchAll(\PDO::FETCH_ASSOC);
+        $vulnerabilities = $getVulnerabilties->fetchAll(\PDO::FETCH_ASSOC);
+
+
+        foreach ($vulnerabilities as $id => $vulnerability)
+        {
+            foreach ($severityChanges as $change)
+            {
+                if ($vulnerability['pluginID'] == $change['plugin_id'])
+                {
+                    $vulnerabilities[$id]['updated'] = true;
+                    $vulnerabilities[$id]['severity'] = $change['severity'];
+                    $vulnerabilities[$id]['risk_factor'] = $this->convertSeverity($change['severity']);
+                }
+            }
+
+        }
+
+        return $vulnerabilities;
+    }
+
+    function convertSeverity($severity)
+    {
+        if ($severity == 0.0)
+        {
+            return 'Info';
+        }
+        elseif (($severity > 0.0) && ($severity <= 3.0))
+        {
+            return 'Low';
+        }
+        elseif (($severity >= 3.1) && ($severity <= 7.0))
+        {
+            return 'Medium';
+        }
+        elseif (($severity >= 7.1) && ($severity <= 9.0))
+        {
+            return 'High';
+        }
+        elseif (($severity >= 9.1) && ($severity <= 10.0))
+        {
+            return 'Critical';
+        }
+    }
+
+    function removeSeverityChange($user_id, $plugin_id)
+    {
+        $removeQuery = $this->getPdo()->prepare('DELETE FROM severities WHERE user_id =? AND plugin_id =?');
+        $removed = $removeQuery->execute(array($user_id, $plugin_id));
+        if (!$removed)
+        {
+            die(print_r($removeQuery->errorInfo()));
+        }
+    }
+
+    function addSeverityChange($userId, $pluginId, $risk)
+    {
+        $severity = array(
+            'Critical'      =>  10,
+            'High'          =>  9,
+            'Medium'        =>  7,
+            'Low'           =>  3,
+            'Informational' =>  0,
+        );
+
+        $addSeverityChange = $this->getPdo()->prepare('INSERT INTO severities (user_id, plugin_id, severity) VALUES (?, ?, ?)');
+        $added = $addSeverityChange->execute(array($userId, $pluginId, $severity[$risk]));
+        if (!$added)
+        {
+            die(print_r($addSeverityChange->errorInfo()));
+        }
+        return $pluginId;
     }
 
     function getShownVulnerabilities($userId)
@@ -123,13 +199,26 @@ class ReportData extends ReportsAbstract
 
     function getVulnerabilities($reportID, $severity, $userId)
     { // Returns all data filtered by severity and report ID
+
+        $severityChange = array(
+            10  =>  'Critical',
+            9   =>  'High',
+            7   =>  'Medium',
+            3   =>  'Low',
+            0   =>  'None'
+        );
+
         $getHostIDs = $this->getPdo()->prepare('SELECT DISTINCT host_id FROM host_vuln_link WHERE report_id=?');
         $getHostName = $this->getPdo()->prepare('SELECT host_name, operating_system, host_fqdn, netbios_name FROM hosts WHERE id=?');
         $getVulnerabilites = $this->getPDO()->prepare('SELECT DISTINCT plugin_id FROM host_vuln_link LEFT JOIN vulnerabilities ON host_vuln_link.plugin_id = vulnerabilities.pluginID WHERE host_vuln_link.report_id=? AND host_vuln_link.host_id=? AND vulnerabilities.severity >=?');
         $getDetails = $this->getPdo()->prepare('SELECT vulnerability, risk_factor, severity FROM vulnerabilities WHERE pluginID = ?');
         $getIgnored = $this->getPdo()->prepare('SELECT plugin_id FROM ignored WHERE user_id=?');
+        $getChanges = $this->getPdo()->prepare('SELECT plugin_id, severity FROM severities WHERE user_id =?');
+        $getChanges->execute(array($userId));
         $getIgnored->execute(array($userId));
+        $changed = $getChanges->fetchAll(\PDO::FETCH_ASSOC);
         $ignored = $getIgnored->fetchAll(\PDO::FETCH_COLUMN);
+
 
         $getHostIDs->execute(array($reportID));
         $hosts = $getHostIDs->fetchall(\PDO::FETCH_ASSOC);
@@ -158,8 +247,32 @@ class ReportData extends ReportsAbstract
                 $getDetails->execute(array($vulnerability));
                 $details = $getDetails->fetchAll(\PDO::FETCH_ASSOC);
                 $vulnerabilities[$id]['name'] = $details[0]['vulnerability'];
-                $vulnerabilities[$id]['severity'] = $details[0]['severity'];
                 $vulnerabilities[$id]['risk'] = $details[0]['risk_factor'];
+
+                if ($changed)
+                {
+                    foreach ($changed as $change)
+                    {
+                        if ($change['plugin_id'] == $vulnerability)
+                        {
+                            if ($change['severity'] < $severity)
+                            {
+                                unset($vulnerabilities[$id]);
+                                continue;
+                            }
+                            $vulnerabilities[$id]['severity'] = $change['severity'];
+                            $vulnerabilities[$id]['risk'] = $severityChange[intval($change['severity'])];
+                        }
+                        else
+                        {
+                            $vulnerabilities[$id]['severity'] = $details[0]['severity'];
+                        }
+                    }
+                }
+                else
+                {
+                    $vulnerabilities[$id]['severity'] = $details[0]['severity'];
+                }
             }
             $hosts[$key]['vulnerabilities'] = $vulnerabilities;
         }

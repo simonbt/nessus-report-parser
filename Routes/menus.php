@@ -53,10 +53,19 @@ $app->get('/changeSeverity', function() use($app, $reportData)
     $app->render('menus/changeSeverity.phtml', array('app' => $app, 'vulnerabilities' => $reportData->getAllVulnerabilities($_SESSION['userId'])));
 });
 
-$app->post('/changeSeverity', function() use($app)
+$app->post('/changeSeverity', function() use($app, $reportData)
 {
-    $severity = strip_tags($app->request()->post('severity'));
+    $risk = strip_tags($app->request()->post('severity'));
     $plugin = strip_tags($app->request()->post('plugin'));
-    $app->redirect('/changeSeverity?result='.$severity.'&plugin='.$plugin);
+    $remove = strip_tags($app->request()->post('remove'));
+
+    if ($remove)
+    {
+        $reportData->removeSeverityChange($_SESSION['userId'], $remove);
+        $app->redirect('/changeSeverity?removed='.$remove);
+    }
+
+    $reportData->addSeverityChange($_SESSION['userId'], $plugin, $risk);
+    $app->redirect('/changeSeverity?result='.$risk.'&plugin='.$plugin);
 
 });

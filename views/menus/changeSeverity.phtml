@@ -12,20 +12,20 @@ $severity = $app->request()->get('result');
 $plugin = $app->request()->get('plugin');
 
 echo '
-<p class="header">Change Severity Levels</p>
-
-<p>WORK - IN  - PROGRESS (i.e. this doesn\'t change anything!)</p>
+<p class="header">Change Vulnerability Risk</p>
 ';
 
-if ($severity){
-echo '<p class="green">Changed severity of plugin '.$plugin.' to '.$severity.'</p>';
-}
 echo '
 <div class="vulnFormContainer">
     <ul class="vulnForm">
 ';
 
 foreach ($vulnerabilities as $vulnerability) {
+
+    if ($vulnerability['risk_factor'] == 'None')
+    {
+        $vulnerability['risk_factor'] = 'Informational';
+    }
 
     if (($vulnerability['risk_factor'] == "High") || ($vulnerability['risk_factor'] == "Critical")) {
         $colour = "red";
@@ -39,22 +39,38 @@ foreach ($vulnerabilities as $vulnerability) {
         $colour = "blue";
     }
 
-    echo'
-        <li>
+    echo'<li>';
+
+    if (array_key_exists('updated', $vulnerability))
+    {
+        echo '
+
+            <form method="post">
+            <label class="' . $colour . '">' . htmlspecialchars($vulnerability['vulnerability']) . '</label>
+
+            <input type="hidden" name="remove" value="' . $vulnerability['pluginID'] . '">
+            <input type="submit" value="Reset"></form>
+        ';
+    }
+    else
+    {
+        echo'
             <form method="post">
             <label class="' . $colour . '">' . htmlspecialchars($vulnerability['vulnerability']) . '</label>
             <select name="severity">
-            <option selected="selected">'. $vulnerability['severity'] .'</option>';
-
-            for ($i = 0.0; $i <= 10.0; $i+=0.1)
-            {
-                echo '<option value ="' . $i . '">' . $i . '</option>';
-            }
-
-    echo '  </select>
-                <input type="hidden" name="plugin" value="' . $vulnerability['pluginID'] . '">
-                <input type="submit"></form>
-            </li>
+                <option selected="selected">'. $vulnerability['risk_factor'] .'</option>
+                <option value ="Critical">Critical</option>
+                <option value ="High">High</option>
+                <option value ="Medium">Medium</option>
+                <option value ="Low">Low</option>
+                <option value ="Informational">Informational</option>
+            </select>
+        <input type="hidden" name="plugin" value="' . $vulnerability['pluginID'] . '">
+        <input type="submit" value="Update"></form>
+        ';
+    }
+echo '
+        </li>
                 ';
 }
 echo '</ul>
