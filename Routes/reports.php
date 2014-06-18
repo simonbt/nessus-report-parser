@@ -32,7 +32,7 @@ $app->get('/vulnerabilities/:reportId/:severity', function ($reportId, $severity
     $reportId = strip_tags($reportId);
     $severity = strip_tags($severity);
 
-    $data = $reportData->getVulnerabilities($reportId, $severity);
+    $data = $reportData->getVulnerabilities($reportId, $severity, $_SESSION['userId']);
     $app->render('reports/vulnerabilities.phtml', array('reportData' => $data));
 });
 

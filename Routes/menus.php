@@ -25,3 +25,25 @@ $app->get('/opendlp', function () use($app)
     $files = new \Library\Files();
     $app->render('menus/openDlpIndex.phtml', array('reports' => $files->getOpenDlpList($_SESSION['userId'])));
 });
+
+$app->get('/ignored/shown', function () use($app, $reportData)
+{
+    $app->render('menus/shown.phtml', array('vulnerabilities' => $reportData->getShownVulnerabilities($_SESSION['userId'])));
+});
+
+$app->get('/ignored/hidden', function () use($app, $reportData)
+{
+    $app->render('menus/hidden.phtml', array('vulnerabilities' => $reportData->getIgnoredVulnerabilities($_SESSION['userId'])));
+});
+
+$app->get('/ignored/add/:pluginId', function($pluginId) use($app, $reportData)
+{
+    $result = $reportData->addIgnored($_SESSION['userId'], $pluginId);
+    $app->redirect('/ignored/shown?added=' . $result);
+});
+
+$app->get('/ignored/remove/:pluginId', function($pluginId) use($app, $reportData)
+{
+    $result = $reportData->deleteIgnored($_SESSION['userId'], $pluginId);
+    $app->redirect('/ignored/hidden?removed=' . $result);
+});

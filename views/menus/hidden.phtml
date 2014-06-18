@@ -1,0 +1,48 @@
+<?php
+/**
+ * nessus-report-parser - hidden.phtml.
+ * User: simonbeattie
+ * Date: 18/06/2014
+ * Time: 11:03
+ */
+
+include(__DIR__ . '/../includes/menuHeader.phtml');
+
+
+echo '
+<p class="header">Vulnerabilities</p>
+
+<div class="reportFormContainer">
+    <ul class="reportForm">
+';
+
+foreach ($vulnerabilities as $vulnerability) {
+
+    if (($vulnerability['risk_factor'] == "High") || ($vulnerability['risk_factor'] == "Critical")) {
+        $colour = "red";
+    } elseif ($vulnerability['risk_factor'] == "Medium") {
+        $colour = "orange";
+    } elseif ($vulnerability['risk_factor'] == "Low") {
+        $colour = "green";
+    } elseif ($vulnerability['risk_factor'] == "None") {
+        $colour = "blue";
+    } else {
+        $colour = "blue";
+    }
+
+    echo'
+        <li>
+            <label class="' . $colour . '">' . htmlspecialchars($vulnerability['vulnerability']) . '</label>
+            <select onchange="location = this.options[this.selectedIndex].value">
+                <option selected> Select </option>
+                <option value="/ignored/remove/' . $vulnerability['pluginID'] . '">Show</option>
+            </select>
+        </li>
+            ';
+}
+echo '</ul>
+</div>';
+
+
+
+include(__DIR__ . '/../includes/footer.phtml');

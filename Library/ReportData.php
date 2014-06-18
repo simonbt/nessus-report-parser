@@ -31,6 +31,63 @@ class ReportData extends ReportsAbstract
         return $reports;
     }
 
+    function getShownVulnerabilities($userId)
+    {
+        $getVulnerabilties = $this->getPdo()->prepare('SELECT pluginID, vulnerability, risk_factor FROM vulnerabilities WHERE NOT EXISTS(SELECT plugin_id FROM ignored WHERE ignored.plugin_id=vulnerabilities.pluginID AND user_id=?) ORDER BY vulnerability');
+        $executedOk = $getVulnerabilties->execute(array($userId));
+
+        if(!$executedOk)
+        {
+            die(print_r($getVulnerabilties->errorInfo()[2], __METHOD__));
+        }
+
+        $vulnerabilties = $getVulnerabilties->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $vulnerabilties;
+    }
+
+    function getIgnoredVulnerabilities($userId)
+    {
+        $getVulnerabilties = $this->getPdo()->prepare('SELECT pluginID, vulnerability, risk_factor FROM vulnerabilities WHERE EXISTS(SELECT plugin_id FROM ignored WHERE ignored.plugin_id=vulnerabilities.pluginID AND user_id=?) ORDER BY vulnerability');
+        $executedOk = $getVulnerabilties->execute(array($userId));
+
+        if(!$executedOk)
+        {
+            die(print_r($getVulnerabilties->errorInfo()[2], __METHOD__));
+        }
+
+        $vulnerabilties = $getVulnerabilties->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $vulnerabilties;
+    }
+
+    function addIgnored($userId, $pluginId)
+    {
+        $addIgnored = $this->getPdo()->prepare('INSERT INTO ignored (plugin_id, user_id) VALUES ( ?, ? )');
+        $addedIgnored = $addIgnored->execute(array($pluginId, $userId));
+
+        if (!$addedIgnored)
+        {
+            die(print_r($addIgnored->errorInfo()));
+        }
+
+        return $pluginId;
+    }
+
+    function deleteIgnored($userId, $pluginId)
+    {
+        $deleteIgnored = $this->getPdo()->prepare('DELETE FROM ignored WHERE plugin_id =? AND user_id =?');
+        $deletedIgnored = $deleteIgnored->execute(array($pluginId, $userId));
+
+        if (!$deletedIgnored)
+        {
+            die(print_r($deleteIgnored->errorInfo()));
+        }
+
+        return $pluginId;
+    }
+
+
     function getDescriptions($reportID, $severity)
     {
 
@@ -49,12 +106,16 @@ class ReportData extends ReportsAbstract
         return $returnArray;
     }
 
-    function getVulnerabilities($reportID, $severity)
+    function getVulnerabilities($reportID, $severity, $userId)
     { // Returns all data filtered by severity and report ID
         $getHostIDs = $this->getPdo()->prepare('SELECT DISTINCT host_id FROM host_vuln_link WHERE report_id=?');
         $getHostName = $this->getPdo()->prepare('SELECT host_name, operating_system, host_fqdn, netbios_name FROM hosts WHERE id=?');
         $getVulnerabilites = $this->getPDO()->prepare('SELECT DISTINCT plugin_id FROM host_vuln_link LEFT JOIN vulnerabilities ON host_vuln_link.plugin_id = vulnerabilities.pluginID WHERE host_vuln_link.report_id=? AND host_vuln_link.host_id=? AND vulnerabilities.severity >=?');
         $getDetails = $this->getPdo()->prepare('SELECT vulnerability, risk_factor, severity FROM vulnerabilities WHERE pluginID = ?');
+        $getIgnored = $this->getPdo()->prepare('SELECT plugin_id FROM ignored WHERE user_id=?');
+        $getIgnored->execute(array($userId));
+        $ignored = $getIgnored->fetchAll(\PDO::FETCH_COLUMN);
+
         $getHostIDs->execute(array($reportID));
         $hosts = $getHostIDs->fetchall(\PDO::FETCH_ASSOC);
         if (!$hosts) {
@@ -69,17 +130,23 @@ class ReportData extends ReportsAbstract
             $hosts[$key]['fqdn'] = $hostName[0]['host_fqdn'];
             $hosts[$key]['netbios'] = $hostName[0]['netbios_name'];
             $getVulnerabilites->execute(array($reportID, $host['host_id'], $severity));
-            $vulnerabilites = $getVulnerabilites->fetchall(\PDO::FETCH_COLUMN);
+            $vulnerabilities = $getVulnerabilites->fetchall(\PDO::FETCH_COLUMN);
 
-            foreach ($vulnerabilites as $id => $vulnerability) {
-                $vulnerabilites[$id] = array();
+            foreach ($vulnerabilities as $id => $vulnerability) {
+
+                if (in_array($vulnerability, $ignored))
+                {
+                    unset($vulnerabilities[$id]);
+                    continue;
+                }
+                $vulnerabilities[$id] = array();
                 $getDetails->execute(array($vulnerability));
                 $details = $getDetails->fetchAll(\PDO::FETCH_ASSOC);
-                $vulnerabilites[$id]['name'] = $details[0]['vulnerability'];
-                $vulnerabilites[$id]['severity'] = $details[0]['severity'];
-                $vulnerabilites[$id]['risk'] = $details[0]['risk_factor'];
+                $vulnerabilities[$id]['name'] = $details[0]['vulnerability'];
+                $vulnerabilities[$id]['severity'] = $details[0]['severity'];
+                $vulnerabilities[$id]['risk'] = $details[0]['risk_factor'];
             }
-            $hosts[$key]['vulnerabilities'] = $vulnerabilites;
+            $hosts[$key]['vulnerabilities'] = $vulnerabilities;
         }
         return $hosts;
     }
