@@ -48,6 +48,30 @@ p {
     margin: 0 auto;
 }
 
+.vulnFormContainer {
+    position: relative;
+    width: 2000px;
+    margin: 0 auto;
+}
+
+.vulnForm li {
+    height: 30px;
+    list-style: none;
+}
+.vulnForm label {
+    display: inline-block;
+    width: 35%;
+    text-align: right;
+    margin-right: 20px;
+}
+
+.reportForm select {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: 10.0pt;
+    width: 100px;
+    border: 1px solid #cccccc;
+}
+
 .reportForm li {
     height: 30px;
     list-style: none;
