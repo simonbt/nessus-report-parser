@@ -31,6 +31,21 @@ class ReportData extends ReportsAbstract
         return $reports;
     }
 
+    function getAllVulnerabilities($userId)
+    {
+        $getVulnerabilties = $this->getPdo()->prepare('SELECT pluginID, vulnerability, risk_factor, severity FROM vulnerabilities ORDER BY vulnerability');
+        $executedOk = $getVulnerabilties->execute(array($userId));
+
+        if(!$executedOk)
+        {
+            die(print_r($getVulnerabilties->errorInfo()[2], __METHOD__));
+        }
+
+        $vulnerabilties = $getVulnerabilties->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $vulnerabilties;
+    }
+
     function getShownVulnerabilities($userId)
     {
         $getVulnerabilties = $this->getPdo()->prepare('SELECT pluginID, vulnerability, risk_factor FROM vulnerabilities WHERE NOT EXISTS(SELECT plugin_id FROM ignored WHERE ignored.plugin_id=vulnerabilities.pluginID AND user_id=?) ORDER BY vulnerability');

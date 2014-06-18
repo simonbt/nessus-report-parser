@@ -47,3 +47,16 @@ $app->get('/ignored/remove/:pluginId', function($pluginId) use($app, $reportData
     $result = $reportData->deleteIgnored($_SESSION['userId'], $pluginId);
     $app->redirect('/ignored/hidden?removed=' . $result);
 });
+
+$app->get('/changeSeverity', function() use($app, $reportData)
+{
+    $app->render('menus/changeSeverity.phtml', array('app' => $app, 'vulnerabilities' => $reportData->getAllVulnerabilities($_SESSION['userId'])));
+});
+
+$app->post('/changeSeverity', function() use($app)
+{
+    $severity = strip_tags($app->request()->post('severity'));
+    $plugin = strip_tags($app->request()->post('plugin'));
+    $app->redirect('/changeSeverity?result='.$severity.'&plugin='.$plugin);
+
+});
