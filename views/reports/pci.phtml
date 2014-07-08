@@ -93,8 +93,8 @@ $ip = "";
 
 $counts = array();
 foreach ($data as $value) {
+    print_r($value);
     foreach ($value as $key2 => $value2) {
-        echo "VALUE " . $value2;
         if ($key2 == "ip") {
             $index = $value2;
             if (array_key_exists($index, $counts)) {
