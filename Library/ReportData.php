@@ -333,7 +333,7 @@ class ReportData extends ReportsAbstract
     { // Returns all report data for all hosts, filtered by severity and report ID but sorted by vulnerability.
 
         $getHostIDs = $this->getPdo()->prepare('SELECT DISTINCT host_id FROM host_vuln_link WHERE report_id=?');
-        $getHostName = $this->getPdo()->prepare('SELECT host_name FROM hosts WHERE id=?');
+        $getHostName = $this->getPdo()->prepare('SELECT host_ip FROM hosts WHERE id=?');
         $getVulnerabilites = $this->getPDO()->prepare('SELECT DISTINCT plugin_id, protocol, port, service FROM host_vuln_link LEFT JOIN vulnerabilities ON host_vuln_link.plugin_id = vulnerabilities.pluginID WHERE host_vuln_link.report_id=? AND host_vuln_link.host_id=? ORDER BY plugin_id');
         $getDetails = $this->getPdo()->prepare('SELECT vulnerability, risk_factor, severity FROM vulnerabilities WHERE pluginID = ?');
         $getHostIDs->execute(array($reportID));
