@@ -54,8 +54,17 @@ foreach ($reportData as $hostData) {
             $risk = $vulnerability['risk'];
         }
 
+        if(filter_var($hostData['hostname'], FILTER_VALIDATE_IP) !== false)
+        {
+            $ipAdd = ip2long($hostData['hostname']);
+        }
+        else
+        {
+            $ipAdd = $hostData['hostname'];
+        }
+
         $data[] = array(
-            'ip'       => ip2long($hostData['hostname']),
+            'ip'       => $ipAdd,
             'vuln'     => $vulnerability['name'],
             'risk'     => $risk,
             'severity' => $vulnerability['severity'],
