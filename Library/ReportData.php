@@ -278,9 +278,9 @@ class ReportData extends ReportsAbstract
             }
             $hosts[$key]['vulnerabilities'] = $vulnerabilities;
         }
-        echo "<pre>";
-        print_r($hosts);
-        echo "</pre>";
+//        echo "<pre>";
+//        print_r($hosts);
+//        echo "</pre>";
         return $hosts;
     }
 
