@@ -345,7 +345,7 @@ class ReportData extends ReportsAbstract
         foreach ($hosts as $key => $host) {
             $getHostName->execute(array($host['host_id']));
             $hostName = $getHostName->fetchall(\PDO::FETCH_ASSOC);
-            $hosts[$key]['hostname'] = $hostName[0]['host_name'];
+            $hosts[$key]['hostname'] = $hostName[0]['host_ip'];
             $getVulnerabilites->execute(array($reportID, $host['host_id']));
             $vulnerabilites = $getVulnerabilites->fetchall(\PDO::FETCH_ASSOC);
 
