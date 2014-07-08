@@ -210,7 +210,7 @@ class ReportData extends ReportsAbstract
 
         $getHostIDs = $this->getPdo()->prepare('SELECT DISTINCT host_id FROM host_vuln_link WHERE report_id=?');
         $getHostName = $this->getPdo()->prepare('SELECT host_name, operating_system, host_fqdn, netbios_name FROM hosts WHERE id=?');
-        $getVulnerabilites = $this->getPDO()->prepare('SELECT DISTINCT plugin_id FROM host_vuln_link LEFT JOIN vulnerabilities ON host_vuln_link.plugin_id = vulnerabilities.pluginID WHERE host_vuln_link.report_id=? AND host_vuln_link.host_id=? AND vulnerabilities.severity >=?');
+        $getVulnerabilites = $this->getPDO()->prepare('SELECT plugin_id, port, protocol FROM host_vuln_link LEFT JOIN vulnerabilities ON host_vuln_link.plugin_id = vulnerabilities.pluginID WHERE host_vuln_link.report_id=? AND host_vuln_link.host_id=? AND vulnerabilities.severity >=? GROUP BY plugin_id');
         $getDetails = $this->getPdo()->prepare('SELECT vulnerability, risk_factor, severity FROM vulnerabilities WHERE pluginID = ?');
         $getIgnored = $this->getPdo()->prepare('SELECT plugin_id FROM ignored WHERE user_id=?');
         $getChanges = $this->getPdo()->prepare('SELECT plugin_id, severity FROM severities WHERE user_id =?');
@@ -234,20 +234,22 @@ class ReportData extends ReportsAbstract
             $hosts[$key]['fqdn'] = $hostName[0]['host_fqdn'];
             $hosts[$key]['netbios'] = $hostName[0]['netbios_name'];
             $getVulnerabilites->execute(array($reportID, $host['host_id'], $severity));
-            $vulnerabilities = $getVulnerabilites->fetchall(\PDO::FETCH_COLUMN);
+            $vulnerabilities = $getVulnerabilites->fetchall(\PDO::FETCH_ASSOC);
 
             foreach ($vulnerabilities as $id => $vulnerability) {
 
-                if (in_array($vulnerability, $ignored))
+                if (in_array($vulnerability['plugin_id'], $ignored))
                 {
                     unset($vulnerabilities[$id]);
                     continue;
                 }
                 $vulnerabilities[$id] = array();
-                $getDetails->execute(array($vulnerability));
+                $getDetails->execute(array($vulnerability['plugin_id']));
                 $details = $getDetails->fetchAll(\PDO::FETCH_ASSOC);
                 $vulnerabilities[$id]['name'] = $details[0]['vulnerability'];
                 $vulnerabilities[$id]['risk'] = $details[0]['risk_factor'];
+                $vulnerabilities[$id]['port'] = $vulnerability['port'];
+                $vulnerabilities[$id]['protocol'] = $vulnerability['protocol'];
 
                 if ($changed)
                 {
@@ -276,6 +278,9 @@ class ReportData extends ReportsAbstract
             }
             $hosts[$key]['vulnerabilities'] = $vulnerabilities;
         }
+        echo "<pre>";
+        print_r($hosts);
+        echo "</pre>";
         return $hosts;
     }
 
