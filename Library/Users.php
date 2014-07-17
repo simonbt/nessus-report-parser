@@ -18,7 +18,7 @@ class Users extends ReportsAbstract
         $query->execute([$reportId]);
         $result = $query->fetchAll(\PDO::FETCH_COLUMN);
 
-        if ($result[0] != $userId)
+        if (!$result || $result[0] != $userId)
         {
             return false;
         }
