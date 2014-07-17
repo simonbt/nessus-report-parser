@@ -197,6 +197,7 @@ class ReportData extends ReportsAbstract
         return $returnArray;
     }
 
+
     function getVulnerabilities($reportID, $severity, $userId)
     { // Returns all data filtered by severity and report ID
 

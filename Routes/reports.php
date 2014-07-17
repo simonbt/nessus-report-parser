@@ -66,6 +66,26 @@ $app->get('/vulnerabilities/:reportId/:severity', function ($reportId, $severity
     }
 });
 
+$app->get('/externals/:reportId/:severity', function ($reportId, $severity) use($app, $reportData, $pdo)
+{
+    $users = new \Library\Users($pdo);
+
+    //Sanitise
+    $reportId = strip_tags($reportId);
+    $severity = strip_tags($severity);
+
+    $userCheck = $users->checkReportOwnership($reportId, $_SESSION['userId']);
+    if (!$userCheck)
+    {
+        $app->render('reports/reportExists.phtml');
+    }
+    else
+    {
+        $data = $reportData->getVulnerabilities($reportId, $severity, $_SESSION['userId']);
+        $app->render('reports/externalVulnerabilities.phtml', array('reportData' => $data));
+    }
+});
+
 $app->get('/pci/:reportId', function ($reportId) use($app, $reportData, $pdo)
 {
     $users = new \Library\Users($pdo);

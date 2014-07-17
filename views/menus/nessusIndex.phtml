@@ -34,7 +34,8 @@ echo '
             <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
                 <option selected> '. $label .' </option>
                 <option value="hosts/' . $report['id'] . '/' . $severity . '">Hosts Report</option>
-                <option value="vulnerabilities/' . $report['id'] . '/' . $severity . '">Vulnerabilities Report</option>
+                <option value="vulnerabilities/' . $report['id'] . '/' . $severity . '">Vulnerabilities Report (Internals)</option>
+                <option value="externals/' . $report['id'] . '/' . $severity . '">Vulnerabilities Report (Externals)</option>
                 <option value="descriptions/' . $report['id'] . '/' . $severity . '">Descriptions Report</option>
                 <option value="pci/' . $report['id'] . '">PCI Report</option>
             </select>
