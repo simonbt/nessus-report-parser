@@ -12,6 +12,20 @@ namespace Library;
 class Users extends ReportsAbstract
 {
 
+    public function checkReportOwnership($reportId, $userId)
+    {
+        $query = $this->getPdo()->prepare('SELECT userId FROM reports WHERE id =?');
+        $query->execute([$reportId]);
+        $result = $query->fetchAll(\PDO::FETCH_COLUMN);
+
+        if ($result[0] != $userId)
+        {
+            return false;
+        }
+
+        return true;
+
+    }
 
     public function checkUser($email, $password)
     {

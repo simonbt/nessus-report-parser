@@ -6,43 +6,83 @@
  * Time: 12:39
  */
 
-$app->get('/hosts/:reportId/:severity', function ($reportId, $severity) use($app, $reportData)
+$app->get('/hosts/:reportId/:severity', function ($reportId, $severity) use($app, $reportData, $pdo)
 {
+    $users = new \Library\Users($pdo);
+
     //Sanitise
     $reportId = strip_tags($reportId);
     $severity = strip_tags($severity);
 
-    $reportData = $reportData->getHosts($reportId, $severity);
-    $app->render('reports/hosts.phtml', array('reportData' => $reportData));
+    $userCheck = $users->checkReportOwnership($reportId, $_SESSION['userId']);
+    if (!$userCheck)
+    {
+        $app->render('reports/reportExists.phtml');
+    }
+    else
+    {
+        $reportData = $reportData->getHosts($reportId, $severity);
+        $app->render('reports/hosts.phtml', array('reportData' => $reportData));
+    }
 });
 
-$app->get('/descriptions/:reportId/:severity', function ($reportId, $severity) use($app, $reportData)
+$app->get('/descriptions/:reportId/:severity', function ($reportId, $severity) use($app, $reportData, $pdo)
 {
+    $users = new \Library\Users($pdo);
+
     //Sanitise
     $reportId = strip_tags($reportId);
     $severity = strip_tags($severity);
 
-    $data = $reportData->getDescriptions($reportId, $severity);
-    $app->render('reports/descriptions.phtml', array('reportData' => $data));
+    $userCheck = $users->checkReportOwnership($reportId, $_SESSION['userId']);
+    if (!$userCheck)
+    {
+        $app->render('reports/reportExists.phtml');
+    }
+    else
+    {
+        $data = $reportData->getDescriptions($reportId, $severity);
+        $app->render('reports/descriptions.phtml', array('reportData' => $data));
+    }
 });
 
-$app->get('/vulnerabilities/:reportId/:severity', function ($reportId, $severity) use($app, $reportData)
+$app->get('/vulnerabilities/:reportId/:severity', function ($reportId, $severity) use($app, $reportData, $pdo)
 {
+    $users = new \Library\Users($pdo);
+
     //Sanitise
     $reportId = strip_tags($reportId);
     $severity = strip_tags($severity);
 
-    $data = $reportData->getVulnerabilities($reportId, $severity, $_SESSION['userId']);
-    $app->render('reports/vulnerabilities.phtml', array('reportData' => $data));
+    $userCheck = $users->checkReportOwnership($reportId, $_SESSION['userId']);
+    if (!$userCheck)
+    {
+        $app->render('reports/reportExists.phtml');
+    }
+    else
+    {
+        $data = $reportData->getVulnerabilities($reportId, $severity, $_SESSION['userId']);
+        $app->render('reports/vulnerabilities.phtml', array('reportData' => $data));
+    }
 });
 
-$app->get('/pci/:reportId', function ($reportId) use($app, $reportData)
+$app->get('/pci/:reportId', function ($reportId) use($app, $reportData, $pdo)
 {
+    $users = new \Library\Users($pdo);
+
     //Sanitise
     $reportId = strip_tags($reportId);
 
-    $data = $reportData->getPCI($reportId);
-    $app->render('reports/pci.phtml', array('reportData' => $data));
+    $userCheck = $users->checkReportOwnership($reportId, $_SESSION['userId']);
+    if (!$userCheck)
+    {
+        $app->render('reports/reportExists.phtml');
+    }
+    else
+    {
+        $data = $reportData->getPCI($reportId);
+        $app->render('reports/pci.phtml', array('reportData' => $data));
+    }
 });
 
 $app->get('/opendlp/:filename', function ($filename) use($app, $reportData)

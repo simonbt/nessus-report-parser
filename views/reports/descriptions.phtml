@@ -17,12 +17,6 @@ foreach ($reportData as $vulnerability)
 {
     echo "<div class=\"report\">";
     echo "<b>" . htmlspecialchars($vulnerability[0]['vulnerability']) . "</b><br>";
-    if ($vulnerability[0]->randomstormed == 1)
-    {
-        echo '<font color="green"><i>This has been updated by a RandomStorm staff member</i><br><br></font>';
-    } else {
-        echo '<font color="red"><i>This has NOT been updated by a RandomStorm staff member</i><br><br></font>';
-    }
     echo "<b>Synopsis</b><br>";
     echo htmlspecialchars($vulnerability[0]['synopsis']) . "<br>";
     echo "<b>Description</b><br>";
