@@ -231,10 +231,6 @@ class ReportData extends ReportsAbstract
             $getHostName->execute(array($host['host_id']));
             $hostName = $getHostName->fetchall(\PDO::FETCH_ASSOC);
 
-            echo "<pre>";
-            print_r($hostName);
-            echo "</pre>";die();
-
             $hosts[$key]['hostname'] = $hostName[0]['host_name'];
             $hosts[$key]['OS'] = $hostName[0]['operating_system'];
             $hosts[$key]['fqdn'] = $hostName[0]['host_fqdn'];
