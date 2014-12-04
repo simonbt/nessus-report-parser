@@ -42,6 +42,10 @@ foreach ($reportData as $hostData) {
 
 }
 
+echo "<pre>";
+print_r($data);
+echo "</pre>";die();
+
 usort($data, function ($firstArrayElement, $secondArrayElement) {
     $first = $firstArrayElement['ip'];
     $second = $secondArrayElement['ip'];
