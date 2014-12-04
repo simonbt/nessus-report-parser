@@ -114,6 +114,16 @@ $app->post('/nessusMenu/admin', function () use($import, $app)
             }
             break;
 
+        case 'Download':
+            $report = $forms->decodeName($reports[0]);
+            $location = $import->downloadNessusXML($userId, $report);
+
+            header('Content-type: text/xml');
+            header('Content-Disposition: attachment; filename="download.xml"');
+
+            readfile($location);
+            break;
+
     }
 
 });

@@ -17,6 +17,13 @@ class Import extends ReportsAbstract
     protected $reportID;
     protected $completedHosts = 1;
 
+    public function downloadNessusXML($userId, $fileName)
+    {
+        $nessusDirectory = __DIR__ . '/uploads/nessus/' . $userId . '/';
+        $download = $nessusDirectory . $fileName;
+        return $download;
+    }
+
     public function importNessusXML($userId, $fileName)
     {
         $nessusDirectory = __DIR__ . '/uploads/nessus/' . $userId . '/';
