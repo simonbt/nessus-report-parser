@@ -37,7 +37,9 @@ foreach ($reportData as $hostData) {
             'os'       => $OS,
             'vuln'     => $vulnerability['name'],
             'risk'     => $vulnerability['risk'],
-            'severity' => $vulnerability['severity']);
+            'severity' => $vulnerability['severity'],
+            'portProtocol' => strtoupper($vulnerability['protocol']).'/'.$vulnerability['port']);
+
     }
 
 }
@@ -100,6 +102,7 @@ foreach ($data as $vuln) {
         print("
             <tr>
                 <td class=" . $colour . ">" . htmlspecialchars($vuln['vuln']) . "</td>
+                <td class=" . $colour . ">" . htmlspecialchars($vuln['portProtocol']) . "</td>
                 <td class=" . $colour . ">" . htmlspecialchars($vuln['risk']) . "</td>
                 <td class=" . $colour . ">" . htmlspecialchars($vuln['severity']) . "</td>
             </tr>
@@ -119,6 +122,7 @@ foreach ($data as $vuln) {
                 <td border:solid 1pt gray; vertical-align: top; rowspan='" . $counts[$vuln['ip']] . "'>" . htmlspecialchars($vuln['name']) . "</td>
                 <td border:solid 1pt gray; vertical-align: top; rowspan='" . $counts[$vuln['ip']] . "'>" . htmlspecialchars($vuln['os']) . "</td>
                 <td class=" . $colour . ">" . htmlspecialchars($vuln['vuln']) . "</td>
+                <td class=" . $colour . ">" . htmlspecialchars($vuln['portProtocol']) . "</td>
                 <td class=" . $colour . ">" . htmlspecialchars($vuln['risk']) . "</td>
                 <td class=" . $colour . ">" . htmlspecialchars($vuln['severity']) . "</td>
             </tr>
