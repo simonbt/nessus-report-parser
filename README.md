@@ -122,6 +122,9 @@ UPDATES:
     13th June 2014:
             Added validation for OpenDLP and Nessus XML uploads
 
+    20th January 2015:
+            Changed Internal and External output tables to reflect report changes
+
 TO-DO:
 
         Limitation to file upload sizes
