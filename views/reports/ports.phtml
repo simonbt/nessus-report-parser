@@ -32,27 +32,6 @@ foreach ($reportData as $hostData) {
 
 }
 
-usort($data, function ($firstArrayElement, $secondArrayElement) {
-    $first = $firstArrayElement['ip'];
-    $second = $secondArrayElement['ip'];
-
-    $ret = strcmp($first, $second);
-    if ($ret == 0) {
-        $firstSeverity = (float)$firstArrayElement['severity'];
-        $secondSeverity = (float)$secondArrayElement['severity'];
-
-        if ($secondSeverity > $firstSeverity) {
-            return 1;
-        } elseif ($firstSeverity > $secondSeverity) {
-            return -1;
-        } elseif ($firstSeverity == $secondSeverity) {
-            return 0;
-        }
-    }
-
-    return $ret;
-});
-
 $ip = "";
 
 
