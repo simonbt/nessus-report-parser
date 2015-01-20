@@ -475,4 +475,80 @@ class ReportData extends ReportsAbstract
 
     }
 
+    function getPorts($reportID, $severity, $userId)
+    { // Returns all data filtered by severity and report ID
+
+        $services = $this->loadXML(__DIR__ . '/../service-names-port-numbers.xml');
+
+        $getHostIDs = $this->getPdo()->prepare('SELECT DISTINCT host_id FROM host_vuln_link WHERE report_id=?');
+        $getHostName = $this->getPdo()->prepare('SELECT host_name, operating_system, host_fqdn, netbios_name FROM hosts WHERE id=?');
+        $getVulnerabilites = $this->getPDO()->prepare('SELECT plugin_id, port, protocol FROM host_vuln_link LEFT JOIN vulnerabilities ON host_vuln_link.plugin_id = vulnerabilities.pluginID WHERE host_vuln_link.report_id=? AND host_vuln_link.host_id=? AND vulnerabilities.severity >=? GROUP BY plugin_id');
+        $getDetails = $this->getPdo()->prepare('SELECT vulnerability, risk_factor, severity FROM vulnerabilities WHERE pluginID = ?');
+        $getIgnored = $this->getPdo()->prepare('SELECT plugin_id FROM ignored WHERE user_id=?');
+        $getChanges = $this->getPdo()->prepare('SELECT plugin_id, severity FROM severities WHERE user_id =?');
+        $getChanges->execute(array($userId));
+        $getIgnored->execute(array($userId));
+        $ignored = $getIgnored->fetchAll(\PDO::FETCH_COLUMN);
+
+
+        $getHostIDs->execute(array($reportID));
+        $hosts = $getHostIDs->fetchall(\PDO::FETCH_ASSOC);
+        if (!$hosts) {
+            die('Sorry, we couldn\'t get the host ID list: ' . $getHostIDs->errorInfo()[2] . PHP_EOL);
+        }
+
+        foreach ($hosts as $key => $host) {
+            $getHostName->execute(array($host['host_id']));
+            $hostName = $getHostName->fetchall(\PDO::FETCH_ASSOC);
+
+            $hosts[$key]['hostname'] = $hostName[0]['host_name'];
+            $hosts[$key]['OS'] = $hostName[0]['operating_system'];
+            $getVulnerabilites->execute(array($reportID, $host['host_id'], $severity));
+            $vulnerabilities = $getVulnerabilites->fetchall(\PDO::FETCH_ASSOC);
+
+            foreach ($vulnerabilities as $id => $vulnerability) {
+
+                if (in_array($vulnerability['plugin_id'], $ignored) | $vulnerability['port'] == "0")
+                {
+                    unset($vulnerabilities[$id]);
+                    continue;
+                }
+
+                $vulnerabilities[$id] = array();
+                $getDetails->execute(array($vulnerability['plugin_id']));
+                $vulnerabilities[$id]['port'] = $vulnerability['port'];
+                $vulnerabilities[$id]['protocol'] = $vulnerability['protocol'];
+                $vulnerabilities[$id]['service'] = $services[$vulnerability['protocol']][$vulnerability['port']];
+            }
+
+            $vulnerabilities = array_map("unserialize", array_unique(array_map("serialize", $vulnerabilities)));
+
+            $hosts[$key]['vulnerabilities'] = $vulnerabilities;
+        }
+        return $hosts;
+    }
+
+    function loadXML($xmlLocation)
+    {
+
+        $services = array();
+
+        // Read in the XML
+        $xml = new \XMLReader();
+        $xml->open($xmlLocation);
+
+        // Move to the first "record" node
+        while ($xml->read() && $xml->name !== 'record');
+
+        // Iterate through each "record" until the end of the tree
+        while ($xml->name === 'record')
+        {
+            // Import the node into a simple XML element
+            $service = new \SimpleXMLElement($xml->readOuterXML());
+            $xml->next('record');
+            $services[(string)$service->protocol][(string)$service->number] = (string)$service->description;
+        }
+
+        return $services;
+    }
 } 

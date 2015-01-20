@@ -114,3 +114,31 @@ $app->get('/opendlp/:filename', function ($filename) use($app, $reportData)
     $reportData = $reportData->getOpenDLP($filename, $userId);
     $app->render('reports/opendlp.phtml', array('reportData' => $reportData));
 });
+
+$app->get('/ports/:reportId/:severity', function ($reportId, $severity) use($app, $reportData, $pdo)
+{
+    $users = new \Library\Users($pdo);
+
+    //Sanitise
+    $reportId = strip_tags($reportId);
+    $severity = strip_tags($severity);
+
+    $userCheck = $users->checkReportOwnership($reportId, $_SESSION['userId']);
+    if (!$userCheck)
+    {
+        $app->render('reports/reportExists.phtml');
+    }
+    else
+    {
+        $data = $reportData->getPorts($reportId, $severity, $_SESSION['userId']);
+        $app->render('reports/ports.phtml', array('reportData' => $data));
+    }
+});
+
+$app->get('/xml', function() use($app, $reportData)
+{
+    $xml = $reportData->loadXML(__DIR__ . '/../service-names-port-numbers.xml');
+
+    echo '<pre>';
+    print_r($xml);
+});

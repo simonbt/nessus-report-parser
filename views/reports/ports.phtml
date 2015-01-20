@@ -1,0 +1,113 @@
+<?php
+/**
+ * nessus-report-parser -- vulnerabilites.phtml
+ * User: Simon Beattie
+ * Date: 11/06/2014
+ * Time: 12:23
+ */
+
+include(__DIR__ . '/../includes/nessusReportHeader.phtml');
+
+
+echo '
+<table border=0 cellpadding=0 cellspacing=0>
+
+';
+
+
+$data = array();
+$rowCount = 0;
+foreach ($reportData as $hostData) {
+    $potentialOperatingSystems = explode(PHP_EOL, $hostData['OS']);
+    $OS = trim(array_shift($potentialOperatingSystems));
+
+    foreach ($hostData['vulnerabilities'] as $vulnerability) {
+        $data[] = array(
+            'ip'       => ip2long($hostData['hostname']),
+            'os'       => $OS,
+            'portProtocol' => strtoupper($vulnerability['protocol']).'/'.$vulnerability['port'],
+            'service'   =>  $vulnerability['service']);
+
+    }
+
+}
+
+usort($data, function ($firstArrayElement, $secondArrayElement) {
+    $first = $firstArrayElement['ip'];
+    $second = $secondArrayElement['ip'];
+
+    $ret = strcmp($first, $second);
+    if ($ret == 0) {
+        $firstSeverity = (float)$firstArrayElement['severity'];
+        $secondSeverity = (float)$secondArrayElement['severity'];
+
+        if ($secondSeverity > $firstSeverity) {
+            return 1;
+        } elseif ($firstSeverity > $secondSeverity) {
+            return -1;
+        } elseif ($firstSeverity == $secondSeverity) {
+            return 0;
+        }
+    }
+
+    return $ret;
+});
+
+$ip = "";
+
+
+$counts = array();
+foreach ($data as $value) {
+    foreach ($value as $key2 => $value2) {
+        if ($key2 == "ip") {
+            $index = $value2;
+            if (array_key_exists($index, $counts)) {
+                $counts[$index]++;
+            } else {
+                $counts[$index] = 1;
+            }
+        }
+    }
+}
+
+
+foreach ($data as $vuln) {
+
+
+    if ($ip == long2ip($vuln['ip'])) {
+        $rowCount++;
+        print("
+            <tr>
+                <td>" . htmlspecialchars($vuln['portProtocol']) . "</td>
+                <td>" . htmlspecialchars($vuln['service']) . "</td>
+            </tr>
+            ");
+    } else {
+        $rowCount++;
+        if ($rowCount > 900)
+        {
+            echo "</table>";
+            echo "<p><hr>";
+            echo "<p><table border=0 cellpadding=0 cellspacing=0>";
+            $rowCount = 0;
+        }
+        print("
+            <tr>
+                <td border:solid 1pt gray; vertical-align: top; rowspan='" . $counts[$vuln['ip']] . "'>" . htmlspecialchars(long2ip($vuln['ip'])) . "</td>
+                <td border:solid 1pt gray; vertical-align: top; rowspan='" . $counts[$vuln['ip']] . "'>" . htmlspecialchars($vuln['os']) . "</td>
+                <td>" . htmlspecialchars($vuln['portProtocol']) . "</td>
+                <td>" . htmlspecialchars($vuln['service']) . "</td>
+            </tr>
+
+            ");
+
+        $ip = long2ip($vuln['ip']);
+
+
+    }
+}
+echo "</table>";
+
+include(__DIR__ . '/../includes/footer.phtml');
+
+
