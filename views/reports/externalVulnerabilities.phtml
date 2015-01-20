@@ -103,8 +103,9 @@ foreach ($data as $vuln) {
         print("
             <tr>
                 <td class=" . $colour . ">" . htmlspecialchars($vuln['vuln']) . "</td>
-                <td class=" . $colour . ">" . htmlspecialchars($vuln['risk']) . "</td>
                 <td class=" . $colour . ">" . htmlspecialchars($vuln['portProtocol']) . "</td>
+                <td class=" . $colour . ">" . htmlspecialchars($vuln['risk']) . "</td>
+                <td class=" . $colour . ">" . htmlspecialchars($vuln['severity']) . "</td>
             </tr>
             ");
     } else {
@@ -121,8 +122,9 @@ foreach ($data as $vuln) {
                 <td border:solid 1pt gray; vertical-align: top; rowspan='" . $counts[$vuln['ip']] . "'>" . htmlspecialchars(long2ip($vuln['ip'])) . "</td>
                 <td border:solid 1pt gray; vertical-align: top; rowspan='" . $counts[$vuln['ip']] . "'>" . htmlspecialchars($vuln['name']) . "</td>
                 <td class=" . $colour . ">" . htmlspecialchars($vuln['vuln']) . "</td>
-                <td class=" . $colour . ">" . htmlspecialchars($vuln['risk']) . "</td>
                 <td class=" . $colour . ">" . htmlspecialchars($vuln['portProtocol']) . "</td>
+                <td class=" . $colour . ">" . htmlspecialchars($vuln['risk']) . "</td>
+                <td class=" . $colour . ">" . htmlspecialchars($vuln['severity']) . "</td>
             </tr>
 
             ");
