@@ -124,6 +124,7 @@ UPDATES:
 
     20th January 2015:
             Changed Internal and External output tables to reflect report changes
+            Added TCP/UDP Open ports report
 
 TO-DO:
 
