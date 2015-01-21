@@ -518,7 +518,14 @@ class ReportData extends ReportsAbstract
                 $getDetails->execute(array($vulnerability['plugin_id']));
                 $vulnerabilities[$id]['port'] = $vulnerability['port'];
                 $vulnerabilities[$id]['protocol'] = $vulnerability['protocol'];
-                $vulnerabilities[$id]['service'] = $services[$vulnerability['protocol']][$vulnerability['port']];
+
+                if (array_key_exists($services[],$vulnerability['protocol']))
+                {
+                    if (array_key_exists($services[$vulnerability['protocol']][],$vulnerability['port']))
+                    {
+                        $vulnerabilities[$id]['service'] = $services[$vulnerability['protocol']][$vulnerability['port']];
+                    }
+                }
             }
 
             $vulnerabilities = array_map("unserialize", array_unique(array_map("serialize", $vulnerabilities)));
