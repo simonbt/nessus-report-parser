@@ -519,9 +519,9 @@ class ReportData extends ReportsAbstract
                 $vulnerabilities[$id]['port'] = $vulnerability['port'];
                 $vulnerabilities[$id]['protocol'] = $vulnerability['protocol'];
 
-                if (array_key_exists($services[],$vulnerability['protocol']))
+                if (array_key_exists($services,$vulnerability['protocol']))
                 {
-                    if (array_key_exists($services[$vulnerability['protocol']][],$vulnerability['port']))
+                    if (array_key_exists($services[$vulnerability['protocol']],$vulnerability['port']))
                     {
                         $vulnerabilities[$id]['service'] = $services[$vulnerability['protocol']][$vulnerability['port']];
                     }
