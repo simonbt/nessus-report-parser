@@ -526,6 +526,10 @@ class ReportData extends ReportsAbstract
                         $vulnerabilities[$id]['service'] = $services[$vulnerability['protocol']][$vulnerability['port']];
                     }
                 }
+                else
+                {
+                    $vulnerabilities[$id]['service'] = "Unknown";
+                }
             }
 
             $vulnerabilities = array_map("unserialize", array_unique(array_map("serialize", $vulnerabilities)));
