@@ -141,7 +141,7 @@ CREATE TABLE `vulnerabilities` (
   `pluginID` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `vulnerability` varchar(255) DEFAULT NULL,
   `svc_name` varchar(30) DEFAULT NULL,
-  `severity` int(11) DEFAULT NULL,
+  `severity` float DEFAULT NULL,
   `pluginFamily` varchar(255) DEFAULT NULL,
   `description` text,
   `cve` text,
