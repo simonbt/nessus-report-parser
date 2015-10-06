@@ -21,7 +21,7 @@ INSTALLATION:
         git clone https://github.com/simonbt/nessus-report-parser.git
 
     Create MYSQL Database
-        mysql -u root -p reports > Database/mysql_schema.sql
+        mysql -u root -p reports < Database/mysql_schema.sql
 
         Setup privileges for another user on the reports database
 
@@ -37,36 +37,37 @@ INSTALLATION:
     Edit the Apache Configuration:
         sudo nano /private/etc/apache2/httpd.conf
         ADD (right at the top of the file):
-        
+
                 NameVirtualHost *:80
-                  <VirtualHost *:80>
-                          ServerName reports.local
-                          ServerAdmin simon.beattie@randomstorm.com
-                          DocumentRoot "/Users/simonbeattie/www/nessus-report-parser/"
+                <VirtualHost *:80>
+                  ServerName reports.local
+                  ServerAdmin simon.beattie@randomstorm.com
+                  DocumentRoot "/Users/simonbeattie/www/nessus-report-parser/"
 
-                          <Directory "/Users/simonbeattie/www/nessus-report-parser/">
-                                  Options Indexes FollowSymLinks MultiViews
-                                  AllowOverride All
-                                  Order allow,deny
-                                  allow from all
-                          </Directory>
-                          ErrorLog "/private/var/log/apache2/reports-vhost.log"
-                          LogLevel warn
-                  </VirtualHost>
+                  <Directory "/Users/simonbeattie/www/nessus-report-parser/">
+                    Options Indexes FollowSymLinks MultiViews
+                    AllowOverride All
+                    Order allow,deny
+                    allow from 127.0.0.1
+                  </Directory>
+                ErrorLog "/private/var/log/apache2/reports-vhost.log"
+                LogLevel warn
+              </VirtualHost>
 
-        REPLACE:
+        UNCOMMENT:
 
             #LoadModule php5_module libexec/apache2/libphp5.so
 
-        WITH:
+        AND
 
-            LoadModule php5_module libexec/apache2/libphp5.so
+            #LoadModule rewrite_module libexec/apache2/mod_rewrite.so
 
     Restart Apache
         sudo apachectl restart
 
     Completed:
         You should now be able to navigate to the system: http://reports.local
+        Default username and password is simon.beattie@randomstorm.com:pa55word
 
 UPDATING:
 
